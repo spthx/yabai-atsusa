@@ -15,7 +15,16 @@ function buildTemperatureRanking(readings, stations) {
   return Object.entries(readings).map(([id, reading]) => {
     const temperature = getTemperature(reading);
     const station = stations[id];
-    return station && temperature !== null ? { id, name: station.kjName, temperature, station } : null;
+    const location = AMEDAS_LOCATION_METADATA[id];
+    return station && temperature !== null ? {
+      id,
+      name: station.kjName,
+      temperature,
+      station,
+      prefecture: location?.prefecture || "所在地不明",
+      municipality: location?.municipality || station.kjName,
+      point: location?.point || station.kjName
+    } : null;
   }).filter(Boolean).sort((a, b) => b.temperature - a.temperature);
 }
 

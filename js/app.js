@@ -18,7 +18,7 @@ function renderSnapshot(snapshot, target) {
   const capitalInfo = getCapitalByStationId(selectedStation.id);
   if (capitalInfo) selectedStation = { ...selectedStation, ...capitalInfo };
   setObservationTime(snapshot.latestTime);
-  renderComparison(kumagaya, selectedStation);
+  renderComparison(kumagaya, selectedStation, ranking);
   renderHeatRanking(capitalRanking.filter(item => item.temperature !== null).slice(0, 10), kumagaya.temperature);
   renderCapitalTemperatureList(capitalRanking);
   renderAllTemperatureStations(ranking);
@@ -46,7 +46,7 @@ function useCurrentLocation() {
     if (!currentSnapshot) return;
     const nearest = findNearestTemperatureStation(position, buildTemperatureRanking(currentSnapshot.readings, currentSnapshot.stations));
     if (!nearest) return;
-    document.getElementById("location-note").textContent = `現在地に近い観測地点「${nearest.name}」（約${nearest.distance.toFixed(0)}km）と比較しています。県庁所在地一覧には県名・市名を表示しています。`;
+    document.getElementById("location-note").textContent = `現在地に近い ${nearest.prefecture}・${nearest.municipality} の観測地点「${nearest.name}」（約${nearest.distance.toFixed(0)}km）と比較しています。`;
     renderSnapshot(currentSnapshot, nearest);
   }, () => {
     document.getElementById("location-note").textContent = "位置情報を取得できなかったため、暑さランキング上位の地点と比較しています。";
