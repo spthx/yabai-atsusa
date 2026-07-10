@@ -38,10 +38,10 @@ function getKumagayaDeviation(targetTemp, kumagayaTemp) {
 
 function getComparison(targetTemp, kumagayaTemp) {
   const diff = kumagayaTemp - targetTemp;
-  if (diff >= 3) return { label: "熊谷よりかなりマシ", detail: "かなり涼しい逃げ場です。", className: "much-cooler", diff };
-  if (diff >= 1) return { label: "熊谷よりマシ", detail: "まだ人類側です。", className: "cooler", diff };
-  if (diff > -1) return { label: "ほぼ熊谷", detail: "暑さはほぼ互角です。", className: "same", diff };
-  return { label: "熊谷超え", detail: "今日はそちらが基準点です。", className: "hotter", diff };
+  if (diff >= 3) return { label: "熊谷よりかなりマシ", detail: "比較で涼しく見えても、のどが渇く前にこまめに水分をとりましょう。", className: "much-cooler", diff };
+  if (diff >= 1) return { label: "熊谷よりマシ", detail: "気温が低めでも油断せず、こまめに水分をとりましょう。", className: "cooler", diff };
+  if (diff > -1) return { label: "ほぼ熊谷", detail: "同じくらい暑いです。のどが渇く前にこまめに水分をとりましょう。", className: "same", diff };
+  return { label: "熊谷超え", detail: "涼しい場所で休み、のどが渇く前にこまめに水分をとりましょう。", className: "hotter", diff };
 }
 
 function getTempClass(temp) {
