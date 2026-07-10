@@ -17,6 +17,11 @@ function renderComparison(kumagaya, target, ranking) {
     : comparison.diff > -1 ? "ほぼ熊谷"
     : `熊谷超え ${difference}℃`;
   document.getElementById("comparison-card").innerHTML = `
+    <div class="battle-backdrop" aria-hidden="true">
+      <img src="assets/japan-silhouette.svg" alt="">
+      <i class="battle-flame flame-left"></i><i class="battle-flame flame-right"></i>
+      <span class="heat-spark spark-one">✦</span><span class="heat-spark spark-two">✦</span>
+    </div>
     <div class="contestants">
       <article class="contestant kumagaya-side">${characterMarkup(CHARACTER_REGISTRY.kumagaya, "hot")}
         <h3>埼玉県<small>${CONFIG.kumagayaStationName}</small></h3><p class="heat-rank">全国暑さ <b>${kumagayaRank}位</b></p><p class="score-label">熊谷偏差値</p><p class="score">${kumagayaScore ?? "–"}</p><p class="temperature">${formatTemperature(kumagaya.temperature)}</p>
