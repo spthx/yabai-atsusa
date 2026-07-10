@@ -1,47 +1,860 @@
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@500;700;900&display=swap');
 
-* { box-sizing: border-box; }
-body { margin: 0; color: #f9fbff; background: #020712; font-family: "Noto Sans JP", "Yu Gothic", sans-serif; }
-.site-shell { min-height: 100vh; max-width: 650px; margin: auto; padding: 20px 16px 34px; background: radial-gradient(circle at 45% 14%, #172c5b 0, #07142a 38%, #020713 82%); }
-.hero { padding: 10px 4px 17px; text-align: center; }
-.hero h1 { margin: 6px 0 12px; font-size: clamp(2.55rem, 12vw, 4.65rem); line-height: 1; letter-spacing: -.09em; text-shadow: 4px 5px 0 #17233b; }
-.eyebrow { margin: 0; color: #d5dbea; font-size: 1.05rem; font-weight: 700; }
-.observation-time, .fairness-note, .ranking-time { margin: 4px 0; color: #d3d9e7; font-size: .82rem; }
-.section-heading { display: flex; align-items: center; justify-content: center; gap: 9px; margin: 8px 0 10px; }
-.section-heading span { font-size: 1.65rem; }
-.section-heading h2 { margin: 0; font-size: 1.5rem; }
-.comparison-card { position: relative; isolation: isolate; overflow: hidden; border: 2px solid #35baff; border-radius: 22px; background: linear-gradient(130deg, #3c102c, #071e48 55%, #072a59); box-shadow: 0 0 28px #0788d344, inset 0 0 32px #fd367044; }
-.battle-backdrop { position: absolute; z-index: 0; inset: 0; overflow: hidden; background: radial-gradient(circle at 50% 44%, #36b9ff27, transparent 43%); }.battle-backdrop img { position: absolute; top: 4%; left: 50%; width: 180px; height: 280px; opacity: .16; transform: translateX(-50%) rotate(10deg); filter: drop-shadow(0 0 12px #3ac4ff); }.battle-flame { position: absolute; bottom: -25px; display: block; width: 105px; height: 160px; background: radial-gradient(ellipse at 50% 80%, #fff1a4 0 8%, #ffb21b 17%, #f13527 42%, transparent 70%); opacity: .46; filter: blur(5px); }.flame-left { left: -50px; transform: rotate(-20deg); }.flame-right { right: -50px; transform: scaleX(-1) rotate(-20deg); }.heat-spark { position: absolute; color: #ffdc4c; font-size: 1.3rem; opacity: .7; text-shadow: 0 0 13px #f74323; animation: heat-flicker 2.2s ease-in-out infinite; }.spark-one { top: 17%; left: 39%; }.spark-two { top: 34%; right: 33%; animation-delay: 1.1s; }
-.contestants { position: relative; z-index: 1; display: grid; grid-template-columns: 1fr 70px 1fr; align-items: center; padding: 17px 8px 5px; }
-.contestant { min-width: 0; text-align: center; }
-.character img { width: 105px; height: 105px; filter: drop-shadow(0 0 9px #ff3780); }
-.character.cool img { filter: drop-shadow(0 0 9px #36cfff); }
-.character p { max-width: 125px; margin: 0 auto 5px; font-size: .62rem; font-weight: 700; }
-.contestant h3 { margin: 0; font-size: 1.28rem; }
-.contestant h3 small { display: block; color: #d8e8ff; font-size: .61em; line-height: 1.2; }
-.heat-rank { display: inline-block; margin: 5px 0 0; padding: 2px 7px; border: 1px solid #ffffff55; border-radius: 99px; color: #dce9ff; background: #071a3f88; font-size: .61rem; line-height: 1.1; }
-.heat-rank b { color: #fff4aa; font-size: .78rem; }
-.score-label { margin: 7px 0 0; font-size: .73rem; }
-.score { margin: 0; font-size: 2.15rem; font-weight: 900; line-height: 1.05; }
-.temperature { margin: 8px 0; color: #fff; font-size: 2.25rem; font-weight: 900; text-shadow: 0 0 13px #ff3d6d; }
-.target-side .temperature { text-shadow: 0 0 13px #28adff; }
-.versus { position: relative; z-index: 1; display: grid; width: 64px; height: 64px; margin: auto; border: 2px solid #fff5bd; border-radius: 50%; color: #fff9cf; background: radial-gradient(circle, #ffbc28 0, #ed5820 34%, #25397f 68%, #07152e 100%); font-size: 2.18rem; font-weight: 900; letter-spacing: -.14em; place-items: center; text-shadow: 0 0 13px #fff, 0 0 24px #ff7b18; box-shadow: 0 0 20px #ff9f243d, inset 0 0 17px #fff4b855; transform: rotate(-7deg); }
-.verdict { position: relative; z-index: 1; padding: 10px 8px 17px; text-align: center; }
-.verdict strong { display: block; font-size: clamp(1.45rem, 7.8vw, 2.35rem); line-height: 1.12; }
-.verdict span { font-size: .94rem; font-weight: 700; }
-.much-cooler strong, .cooler strong { color: #ffd641; }.same strong { color: #fff; }.hotter strong { color: #ff7184; }
-.refresh-button { display: block; width: 100%; margin: 11px 0 3px; padding: 12px; border: 1px solid #57c8ff; border-radius: 13px; color: #fff; background: #0b3369; font: inherit; font-weight: 700; }
-.refresh-button:disabled { opacity: .65; }.location-note { margin: 7px 4px 20px; color: #bdc8db; font-size: .72rem; text-align: center; }
-.ranking-section { margin-top: 10px; }.ranking-time { margin-top: -6px; margin-bottom: 10px; text-align: center; }.heat-ranking-list { display: grid; gap: 8px; }
-.ranking-card { position: relative; display: grid; grid-template-columns: 54px minmax(0, 1fr) 88px; grid-template-rows: 50px 20px; align-items: center; gap: 0 6px; min-height: 76px; padding: 6px 10px; border: 1px solid #ffaf56; border-radius: 16px; box-shadow: inset 0 0 21px #ffffff12, 0 5px 13px #0002; }
-.prefecture-mascot { position: absolute; bottom: 4px; left: 12px; display: grid; width: 31px; height: 31px; place-items: center; filter: drop-shadow(0 0 5px var(--mascot-color)); }.prefecture-mascot svg { width: 30px; height: 30px; }.prefecture-mascot b { display: none; }
-.ranking-card .rank { grid-column: 1; grid-row: 1; align-self: center; color: #fff; font-size: 1.17rem; font-weight: 900; text-align: left; text-shadow: 0 2px 3px #000a; }.ranking-card .place { grid-column: 2; grid-row: 1; min-width: 0; font-weight: 900; line-height: 1; text-shadow: 0 2px 3px #0009; }.ranking-card .place em { display: block; color: #fff9c6; font-size: .7rem; font-style: normal; letter-spacing: .04em; }.ranking-card .place b { display: block; overflow: hidden; font-size: 1.52rem; text-overflow: ellipsis; white-space: nowrap; }.ranking-card .place small { display: none; }.ranking-card > strong { grid-column: 3; grid-row: 1; justify-self: end; font-size: 1.48rem; letter-spacing: -.04em; text-shadow: 0 2px 4px #000a; white-space: nowrap; }.ranking-card .rank-diff { grid-column: 2; grid-row: 2; align-self: center; font-size: .68rem; font-weight: 900; text-shadow: 0 1px 2px #0009; }.ranking-card .rank-score { grid-column: 3; grid-row: 2; padding: 0; border: 0; font-size: .52rem; line-height: 1.05; text-align: right; text-shadow: 0 1px 2px #0009; }.ranking-card .rank-score b { font-size: .94rem; }
-.rank-1 { border-color: #fff0a1; box-shadow: inset 0 0 28px #fff6b266, 0 0 18px #ffbc3644; }.rank-1 .rank { color: #fff5a5; font-size: 1.12rem; }.rank-2, .rank-3 { border-color: #ffd46b; }
+* {
+  box-sizing: border-box;
+}
 
-/* 暑さの強さ: 紫 → 赤 → 橙 → 黄 → 白 */
-.temp-extreme { color: #fff; background: linear-gradient(115deg, #3d155f, #8e267a 62%, #e156a2); border-color: #d984ff; }.temp-purple { color: #fff; background: linear-gradient(115deg, #591342, #a4265e 62%, #f0608e); border-color: #fc79b0; }.temp-red { color: #fff; background: linear-gradient(115deg, #75152a, #d53d32 62%, #ff8868); border-color: #ff7f67; }.temp-orange { color: #fff; background: linear-gradient(115deg, #8c3c10, #df7a1b 62%, #ffc650); border-color: #ffbd4a; }.temp-yellow { color: #fff; background: linear-gradient(115deg, #9a7112, #ddba35 65%, #fff39a); border-color: #ffe47a; }.temp-normal { color: #193148; background: linear-gradient(115deg, #c6dbe0, #edf6ed 65%, #fff); border-color: #e6fff6; }.temp-cool { color: #12345c; background: linear-gradient(115deg, #a6cdf1, #eaf6ff 65%, #fff); border-color: #e8f7ff; }.temp-normal .rank-score, .temp-cool .rank-score, .temp-normal .place em, .temp-cool .place em { color: #274a72; }
-.capital-section { margin-top: 24px; }.capital-note { margin: -6px 0 10px; color: #bdc8db; font-size: .74rem; text-align: center; }.capital-temperature-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 7px; }.capital-card { position: relative; display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; min-height: 64px; overflow: hidden; padding: 9px 9px 9px 38px; border: 1px solid #ffffff66; border-radius: 13px; box-shadow: inset 0 0 17px #fff1; }.capital-card .capital-rank { position: absolute; top: 0; left: 0; display: grid; width: 31px; height: 31px; border-radius: 0 0 11px 0; background: #ffffff2a; font-size: .7rem; font-weight: 900; place-items: center; text-shadow: 0 1px 2px #0008; }.capital-place { min-width: 0; text-shadow: 0 2px 3px #0008; }.capital-place b, .capital-place small { display: block; }.capital-place b { overflow: hidden; font-size: .9rem; text-overflow: ellipsis; white-space: nowrap; }.capital-place small { font-size: .72rem; opacity: .9; }.capital-card > strong { justify-self: end; margin: 0; padding-left: 4px; font-size: 1.16rem; line-height: 1; text-shadow: 0 2px 3px #0009; white-space: nowrap; }.capital-card.temp-normal, .capital-card.temp-cool { text-shadow: none; }.capital-card.temp-missing { color: #fff; background: linear-gradient(135deg, #526274, #8391a0); border-color: #a6b4c3; }.capital-card.temp-missing > strong { font-size: .85rem; }
-.all-stations-section { margin-top: 26px; }.all-stations-note { margin: -6px 0 10px; color: #bdc8db; font-size: .74rem; text-align: center; }.all-temperature-stations { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 5px; }.all-station-card { display: grid; grid-template-columns: 25px minmax(0, 1fr) auto; align-items: center; min-height: 53px; padding: 6px 7px 6px 4px; border: 1px solid #ffffff77; border-radius: 8px; box-shadow: inset 0 0 11px #fff1; }.all-station-card .station-rank { opacity: .75; font-size: .61rem; text-align: center; text-shadow: 0 1px 2px #0008; }.station-info { min-width: 0; overflow: hidden; line-height: 1.12; text-shadow: 0 1px 2px #0009; }.station-info em { display: block; overflow: hidden; opacity: .87; font-size: .58rem; font-style: normal; text-overflow: ellipsis; white-space: nowrap; }.station-info b { display: block; overflow: hidden; margin-top: 1px; font-size: .78rem; text-overflow: ellipsis; white-space: nowrap; }.station-info small { display: block; overflow: hidden; margin-top: 4px; opacity: .9; font-size: .54rem; text-overflow: ellipsis; white-space: nowrap; }.all-station-card > strong { padding-left: 4px; font-size: .8rem; text-shadow: 0 2px 3px #0009; white-space: nowrap; }
-.loading, .error { margin: 0; padding: 34px 14px; text-align: center; }.error { color: #ffd1d7; }footer { margin-top: 22px; padding: 16px 8px 0; border-top: 1px solid #304568; color: #bdc8db; font-size: .7rem; line-height: 1.65; text-align: center; }footer p { margin: 0; }.safety-note { margin-top: 7px; color: #ffe39a; font-weight: 700; }
-@keyframes heat-flicker { 0%, 100% { transform: scale(.75) rotate(0deg); opacity: .35; } 50% { transform: scale(1.15) rotate(22deg); opacity: .9; } }
-@media (min-width: 520px) { .site-shell { margin-top: 12px; margin-bottom: 12px; border: 1px solid #102d5d; border-radius: 12px; }.character img { width: 120px; height: 120px; }.contestants { padding-right: 20px; padding-left: 20px; }.capital-temperature-list { grid-template-columns: repeat(3, minmax(0, 1fr)); }.all-temperature-stations { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+body {
+  margin: 0;
+  color: #f9fbff;
+  background: #020712;
+  font-family: "Noto Sans JP", "Yu Gothic", sans-serif;
+}
+
+.site-shell {
+  min-height: 100vh;
+  max-width: 650px;
+  margin: auto;
+  padding: 20px 16px 34px;
+  background: radial-gradient(circle at 45% 14%, #172c5b 0, #07142a 38%, #020713 82%);
+}
+
+.hero {
+  padding: 10px 4px 17px;
+  text-align: center;
+}
+
+.hero h1 {
+  margin: 6px 0 12px;
+  font-size: clamp(2.25rem, 10.4vw, 4.05rem);
+  line-height: 1;
+  letter-spacing: -.075em;
+  text-shadow: 4px 5px 0 #17233b;
+}
+
+.eyebrow {
+  margin: 0;
+  color: #d5dbea;
+  font-size: 1.05rem;
+  font-weight: 700;
+}
+
+.observation-time,
+.fairness-note,
+.ranking-time {
+  margin: 4px 0;
+  color: #d3d9e7;
+  font-size: .82rem;
+}
+
+.fairness-note {
+  max-width: 92%;
+  margin: 8px auto 0;
+  line-height: 1.55;
+  text-shadow: 0 1px 2px #0008;
+}
+
+.section-heading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  margin: 8px 0 10px;
+}
+
+.section-heading span {
+  font-size: 1.65rem;
+}
+
+.section-heading h2 {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.comparison-card {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  border: 2px solid #35baff;
+  border-radius: 22px;
+  background: linear-gradient(130deg, #3c102c, #071e48 55%, #072a59);
+  box-shadow: 0 0 28px #0788d344, inset 0 0 32px #fd367044;
+}
+
+.battle-backdrop {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  overflow: hidden;
+  background:
+    linear-gradient(90deg, #e4254f33 0, transparent 34%, transparent 66%, #148eea33 100%),
+    radial-gradient(circle at 50% 44%, #36b9ff2b, transparent 43%);
+}
+
+.battle-backdrop img {
+  position: absolute;
+  top: 3%;
+  left: 50%;
+  width: 188px;
+  height: 282px;
+  opacity: .18;
+  transform: translateX(-50%) rotate(10deg);
+  filter: drop-shadow(0 0 15px #58cfff);
+}
+
+.battle-flame {
+  position: absolute;
+  bottom: -25px;
+  display: block;
+  width: 105px;
+  height: 160px;
+  background: radial-gradient(ellipse at 50% 80%, #fff1a4 0 8%, #ffb21b 17%, #f13527 42%, transparent 70%);
+  opacity: .46;
+  filter: blur(5px);
+}
+
+.flame-left {
+  left: -50px;
+  transform: rotate(-20deg);
+}
+
+.flame-right {
+  right: -50px;
+  transform: scaleX(-1) rotate(-20deg);
+}
+
+.heat-spark {
+  position: absolute;
+  color: #ffdc4c;
+  font-size: 1.3rem;
+  opacity: .7;
+  text-shadow: 0 0 13px #f74323;
+  animation: heat-flicker 2.2s ease-in-out infinite;
+}
+
+.spark-one {
+  top: 17%;
+  left: 39%;
+}
+
+.spark-two {
+  top: 34%;
+  right: 33%;
+  animation-delay: 1.1s;
+}
+
+.contestants {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: 1fr 80px 1fr;
+  align-items: center;
+  padding: 17px 8px 5px;
+}
+
+.contestant {
+  min-width: 0;
+  text-align: center;
+}
+
+.character img {
+  width: 105px;
+  height: 105px;
+  filter: drop-shadow(0 0 9px #ff3780);
+}
+
+.character.cool img {
+  filter: drop-shadow(0 0 9px #36cfff);
+}
+
+.character p {
+  max-width: 125px;
+  margin: 0 auto 5px;
+  font-size: .62rem;
+  font-weight: 700;
+}
+
+.contestant h3 {
+  margin: 0;
+  font-size: 1.28rem;
+}
+
+.contestant h3 small {
+  display: block;
+  color: #d8e8ff;
+  font-size: .61em;
+  line-height: 1.2;
+}
+
+.heat-rank {
+  display: inline-block;
+  margin: 5px 0 0;
+  padding: 2px 7px;
+  border: 1px solid #ffffff55;
+  border-radius: 99px;
+  color: #dce9ff;
+  background: #071a3f88;
+  font-size: .61rem;
+  line-height: 1.1;
+}
+
+.heat-rank b {
+  color: #fff4aa;
+  font-size: .78rem;
+}
+
+.score-label {
+  margin: 7px 0 0;
+  font-size: .73rem;
+}
+
+.score {
+  margin: 0;
+  font-size: 2.15rem;
+  font-weight: 900;
+  line-height: 1.05;
+}
+
+.temperature {
+  margin: 8px 0;
+  color: #fff;
+  font-size: 2.25rem;
+  font-weight: 900;
+  text-shadow: 0 0 13px #ff3d6d;
+}
+
+.target-side .temperature {
+  text-shadow: 0 0 13px #28adff;
+}
+
+.versus {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  width: 80px;
+  height: 94px;
+  margin: auto;
+  border: 0;
+  color: #fff9cf;
+  background: transparent;
+  font-size: 3.55rem;
+  font-weight: 900;
+  font-style: italic;
+  letter-spacing: -.2em;
+  line-height: .8;
+  place-items: center;
+  text-shadow: 0 0 5px #fff, 0 0 17px #ffb51f, 0 0 30px #e82c22;
+  transform: skew(-10deg);
+}
+
+.versus::before {
+  position: absolute;
+  z-index: -1;
+  content: "";
+  width: 12px;
+  height: 108px;
+  background: linear-gradient(to bottom, transparent 0 8%, #fbf0b8 9% 25%, #ff9e19 26% 55%, #f13a2e 56% 84%, transparent 85%);
+  clip-path: polygon(43% 0, 100% 0, 64% 37%, 100% 37%, 23% 100%, 43% 58%, 0 58%);
+  filter: drop-shadow(0 0 8px #ff4c1d);
+  transform: rotate(19deg);
+}
+
+.versus::after {
+  position: absolute;
+  bottom: 1px;
+  content: "HEAT BATTLE";
+  color: #fff2c2;
+  font-size: .36rem;
+  font-style: normal;
+  font-weight: 900;
+  letter-spacing: .09em;
+  text-shadow: 0 1px 2px #000;
+  transform: skew(10deg);
+}
+
+.verdict {
+  position: relative;
+  z-index: 1;
+  padding: 10px 8px 20px;
+  text-align: center;
+}
+
+.verdict strong {
+  display: block;
+  margin-bottom: 14px;
+  color: #fff8f6;
+  font-size: clamp(1.45rem, 7.8vw, 2.35rem);
+  font-weight: 900;
+  letter-spacing: -.03em;
+  line-height: 1.12;
+  text-shadow:
+    0 2px 0 rgba(35, 5, 18, .85),
+    0 0 5px rgba(255, 255, 255, .45),
+    0 0 14px rgba(255, 70, 105, .72),
+    0 0 28px rgba(255, 38, 82, .42);
+}
+
+.verdict span {
+  display: block;
+  margin-top: 2px;
+  color: #fff;
+  font-size: .94rem;
+  font-weight: 700;
+  text-shadow:
+    0 2px 3px rgba(0, 0, 0, .75),
+    0 0 8px rgba(255, 255, 255, .18);
+}
+
+.much-cooler strong,
+.cooler strong {
+  color: #fff8f6;
+  -webkit-text-stroke: .55px rgba(255, 215, 65, .75);
+  text-shadow:
+    0 2px 0 rgba(35, 25, 5, .85),
+    0 0 5px rgba(255, 255, 255, .45),
+    0 0 13px rgba(255, 214, 65, .75),
+    0 0 26px rgba(255, 180, 35, .42);
+}
+
+.same strong {
+  color: #fff;
+  text-shadow:
+    0 2px 0 rgba(10, 16, 32, .9),
+    0 0 6px rgba(255, 255, 255, .5),
+    0 0 18px rgba(255, 255, 255, .28);
+}
+
+.hotter strong {
+  color: #fff8f6;
+  -webkit-text-stroke: .7px rgba(255, 105, 135, .85);
+  text-shadow:
+    0 2px 0 rgba(40, 4, 20, .9),
+    0 0 5px rgba(255, 255, 255, .55),
+    0 0 13px rgba(255, 76, 112, .82),
+    0 0 26px rgba(255, 36, 84, .48),
+    0 0 42px rgba(255, 120, 60, .25);
+}
+
+.refresh-button {
+  display: block;
+  width: 100%;
+  margin: 11px 0 3px;
+  padding: 12px;
+  border: 1px solid #57c8ff;
+  border-radius: 13px;
+  color: #fff;
+  background: #0b3369;
+  font: inherit;
+  font-weight: 700;
+}
+
+.refresh-button:disabled {
+  opacity: .65;
+}
+
+.location-note {
+  margin: 7px 4px 20px;
+  color: #bdc8db;
+  font-size: .72rem;
+  text-align: center;
+}
+
+.ranking-section {
+  margin-top: 10px;
+}
+
+.ranking-time {
+  margin-top: -6px;
+  margin-bottom: 7px;
+  text-align: center;
+}
+
+.ranking-note {
+  margin: 0 0 10px;
+  color: #bdc8db;
+  font-size: .72rem;
+  line-height: 1.45;
+  text-align: center;
+}
+
+.heat-ranking-list {
+  display: grid;
+  gap: 8px;
+}
+
+.ranking-card {
+  position: relative;
+  display: grid;
+  grid-template-columns: 54px minmax(0, 1fr) 88px;
+  grid-template-rows: 50px 20px;
+  align-items: center;
+  gap: 0 6px;
+  min-height: 76px;
+  padding: 6px 10px;
+  border: 1px solid #ffaf56;
+  border-radius: 16px;
+  box-shadow: inset 0 0 21px #ffffff12, 0 5px 13px #0002;
+}
+
+.ranking-card.extra-kumagaya-line {
+  border-color: #ffd46b;
+}
+
+.prefecture-mascot {
+  position: absolute;
+  bottom: 4px;
+  left: 12px;
+  display: grid;
+  width: 31px;
+  height: 31px;
+  place-items: center;
+  filter: drop-shadow(0 0 5px var(--mascot-color));
+}
+
+.prefecture-mascot svg {
+  width: 30px;
+  height: 30px;
+}
+
+.prefecture-mascot b {
+  display: none;
+}
+
+.ranking-card .rank {
+  grid-column: 1;
+  grid-row: 1;
+  align-self: center;
+  color: #fff;
+  font-size: 1.17rem;
+  font-weight: 900;
+  text-align: left;
+  text-shadow: 0 2px 3px #000a;
+}
+
+.ranking-card .place {
+  grid-column: 2;
+  grid-row: 1;
+  min-width: 0;
+  font-weight: 900;
+  line-height: 1;
+  text-shadow: 0 2px 3px #0009;
+}
+
+.ranking-card .place em {
+  display: block;
+  color: #fff9c6;
+  font-size: .7rem;
+  font-style: normal;
+  letter-spacing: .04em;
+}
+
+.ranking-card .place b {
+  display: block;
+  overflow: hidden;
+  font-size: 1.52rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ranking-card .place small {
+  display: none;
+}
+
+.ranking-card > strong {
+  grid-column: 3;
+  grid-row: 1;
+  justify-self: end;
+  font-size: 1.48rem;
+  letter-spacing: -.04em;
+  text-shadow: 0 2px 4px #000a;
+  white-space: nowrap;
+}
+
+.ranking-card .rank-diff {
+  grid-column: 2;
+  grid-row: 2;
+  align-self: center;
+  font-size: .68rem;
+  font-weight: 900;
+  text-shadow: 0 1px 2px #0009;
+}
+
+.ranking-card .rank-score {
+  grid-column: 3;
+  grid-row: 2;
+  padding: 0;
+  border: 0;
+  font-size: .52rem;
+  line-height: 1.05;
+  text-align: right;
+  text-shadow: 0 1px 2px #0009;
+}
+
+.ranking-card .rank-score b {
+  font-size: .94rem;
+}
+
+.rank-1 {
+  border-color: #fff0a1;
+  box-shadow: inset 0 0 28px #fff6b266, 0 0 18px #ffbc3644;
+}
+
+.rank-1 .rank {
+  color: #fff5a5;
+  font-size: 1.12rem;
+}
+
+.rank-2,
+.rank-3 {
+  border-color: #ffd46b;
+}
+
+.temp-extreme {
+  color: #fff;
+  background: linear-gradient(115deg, #3d155f, #8e267a 62%, #e156a2);
+  border-color: #d984ff;
+}
+
+.temp-purple {
+  color: #fff;
+  background: linear-gradient(115deg, #591342, #a4265e 62%, #f0608e);
+  border-color: #fc79b0;
+}
+
+.temp-red {
+  color: #fff;
+  background: linear-gradient(115deg, #75152a, #d53d32 62%, #ff8868);
+  border-color: #ff7f67;
+}
+
+.temp-orange {
+  color: #fff;
+  background: linear-gradient(115deg, #8c3c10, #df7a1b 62%, #ffc650);
+  border-color: #ffbd4a;
+}
+
+.temp-yellow {
+  color: #fff;
+  background: linear-gradient(115deg, #9a7112, #ddba35 65%, #fff39a);
+  border-color: #ffe47a;
+}
+
+.temp-normal {
+  color: #193148;
+  background: linear-gradient(115deg, #c6dbe0, #edf6ed 65%, #fff);
+  border-color: #e6fff6;
+}
+
+.temp-cool {
+  color: #12345c;
+  background: linear-gradient(115deg, #a6cdf1, #eaf6ff 65%, #fff);
+  border-color: #e8f7ff;
+}
+
+.temp-normal .rank-score,
+.temp-cool .rank-score,
+.temp-normal .place em,
+.temp-cool .place em {
+  color: #274a72;
+}
+
+.capital-section {
+  margin-top: 24px;
+}
+
+.capital-note {
+  margin: -6px 0 10px;
+  color: #bdc8db;
+  font-size: .74rem;
+  text-align: center;
+}
+
+.capital-temperature-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 7px;
+}
+
+.capital-card {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  min-height: 64px;
+  overflow: hidden;
+  padding: 9px 9px 9px 38px;
+  border: 1px solid #ffffff66;
+  border-radius: 13px;
+  box-shadow: inset 0 0 17px #fff1;
+}
+
+.capital-card .capital-rank {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: grid;
+  width: 31px;
+  height: 31px;
+  border-radius: 0 0 11px 0;
+  background: #ffffff2a;
+  font-size: .7rem;
+  font-weight: 900;
+  place-items: center;
+  text-shadow: 0 1px 2px #0008;
+}
+
+.capital-place {
+  min-width: 0;
+  text-shadow: 0 2px 3px #0008;
+}
+
+.capital-place b,
+.capital-place small {
+  display: block;
+}
+
+.capital-place b {
+  overflow: hidden;
+  font-size: .9rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.capital-place small {
+  font-size: .72rem;
+  opacity: .9;
+}
+
+.capital-card > strong {
+  justify-self: end;
+  margin: 0;
+  padding-left: 4px;
+  font-size: 1.16rem;
+  line-height: 1;
+  text-shadow: 0 2px 3px #0009;
+  white-space: nowrap;
+}
+
+.capital-card.temp-normal,
+.capital-card.temp-cool {
+  text-shadow: none;
+}
+
+.capital-card.temp-missing {
+  color: #fff;
+  background: linear-gradient(135deg, #526274, #8391a0);
+  border-color: #a6b4c3;
+}
+
+.capital-card.temp-missing > strong {
+  font-size: .85rem;
+}
+
+.all-stations-section {
+  margin-top: 26px;
+}
+
+.all-stations-note {
+  margin: -6px 0 10px;
+  color: #bdc8db;
+  font-size: .74rem;
+  text-align: center;
+}
+
+.all-stations-details {
+  margin-top: 8px;
+}
+
+.all-stations-details summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  min-height: 46px;
+  padding: 10px 12px;
+  border: 1px solid #ffffff3f;
+  border-radius: 13px;
+  color: #f9fbff;
+  background: linear-gradient(135deg, #102b58cc, #071a35cc);
+  cursor: pointer;
+  list-style: none;
+  box-shadow: inset 0 0 18px #ffffff0d, 0 8px 18px #0004;
+}
+
+.all-stations-details summary::-webkit-details-marker {
+  display: none;
+}
+
+.all-stations-details summary span {
+  font-size: .9rem;
+  font-weight: 900;
+}
+
+.all-stations-details summary span::after {
+  content: " ▼";
+  color: #ffd55a;
+}
+
+.all-stations-details[open] summary span::after {
+  content: " ▲";
+}
+
+.all-stations-details summary small {
+  color: #cbd7e8;
+  font-size: .66rem;
+  line-height: 1.35;
+  text-align: right;
+}
+
+.all-stations-details[open] .all-temperature-stations {
+  margin-top: 8px;
+}
+
+.all-temperature-stations {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 5px;
+}
+
+.all-station-card {
+  display: grid;
+  grid-template-columns: 25px minmax(0, 1fr) auto;
+  align-items: center;
+  min-height: 53px;
+  padding: 6px 7px 6px 4px;
+  border: 1px solid #ffffff77;
+  border-radius: 8px;
+  box-shadow: inset 0 0 11px #fff1;
+}
+
+.all-station-card.kumagaya-marker {
+  border-color: #ffd86b;
+  box-shadow: inset 0 0 18px #ffd86b22, 0 0 16px #ffb02e33;
+}
+
+.all-station-card .station-rank {
+  opacity: .75;
+  font-size: .61rem;
+  text-align: center;
+  text-shadow: 0 1px 2px #0008;
+}
+
+.all-station-card.kumagaya-marker .station-rank {
+  color: #fff5a5;
+  opacity: 1;
+  font-weight: 900;
+}
+
+.station-info {
+  min-width: 0;
+  overflow: hidden;
+  line-height: 1.12;
+  text-shadow: 0 1px 2px #0009;
+}
+
+.station-info em {
+  display: block;
+  overflow: hidden;
+  opacity: .87;
+  font-size: .58rem;
+  font-style: normal;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.station-info b {
+  display: block;
+  overflow: hidden;
+  margin-top: 1px;
+  font-size: .78rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.station-info small {
+  display: block;
+  overflow: hidden;
+  margin-top: 4px;
+  opacity: .9;
+  font-size: .54rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.all-station-card > strong {
+  padding-left: 4px;
+  font-size: .8rem;
+  text-shadow: 0 2px 3px #0009;
+  white-space: nowrap;
+}
+
+.loading,
+.error {
+  margin: 0;
+  padding: 34px 14px;
+  text-align: center;
+}
+
+.error {
+  color: #ffd1d7;
+}
+
+footer {
+  margin-top: 22px;
+  padding: 16px 8px 0;
+  border-top: 1px solid #304568;
+  color: #bdc8db;
+  font-size: .7rem;
+  line-height: 1.65;
+  text-align: center;
+}
+
+footer p {
+  margin: 0;
+}
+
+.safety-note {
+  margin-top: 7px;
+  color: #ffe39a;
+  font-weight: 700;
+}
+
+@keyframes heat-flicker {
+  0%,
+  100% {
+    transform: scale(.75) rotate(0deg);
+    opacity: .35;
+  }
+
+  50% {
+    transform: scale(1.15) rotate(22deg);
+    opacity: .9;
+  }
+}
+
+@media (min-width: 520px) {
+  .site-shell {
+    margin-top: 12px;
+    margin-bottom: 12px;
+    border: 1px solid #102d5d;
+    border-radius: 12px;
+  }
+
+  .character img {
+    width: 120px;
+    height: 120px;
+  }
+
+  .contestants {
+    padding-right: 20px;
+    padding-left: 20px;
+  }
+
+  .capital-temperature-list {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .all-temperature-stations {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}

@@ -10,10 +10,10 @@
 <body>
   <main class="site-shell">
     <header class="hero">
-      <p class="eyebrow">全国の暑さを熊谷基準で判定</p>
+      <p class="eyebrow">全国の暑さを熊谷基準で判定！</p>
       <h1>最強熊谷伝説</h1>
       <p id="observation-time" class="observation-time">観測時刻：取得中</p>
-      <p class="fairness-note">この比較は同一観測時刻のアメダス気温から算出しています</p>
+      <p class="fairness-note">この比較は、同一観測時刻のアメダス気温データ（全国916地点）から算出しています。</p>
     </header>
 
     <section class="comparison-section" aria-labelledby="comparison-heading">
@@ -26,25 +26,29 @@
     </section>
 
     <section class="ranking-section" aria-labelledby="ranking-heading">
-      <div class="section-heading"><span>🏆</span><h2 id="ranking-heading">県庁所在地・暑さベスト10</h2></div>
+      <div class="section-heading"><span>🏆</span><h2 id="ranking-heading">県庁所在地・暑さランキング</h2></div>
       <p id="ranking-time" class="ranking-time">観測時刻：取得中</p>
+      <p class="ranking-note">1位〜10位に加えて、熊谷偏差値100以上の地点を表示します。</p>
       <div id="heat-ranking-list" class="heat-ranking-list" aria-live="polite"></div>
     </section>
 
     <section class="capital-section" aria-labelledby="capital-heading">
-      <div class="section-heading"><span>🗾</span><h2 id="capital-heading">47都道府県・県庁所在地</h2></div>
-      <p class="capital-note">すべて同じ観測時刻のアメダス気温です</p>
+      <div class="section-heading"><span>🗾</span><h2 id="capital-heading">47都道府県代表地点</h2></div>
+      <p class="capital-note">県庁所在地付近の代表アメダス地点を、すべて同じ観測時刻で比較しています。</p>
       <div id="capital-temperature-list" class="capital-temperature-list" aria-live="polite"></div>
     </section>
 
     <section class="all-stations-section" aria-labelledby="all-stations-heading">
-      <div class="section-heading"><span>🌡️</span><h2 id="all-stations-heading">全国アメダス気温一覧</h2></div>
-      <p id="all-stations-note" class="all-stations-note">同一観測時刻の気温を暑い順に表示しています</p>
-      <div id="all-temperature-stations" class="all-temperature-stations" aria-live="polite"></div>
+      <div class="section-heading"><span>🌡️</span><h2 id="all-stations-heading">全国アメダス気温ランキング</h2></div>
+      <p id="all-stations-note" class="all-stations-note">同一観測時刻の気温を暑い順に集計しています。</p>
+      <details class="all-stations-details">
+        <summary><span>全国ランキングを開く</span><small id="all-stations-summary">集計中…</small></summary>
+        <div id="all-temperature-stations" class="all-temperature-stations" aria-live="polite"></div>
+      </details>
     </section>
 
     <footer>
-      <p>本サイトの比較・ランキングは、同一観測時刻の気象庁アメダス観測値を加工して作成しています。</p>
+      <p>本サイトの比較・ランキングは、同一観測時刻の気象庁アメダス観測値を加工して作成しています。全国ランキングは、全国916地点のうち気温データが取得できた有効観測地点のみを対象にします。</p>
       <p>「熊谷偏差値」「熊谷よりマシ」判定は本サイト独自の演出・目安です。</p>
       <p class="safety-note">のどが渇く前に、こまめに水分をとりましょう。水分摂取について医師から指示がある場合は、その指示を優先してください。</p>
     </footer>

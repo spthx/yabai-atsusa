@@ -12,10 +12,12 @@ function renderComparison(kumagaya, target, ranking) {
   const kumagayaRank = ranking.findIndex(item => item.id === kumagaya.id) + 1;
   const targetRank = ranking.findIndex(item => item.id === target.id) + 1;
   const difference = Math.abs(comparison.diff).toFixed(1);
+
   const verdictText = comparison.diff >= 3 ? `熊谷より ${difference}℃ かなりマシ！`
     : comparison.diff >= 1 ? `熊谷より ${difference}℃ マシ！`
     : comparison.diff > -1 ? "ほぼ熊谷"
-    : `熊谷超え ${difference}℃`;
+    : `熊谷超え ${difference}℃！`;
+
   document.getElementById("comparison-card").innerHTML = `
     <div class="battle-backdrop" aria-hidden="true">
       <img src="assets/japan-silhouette.svg" alt="">
@@ -24,27 +26,50 @@ function renderComparison(kumagaya, target, ranking) {
     </div>
     <div class="contestants">
       <article class="contestant kumagaya-side">${characterMarkup(CHARACTER_REGISTRY.kumagaya, "hot")}
-        <h3>埼玉県<small>${CONFIG.kumagayaStationName}</small></h3><p class="heat-rank">全国暑さ <b>${kumagayaRank}位</b></p><p class="score-label">熊谷偏差値</p><p class="score">${kumagayaScore ?? "–"}</p><p class="temperature">${formatTemperature(kumagaya.temperature)}</p>
+        <h3>埼玉県<small>${CONFIG.kumagayaStationName}</small></h3>
+        <p class="heat-rank">全国暑さ <b>${kumagayaRank}位</b></p>
+        <p class="score-label">熊谷偏差値</p>
+        <p class="score">${kumagayaScore ?? "–"}</p>
+        <p class="temperature">${formatTemperature(kumagaya.temperature)}</p>
       </article>
       <div class="versus">VS</div>
       <article class="contestant target-side">${characterMarkup(targetCharacter, "cool")}
-        <h3>${targetLocation}</h3><p class="heat-rank">全国暑さ <b>${targetRank}位</b></p><p class="score-label">熊谷偏差値</p><p class="score">${targetScore ?? "–"}</p><p class="temperature">${formatTemperature(target.temperature)}</p>
+        <h3>${targetLocation}</h3>
+        <p class="heat-rank">全国暑さ <b>${targetRank}位</b></p>
+        <p class="score-label">熊谷偏差値</p>
+        <p class="score">${targetScore ?? "–"}</p>
+        <p class="temperature">${formatTemperature(target.temperature)}</p>
       </article>
     </div>
-    <div class="verdict ${comparison.className}"><strong>${verdictText}</strong><span>${comparison.detail}</span></div>`;
+    <div class="verdict ${comparison.className}">
+      <strong>${verdictText}</strong>
+      <span>${comparison.detail}</span>
+    </div>`;
 }
 
 function renderHeatRanking(ranking, kumagayaTemp) {
   const list = document.getElementById("heat-ranking-list");
   list.innerHTML = "";
-  ranking.slice(0, 10).forEach((item, index) => {
+
+  ranking.forEach((item, index) => {
     const comparison = getComparison(item.temperature, kumagayaTemp);
     const score = getKumagayaDeviation(item.temperature, kumagayaTemp);
     const delta = Math.abs(comparison.diff).toFixed(1);
     const diffText = comparison.diff === 0 ? "熊谷と同じ" : `${comparison.label} ${delta}℃`;
+
     const row = document.createElement("article");
-    row.className = `ranking-card rank-${index + 1} ${getTempClass(item.temperature)}`;
-    row.innerHTML = `${prefectureMascotMarkup(item.prefecture, index + 1)}<span class="rank">${index + 1}位</span><span class="place"><em>${item.prefecture}</em><b>${item.city}</b><small>観測地点：${item.name}</small></span><strong>${formatTemperature(item.temperature)}</strong><span class="rank-diff">${diffText}</span><span class="rank-score">熊谷偏差値<br><b>${score ?? "–"}</b></span>`;
+    row.className = `ranking-card rank-${index + 1} ${index >= 10 ? "extra-kumagaya-line" : ""} ${getTempClass(item.temperature)}`;
+    row.innerHTML = `
+      ${prefectureMascotMarkup(item.prefecture, index + 1)}
+      <span class="rank">${index + 1}位</span>
+      <span class="place">
+        <em>${item.prefecture}</em>
+        <b>${item.city}</b>
+        <small>観測地点：${item.name}</small>
+      </span>
+      <strong>${formatTemperature(item.temperature)}</strong>
+      <span class="rank-diff">${diffText}</span>
+      <span class="rank-score">熊谷偏差値<br><b>${score ?? "–"}</b></span>`;
     list.appendChild(row);
   });
 }
@@ -52,32 +77,66 @@ function renderHeatRanking(ranking, kumagayaTemp) {
 function renderCapitalTemperatureList(capitals) {
   const list = document.getElementById("capital-temperature-list");
   list.innerHTML = "";
+
   capitals.forEach((item, index) => {
     const card = document.createElement("article");
     const missing = item.temperature === null;
     card.className = `capital-card ${missing ? "temp-missing" : getTempClass(item.temperature)}`;
-    card.innerHTML = `<span class="capital-rank">${index + 1}</span><span class="capital-place"><b>${item.prefecture}</b><small>${item.city}</small></span><strong>${missing ? "観測なし" : formatTemperature(item.temperature)}</strong>`;
+    card.innerHTML = `
+      <span class="capital-rank">${index + 1}</span>
+      <span class="capital-place">
+        <b>${item.prefecture}</b>
+        <small>${item.city}</small>
+      </span>
+      <strong>${missing ? "観測なし" : formatTemperature(item.temperature)}</strong>`;
     list.appendChild(card);
   });
 }
 
-function renderAllTemperatureStations(ranking) {
+function renderAllTemperatureStations(ranking, kumagaya) {
   const list = document.getElementById("all-temperature-stations");
   const note = document.getElementById("all-stations-note");
-  note.textContent = `${ranking.length}地点の気温を、同一観測時刻・暑い順で表示しています`;
+  const summary = document.getElementById("all-stations-summary");
+  const kumagayaIndex = ranking.findIndex(item => item.id === CONFIG.kumagayaStationId);
+  const kumagayaRank = kumagayaIndex >= 0 ? kumagayaIndex + 1 : null;
+  const hotterThanKumagaya = kumagaya
+    ? ranking.filter(item => item.temperature > kumagaya.temperature).length
+    : null;
+
+  note.textContent = `${ranking.length}地点の気温を、同一観測時刻・暑い順で集計しています。`;
+
+  if (summary) {
+    summary.textContent = kumagayaRank
+      ? `熊谷は${kumagayaRank}位 / ${ranking.length}地点中・熊谷超え${hotterThanKumagaya}地点`
+      : `${ranking.length}地点を表示`;
+  }
+
   list.innerHTML = "";
   const fragment = document.createDocumentFragment();
+
   ranking.forEach((item, index) => {
     const card = document.createElement("article");
-    card.className = `all-station-card ${getTempClass(item.temperature)}`;
+    const isKumagaya = item.id === CONFIG.kumagayaStationId;
     const prefectureLabel = item.prefecture || "都道府県情報なし";
     const locationLabel = item.location || "市区町村情報なし";
-    card.innerHTML = `<span class="station-rank">${index + 1}</span><div class="station-info"><em>${prefectureLabel}</em><b>${locationLabel}</b><small>観測地点：${item.point}</small></div><strong>${formatTemperature(item.temperature)}</strong>`;
+
+    card.className = `all-station-card ${isKumagaya ? "kumagaya-marker" : ""} ${getTempClass(item.temperature)}`;
+    card.innerHTML = `
+      <span class="station-rank">${index + 1}</span>
+      <div class="station-info">
+        <em>${prefectureLabel}</em>
+        <b>${locationLabel}</b>
+        <small>観測地点：${item.point}${isKumagaya ? " / 熊谷基準" : ""}</small>
+      </div>
+      <strong>${formatTemperature(item.temperature)}</strong>`;
+
     fragment.appendChild(card);
   });
+
   list.appendChild(fragment);
 }
 
 function showError(message) {
-  document.getElementById("comparison-card").innerHTML = `<p class="error">${message}<br>しばらくしてから更新してください。</p>`;
+  document.getElementById("comparison-card").innerHTML =
+    `<p class="error">${message}<br>しばらくしてから更新してください。</p>`;
 }
