@@ -1,16 +1,1 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 360" aria-hidden="true">
-  <defs>
-    <linearGradient id="japanGlow" x1="0" y1="0" x2="1" y2="1">
-      <stop stop-color="#d9f6ff"/>
-      <stop offset=".48" stop-color="#55c9ff"/>
-      <stop offset="1" stop-color="#3986dc"/>
-    </linearGradient>
-  </defs>
-  <g fill="url(#japanGlow)">
-    <path d="M178 18c13-9 39-4 49 6l22 19-8 19-24-1-14 11-22-5-18 7-23-9 4-21 18-7z"/>
-    <path d="M135 83c15 2 25 10 39 13l19 15 26 7 8 15-18 11-4 17-18 5-8 16-19 2-7 18-17 5-7 16-16 7-9 17-17 5-7 16-15 8-5 19-14 8 2 18-13 8 4 17-11 11 7 12-7 15 10 9-1 16 14 3 10-9 13 5 13-7 16 4 12-9 16 2 10-13 14-3 8-15 11-5 6-17 11-9 2-18 9-14-3-18 8-14-5-17 5-13-10-14 3-15-13-12 1-15-15-10 3-16-16-8 4-16-17-8 2-15-16-11z"/>
-    <path d="m96 274-20 8-8 18 9 15 19-1 9-17z"/>
-    <path d="m55 315-16 4-9 14 10 11 18-7 7-14z"/>
-    <path d="m24 344-9 3-4 7 7 4 9-5z"/>
-  </g>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 360" aria-hidden="true"><defs><linearGradient id="japanGlow" x1=".15" y1="0" x2=".85" y2="1"><stop stop-color="#eefcff"/><stop offset=".42" stop-color="#7ad9ff"/><stop offset="1" stop-color="#2d79ce"/></linearGradient><filter id="coastGlow" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="1.4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs><g fill="url(#japanGlow)" stroke="#dff8ff" stroke-width="1.25" stroke-linejoin="round" filter="url(#coastGlow)"><path d="M194 18 210 9l22 3 12 8 17 2 17 14-5 14-16 7-13-2-11 8-17-3-12 8-19-5-12 4-14-10 5-15 14-5z"/><path d="m148 79 15-3 13 7 15 2 12 8 15 3 10 9 14 3 9 10 13 4 7 12-8 11-14 2-10 10-15 1-8 12-13 4-6 14-14 7-4 14-15 8-5 15-14 8-4 14-15 8-5 14-13 10-4 15-12 9 1 13-12 10 4 14-11 10 6 12-8 13 9 11-2 13 12 7 13-3 10 8 15-3 10 8 14-5 12 4 11-9 14 1 9-12 13-3 7-14 11-6 4-15 10-9 1-16 8-12-2-16 7-13-4-15 5-12-9-13 4-14-11-11 2-15-13-10 4-15-15-8 4-15-16-8 2-15-17-8 3-15-16-10 1-15-17-10z"/><path d="m101 257 17 2 13 7 20-2 11 8-5 10-17 3-12 8-16-4-15 4-13-8 6-11z"/><path d="m57 283 16-2 12 8 11 2 11 12-4 15-13 8-7 15-15 2-12-9-11 1-10-11 6-13 7-9z"/><path d="m41 330 8-2 7 5-4 8-11 2-6-6z"/><path d="m25 344 7-2 6 4-3 6-8 2-5-5z"/><path d="m12 354 5-2 5 3-3 4-6 1-4-3z"/></g></svg>

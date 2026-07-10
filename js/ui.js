@@ -12,6 +12,8 @@ function renderComparison(kumagaya, target, ranking) {
   const kumagayaRank = ranking.findIndex(item => item.id === kumagaya.id) + 1;
   const targetRank = ranking.findIndex(item => item.id === target.id) + 1;
   const difference = Math.abs(comparison.diff).toFixed(1);
+  const kumagayaWins = comparison.diff > 0;
+  const targetWins = comparison.diff < 0;
 
   const verdictText = comparison.diff >= 3 ? `熊谷より ${difference}℃ かなりマシ！`
     : comparison.diff >= 1 ? `熊谷より ${difference}℃ マシ！`
@@ -25,7 +27,7 @@ function renderComparison(kumagaya, target, ranking) {
       <span class="heat-spark spark-one">✦</span><span class="heat-spark spark-two">✦</span>
     </div>
     <div class="contestants">
-      <article class="contestant kumagaya-side">${characterMarkup(CHARACTER_REGISTRY.kumagaya, "hot")}
+      <article class="contestant kumagaya-side ${kumagayaWins ? "is-winner" : ""}">${kumagayaWins ? '<span class="winner-badge">WIN!</span>' : ""}${characterMarkup(CHARACTER_REGISTRY.kumagaya, "hot")}
         <h3>埼玉県<small>${CONFIG.kumagayaStationName}</small></h3>
         <p class="heat-rank">全国暑さ <b>${kumagayaRank}位</b></p>
         <p class="score-label">熊谷偏差値</p>
@@ -33,7 +35,7 @@ function renderComparison(kumagaya, target, ranking) {
         <p class="temperature">${formatTemperature(kumagaya.temperature)}</p>
       </article>
       <div class="versus">VS</div>
-      <article class="contestant target-side">${characterMarkup(targetCharacter, "cool")}
+      <article class="contestant target-side ${targetWins ? "is-winner" : ""}">${targetWins ? '<span class="winner-badge">WIN!</span>' : ""}${characterMarkup(targetCharacter, "cool")}
         <h3>${targetLocation}</h3>
         <p class="heat-rank">全国暑さ <b>${targetRank}位</b></p>
         <p class="score-label">熊谷偏差値</p>

@@ -95,40 +95,68 @@ body {
 
 .battle-backdrop img {
   position: absolute;
-  top: 3%;
+  top: 1%;
   left: 50%;
-  width: 188px;
-  height: 282px;
-  opacity: .18;
-  transform: translateX(-50%) rotate(10deg);
-  filter: drop-shadow(0 0 15px #58cfff);
+  width: 205px;
+  height: 300px;
+  opacity: .23;
+  transform: translateX(-50%) rotate(8deg);
+  filter: drop-shadow(0 0 16px #79dcff) drop-shadow(0 0 32px #2f74d7);
 }
 
 .battle-flame {
   position: absolute;
-  bottom: -25px;
+  top: 18%;
   display: block;
-  width: 105px;
-  height: 160px;
+  width: 155px;
+  height: 240px;
   background: radial-gradient(
-    ellipse at 50% 80%,
-    #fff1a4 0 8%,
-    #ffb21b 17%,
-    #f13527 42%,
-    transparent 70%
+    ellipse at 42% 62%,
+    #fff9c5 0 7%,
+    #ffd24d 14%,
+    #ff861b 31%,
+    #f0382e 52%,
+    transparent 73%
   );
-  opacity: .46;
-  filter: blur(5px);
+  opacity: .72;
+  filter: blur(3px) saturate(1.25);
 }
 
 .flame-left {
-  left: -50px;
-  transform: rotate(-20deg);
+  left: -76px;
+  transform: rotate(-15deg);
 }
 
 .flame-right {
-  right: -50px;
-  transform: scaleX(-1) rotate(-20deg);
+  right: -76px;
+  transform: scaleX(-1) rotate(-15deg);
+}
+
+.battle-flame::before,
+.battle-flame::after {
+  position: absolute;
+  display: block;
+  content: "";
+  background: linear-gradient(to top, #f53525 0 16%, #ff9f1d 48%, #fff4a6 72%, transparent 100%);
+  clip-path: polygon(50% 0, 78% 44%, 66% 70%, 100% 100%, 35% 83%, 0 100%, 28% 56%);
+  filter: drop-shadow(0 0 8px #ff3c23);
+}
+
+.battle-flame::before {
+  bottom: 1px;
+  left: 29px;
+  width: 79px;
+  height: 190px;
+  transform: rotate(12deg);
+}
+
+.battle-flame::after {
+  bottom: 0;
+  left: 76px;
+  width: 64px;
+  height: 153px;
+  opacity: .87;
+  transform: rotate(-12deg);
 }
 
 .heat-spark {
@@ -161,6 +189,7 @@ body {
 }
 
 .contestant {
+  position: relative;
   min-width: 0;
   text-align: center;
 }
@@ -168,11 +197,45 @@ body {
 .character img {
   width: 105px;
   height: 105px;
+  border: 2px solid #ff90a6;
+  border-radius: 50%;
+  object-fit: cover;
+  background: #193b74;
+  box-shadow: 0 0 0 3px #ffffff28, 0 0 16px #ff3780;
   filter: drop-shadow(0 0 9px #ff3780);
 }
 
 .character.cool img {
+  border-color: #74ddff;
+  box-shadow: 0 0 0 3px #ffffff28, 0 0 16px #36cfff;
   filter: drop-shadow(0 0 9px #36cfff);
+}
+
+.winner-badge {
+  position: absolute;
+  z-index: 3;
+  top: -4px;
+  right: 4px;
+  padding: 3px 6px 2px;
+  border: 1px solid #fff3ad;
+  border-radius: 5px;
+  color: #fffce1;
+  background: linear-gradient(135deg, #ffbd26, #e53925 72%);
+  box-shadow: 0 0 11px #ff5d25, inset 0 0 5px #fff5ab88;
+  font-size: .76rem;
+  font-style: italic;
+  font-weight: 900;
+  letter-spacing: -.02em;
+  line-height: 1;
+  transform: rotate(7deg);
+}
+
+.target-side .winner-badge {
+  right: auto;
+  left: 4px;
+  background: linear-gradient(135deg, #2ed4ff, #2361cc 72%);
+  box-shadow: 0 0 11px #36bfff, inset 0 0 5px #d9fbff88;
+  transform: rotate(-7deg);
 }
 
 .character p {

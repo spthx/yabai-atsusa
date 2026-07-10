@@ -1,6 +1,6 @@
 const CHARACTER_REGISTRY = {
-  kumagaya: { name: "くまがや灼熱くま", image: "assets/characters/kumagaya.svg", catchphrase: "基準点は まかせるクマ！" },
-  default: { name: "ヤバいせ判定員", image: "assets/characters/default.svg", catchphrase: "この気温はヤバいせ！！" }
+  kumagaya: { name: "くまがや灼熱くま", image: "assets/characters/kumagaya-anime.png", catchphrase: "基準点は まかせるクマ！" },
+  default: { name: "ヤバいせ判定員", image: "assets/characters/default-anime.png", catchphrase: "この気温はヤバいせ！！" }
 };
 
 function getCharacterForStation(stationName) {
