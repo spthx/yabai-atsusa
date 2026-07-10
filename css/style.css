@@ -4,15 +4,22 @@
   box-sizing: border-box;
 }
 
+html {
+  min-height: 100%;
+}
+
 body {
   margin: 0;
+  min-height: 100%;
+  overflow-x: clip;
+  overflow-y: visible;
   color: #f9fbff;
   background: #020712;
   font-family: "Noto Sans JP", "Yu Gothic", sans-serif;
 }
 
 .site-shell {
-  min-height: 100vh;
+  min-height: 100%;
   max-width: 650px;
   margin: auto;
   padding: 20px 16px 34px;
@@ -194,21 +201,63 @@ body {
   text-align: center;
 }
 
-.character img {
-  width: 105px;
-  height: 105px;
-  border: 2px solid #ff90a6;
-  border-radius: 50%;
-  object-fit: cover;
+.fighter-photo {
+  position: relative;
+  width: 118px;
+  height: 130px;
+  margin: 0 auto 6px;
+  overflow: hidden;
   background: #193b74;
-  box-shadow: 0 0 0 3px #ffffff28, 0 0 16px #ff3780;
-  filter: drop-shadow(0 0 9px #ff3780);
+  clip-path: polygon(10% 0, 100% 0, 90% 100%, 0 100%);
 }
 
-.character.cool img {
-  border-color: #74ddff;
-  box-shadow: 0 0 0 3px #ffffff28, 0 0 16px #36cfff;
-  filter: drop-shadow(0 0 9px #36cfff);
+.character.hot .fighter-photo {
+  filter: drop-shadow(0 0 2px #fff0f1) drop-shadow(0 0 13px #ff3871);
+}
+
+.character.cool .fighter-photo {
+  clip-path: polygon(0 0, 90% 0, 100% 100%, 10% 100%);
+  filter: drop-shadow(0 0 2px #e7fbff) drop-shadow(0 0 13px #36cfff);
+}
+
+.fighter-photo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.fighter-photo::after {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  content: "";
+  pointer-events: none;
+  mix-blend-mode: screen;
+}
+
+.character.hot .fighter-photo::after {
+  background:
+    radial-gradient(circle at 38% 54%, #ffecf3 0, #ff6b8a22 30%, transparent 69%),
+    linear-gradient(135deg, #ff416533, transparent 52%);
+  box-shadow: inset 0 0 18px #ff356470, inset 0 0 4px #fff3f6;
+}
+
+.character.cool .fighter-photo::after {
+  background:
+    radial-gradient(circle at 61% 50%, #e9fbff 0, #3ecfff20 30%, transparent 69%),
+    linear-gradient(225deg, #2dbfff35, transparent 52%);
+  box-shadow: inset 0 0 18px #36cfff70, inset 0 0 4px #effcff;
+}
+
+.character.hot .fighter-photo img {
+  transform: translateY(8px) scale(1.2);
+  transform-origin: 40% 40%;
+}
+
+.character.cool .fighter-photo img {
+  transform: scale(.96);
+  transform-origin: 50% 46%;
 }
 
 .winner-badge {
@@ -950,6 +999,11 @@ footer p {
 /* スマホ狭幅調整 */
 
 @media (max-width: 430px) {
+  .fighter-photo {
+    width: 104px;
+    height: 116px;
+  }
+
   .ranking-card {
     grid-template-columns: 23px 34px 65px 29px minmax(0, 1fr) 46px;
     column-gap: 5px;
@@ -1011,9 +1065,9 @@ footer p {
     border-radius: 12px;
   }
 
-  .character img {
-    width: 120px;
-    height: 120px;
+  .fighter-photo {
+    width: 132px;
+    height: 146px;
   }
 
   .contestants {

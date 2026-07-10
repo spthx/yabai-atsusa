@@ -1,5 +1,5 @@
 function characterMarkup(character, side) {
-  return `<div class="character ${side}"><img src="${character.image}" alt="${character.name}"><p>${character.catchphrase}</p></div>`;
+  return `<div class="character ${side}"><div class="fighter-photo"><img src="${character.image}" alt="${character.name}"></div><p>${character.catchphrase}</p></div>`;
 }
 
 function renderComparison(kumagaya, target, ranking) {
