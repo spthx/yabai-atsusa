@@ -212,12 +212,12 @@ body {
 }
 
 .character.hot .fighter-photo {
-  filter: drop-shadow(0 0 2px #fff0f1) drop-shadow(0 0 13px #ff3871);
+  filter: drop-shadow(0 0 3px #fff0f1) drop-shadow(0 0 10px #ff5a84) drop-shadow(0 0 20px #ff377a99);
 }
 
 .character.cool .fighter-photo {
   clip-path: polygon(0 0, 90% 0, 100% 100%, 10% 100%);
-  filter: drop-shadow(0 0 2px #e7fbff) drop-shadow(0 0 13px #36cfff);
+  filter: drop-shadow(0 0 3px #e7fbff) drop-shadow(0 0 10px #49cfff) drop-shadow(0 0 20px #36cfff99);
 }
 
 .fighter-photo img {
@@ -225,29 +225,6 @@ body {
   width: 100%;
   height: 100%;
   object-fit: cover;
-}
-
-.fighter-photo::after {
-  position: absolute;
-  z-index: 1;
-  inset: 0;
-  content: "";
-  pointer-events: none;
-  mix-blend-mode: screen;
-}
-
-.character.hot .fighter-photo::after {
-  background:
-    radial-gradient(circle at 38% 54%, #ffecf3 0, #ff6b8a22 30%, transparent 69%),
-    linear-gradient(135deg, #ff416533, transparent 52%);
-  box-shadow: inset 0 0 18px #ff356470, inset 0 0 4px #fff3f6;
-}
-
-.character.cool .fighter-photo::after {
-  background:
-    radial-gradient(circle at 61% 50%, #e9fbff 0, #3ecfff20 30%, transparent 69%),
-    linear-gradient(225deg, #2dbfff35, transparent 52%);
-  box-shadow: inset 0 0 18px #36cfff70, inset 0 0 4px #effcff;
 }
 
 .character.hot .fighter-photo img {
