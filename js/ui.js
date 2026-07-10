@@ -7,7 +7,7 @@ function renderComparison(kumagaya, target, ranking) {
   const kumagayaScore = getKumagayaDeviation(kumagaya.temperature, kumagaya.temperature);
   const targetScore = getKumagayaDeviation(target.temperature, kumagaya.temperature);
   const targetCharacter = getCharacterForStation(target.name);
-  const targetMunicipality = target.city || target.municipality || target.name;
+  const targetMunicipality = target.city || target.location || target.name;
   const targetLocation = `${target.prefecture || "所在地不明"}<small>${targetMunicipality}</small>`;
   const kumagayaRank = ranking.findIndex(item => item.id === kumagaya.id) + 1;
   const targetRank = ranking.findIndex(item => item.id === target.id) + 1;
@@ -65,7 +65,9 @@ function renderAllTemperatureStations(ranking) {
   ranking.forEach((item, index) => {
     const card = document.createElement("article");
     card.className = `all-station-card ${getTempClass(item.temperature)}`;
-    card.innerHTML = `<span class="station-rank">${index + 1}</span><div class="station-info"><em>${item.prefecture}</em><b>${item.municipality}</b><small>観測地点：${item.point}</small></div><strong>${formatTemperature(item.temperature)}</strong>`;
+    const prefectureLabel = item.prefecture || "都道府県情報なし";
+    const locationLabel = item.location || "市区町村情報なし";
+    card.innerHTML = `<span class="station-rank">${index + 1}</span><div class="station-info"><em>${prefectureLabel}</em><b>${locationLabel}</b><small>観測地点：${item.point}</small></div><strong>${formatTemperature(item.temperature)}</strong>`;
     fragment.appendChild(card);
   });
   list.appendChild(fragment);

@@ -21,8 +21,8 @@ function buildTemperatureRanking(readings, stations) {
       name: station.kjName,
       temperature,
       station,
-      prefecture: location?.prefecture || "所在地不明",
-      municipality: location?.municipality || station.kjName,
+      prefecture: location?.prefecture || "",
+      location: location?.location || "",
       point: location?.point || station.kjName
     } : null;
   }).filter(Boolean).sort((a, b) => b.temperature - a.temperature);

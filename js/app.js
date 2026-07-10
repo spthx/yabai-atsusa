@@ -46,7 +46,8 @@ function useCurrentLocation() {
     if (!currentSnapshot) return;
     const nearest = findNearestTemperatureStation(position, buildTemperatureRanking(currentSnapshot.readings, currentSnapshot.stations));
     if (!nearest) return;
-    document.getElementById("location-note").textContent = `現在地に近い ${nearest.prefecture}・${nearest.municipality} の観測地点「${nearest.name}」（約${nearest.distance.toFixed(0)}km）と比較しています。`;
+    const locationLabel = [nearest.prefecture, nearest.location].filter(Boolean).join("・") || "所在地情報なし";
+    document.getElementById("location-note").textContent = `現在地に近い ${locationLabel} の観測地点「${nearest.name}」（約${nearest.distance.toFixed(0)}km）と比較しています。`;
     renderSnapshot(currentSnapshot, nearest);
   }, () => {
     document.getElementById("location-note").textContent = "位置情報を取得できなかったため、暑さランキング上位の地点と比較しています。";
