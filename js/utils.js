@@ -1,77 +1,55 @@
-// ==========================
-// 地震APIの日時表示
-// Safari(iPhone)対応版
-// 例:
-// "2026/07/03 14:06:54.979"
-// ↓
-// "2026年07月03日 14:06"
-// ==========================
-function formatTimeNoSeconds(timeStr) {
-
-    if (!timeStr) return "";
-
-    try {
-
-        // "2026/07/03 14:06:54.979"
-        const [datePart, timePart] = timeStr.trim().split(" ");
-
-        if (!datePart || !timePart) {
-            return timeStr;
-        }
-
-        const [yyyy, mm, dd] = datePart.split("/");
-        const [hh, min] = timePart.split(":");
-
-        return `${yyyy}年${mm}月${dd}日 ${hh}:${min}`;
-
-    } catch (e) {
-
-        console.error("日時変換エラー:", timeStr, e);
-        return timeStr;
-
-    }
+function toJmaStamp(latestTime) {
+  const match = String(latestTime).trim().match(/(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2})/);
+  if (!match) throw new Error("観測時刻の形式を確認できませんでした。");
+  return match.slice(1).join("");
 }
 
-function scaleToString(scale) {
-
-    const table = {
-        10: "1",
-        20: "2",
-        30: "3",
-        40: "4",
-        45: "5弱",
-        50: "5強",
-        55: "6弱",
-        60: "6強",
-        70: "7"
-    };
-
-    return table[scale] ?? "-";
+function formatObservationTime(latestTime) {
+  const match = String(latestTime).trim().match(/(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2})/);
+  return match ? `${match[1]}/${match[2]}/${match[3]} ${match[4]}:${match[5]}` : "不明";
 }
 
-function tsunamiToString(type) {
+function getTemperature(reading) {
+  const value = reading?.temp?.[0];
+  return Number.isFinite(value) ? value : null;
+}
 
-    switch (type) {
+function getStationCoordinates(station) {
+  const lat = station?.lat;
+  const lon = station?.lon;
+  if (!Array.isArray(lat) || !Array.isArray(lon)) return null;
+  return { lat: Number(lat[0]) + Number(lat[1]) / 60, lon: Number(lon[0]) + Number(lon[1]) / 60 };
+}
 
-        case "None":
-            return "津波の心配はありません";
+function distanceKm(a, b) {
+  const rad = Math.PI / 180;
+  const dLat = (b.lat - a.lat) * rad;
+  const dLon = (b.lon - a.lon) * rad;
+  const x = Math.sin(dLat / 2) ** 2 + Math.cos(a.lat * rad) * Math.cos(b.lat * rad) * Math.sin(dLon / 2) ** 2;
+  return 6371 * 2 * Math.atan2(Math.sqrt(x), Math.sqrt(1 - x));
+}
 
-        case "Checking":
-            return "津波の有無を調査中";
+function formatTemperature(temp) { return `${temp.toFixed(1)}℃`; }
 
-        case "NonEffective":
-            return "若干の海面変動の可能性があります";
+function getKumagayaDeviation(targetTemp, kumagayaTemp) {
+  return Number.isFinite(kumagayaTemp) && kumagayaTemp > 0 && Number.isFinite(targetTemp)
+    ? Math.round((targetTemp / kumagayaTemp) * 100) : null;
+}
 
-        case "Watch":
-            return "津波注意報";
+function getComparison(targetTemp, kumagayaTemp) {
+  const diff = kumagayaTemp - targetTemp;
+  if (diff >= 3) return { label: "熊谷よりかなりマシ", detail: "かなり涼しい逃げ場です。", className: "much-cooler", diff };
+  if (diff >= 1) return { label: "熊谷よりマシ", detail: "まだ人類側です。", className: "cooler", diff };
+  if (diff > -1) return { label: "ほぼ熊谷", detail: "暑さはほぼ互角です。", className: "same", diff };
+  return { label: "熊谷超え", detail: "今日はそちらが基準点です。", className: "hotter", diff };
+}
 
-        case "Warning":
-            return "津波警報";
-
-        case "Unknown":
-            return "津波情報は不明";
-
-        default:
-            return "津波情報なし";
-    }
+function getTempClass(temp) {
+  if (temp >= 40) return "temp-extreme";
+  if (temp >= 38) return "temp-purple";
+  if (temp >= 35) return "temp-red";
+  if (temp >= 30) return "temp-orange";
+  if (temp >= 25) return "temp-yellow";
+  if (temp >= 20) return "temp-normal";
+  return "temp-cool";
 }

@@ -1,281 +1,43 @@
-/* ==========================================
-    Earthquake Viewer JP - スマホ縦画面・固定＆潜り込みスクロール版
-========================================== */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@500;700;900&display=swap');
 
-/* 1. Reset */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+* { box-sizing: border-box; }
+body { margin: 0; color: #f9fbff; background: #020712; font-family: "Noto Sans JP", "Yu Gothic", sans-serif; }
+.site-shell { min-height: 100vh; max-width: 650px; margin: auto; padding: 20px 16px 34px; background: radial-gradient(circle at 45% 14%, #172c5b 0, #07142a 38%, #020713 82%); }
+.hero { padding: 10px 4px 17px; text-align: center; }
+.hero h1 { margin: 6px 0 12px; font-size: clamp(2.55rem, 12vw, 4.65rem); line-height: 1; letter-spacing: -.09em; text-shadow: 4px 5px 0 #17233b; }
+.eyebrow { margin: 0; color: #d5dbea; font-size: 1.05rem; font-weight: 700; }
+.observation-time, .fairness-note, .ranking-time { margin: 4px 0; color: #d3d9e7; font-size: .82rem; }
+.section-heading { display: flex; align-items: center; justify-content: center; gap: 9px; margin: 8px 0 10px; }
+.section-heading span { font-size: 1.65rem; }
+.section-heading h2 { margin: 0; font-size: 1.5rem; }
+.comparison-card { overflow: hidden; border: 2px solid #35baff; border-radius: 22px; background: linear-gradient(130deg, #3c102c, #071e48 55%, #072a59); box-shadow: 0 0 28px #0788d344, inset 0 0 32px #fd367044; }
+.contestants { display: grid; grid-template-columns: 1fr 48px 1fr; align-items: center; padding: 17px 8px 5px; }
+.contestant { min-width: 0; text-align: center; }
+.character img { width: 105px; height: 105px; filter: drop-shadow(0 0 9px #ff3780); }
+.character.cool img { filter: drop-shadow(0 0 9px #36cfff); }
+.character p { max-width: 125px; margin: 0 auto 5px; font-size: .62rem; font-weight: 700; }
+.contestant h3 { margin: 0; font-size: 1.28rem; }
+.contestant h3 small { display: block; color: #d8e8ff; font-size: .61em; line-height: 1.2; }
+.score-label { margin: 7px 0 0; font-size: .73rem; }
+.score { margin: 0; font-size: 2.15rem; font-weight: 900; line-height: 1.05; }
+.temperature { margin: 8px 0; color: #fff; font-size: 2.25rem; font-weight: 900; text-shadow: 0 0 13px #ff3d6d; }
+.target-side .temperature { text-shadow: 0 0 13px #28adff; }
+.versus { color: #fff3b7; font-size: 1.6rem; font-weight: 900; text-align: center; text-shadow: 0 0 12px #ff8a22; }
+.verdict { padding: 10px 8px 17px; text-align: center; }
+.verdict strong { display: block; font-size: clamp(1.45rem, 7.8vw, 2.35rem); line-height: 1.12; }
+.verdict span { font-size: .94rem; font-weight: 700; }
+.much-cooler strong, .cooler strong { color: #ffd641; }.same strong { color: #fff; }.hotter strong { color: #ff7184; }
+.refresh-button { display: block; width: 100%; margin: 11px 0 3px; padding: 12px; border: 1px solid #57c8ff; border-radius: 13px; color: #fff; background: #0b3369; font: inherit; font-weight: 700; }
+.refresh-button:disabled { opacity: .65; }.location-note { margin: 7px 4px 20px; color: #bdc8db; font-size: .72rem; text-align: center; }
+.ranking-section { margin-top: 10px; }.ranking-time { margin-top: -6px; margin-bottom: 10px; text-align: center; }.heat-ranking-list { display: grid; gap: 8px; }
+.ranking-card { display: grid; grid-template-columns: 48px 40px minmax(76px, 1fr) auto; align-items: center; gap: 4px; padding: 8px 9px; border: 1px solid #ffaf56; border-radius: 14px; box-shadow: inset 0 0 21px #ffffff12; }
+.prefecture-mascot { grid-column: 1; grid-row: 1 / 3; position: relative; display: grid; width: 42px; height: 42px; place-items: center; filter: drop-shadow(0 0 6px var(--mascot-color)); }
+.prefecture-mascot svg { width: 39px; height: 39px; }.prefecture-mascot b { position: absolute; bottom: -2px; max-width: 39px; overflow: hidden; color: #fff; font-size: .5rem; text-overflow: ellipsis; white-space: nowrap; text-shadow: 0 1px 2px #000; }
+.ranking-card .rank { grid-column: 2; grid-row: 1; font-size: .98rem; font-weight: 900; }.ranking-card .place { grid-column: 3; grid-row: 1; font-size: 1rem; font-weight: 900; line-height: 1.1; }.ranking-card .place em { display: block; color: #fff8b4; font-size: .62rem; font-style: normal; }.ranking-card > strong { grid-column: 4; grid-row: 1; font-size: 1.18rem; white-space: nowrap; }.ranking-card .rank-diff { grid-column: 2 / 4; grid-row: 2; font-size: .68rem; font-weight: 700; }.ranking-card .rank-score { grid-column: 4; grid-row: 2; padding: 0; border: 0; font-size: .56rem; text-align: center; }.ranking-card .rank-score b { font-size: .98rem; }
 
-/* 2. Base Layout (★ブラウザのスクロールを活かしてアドレスバーを細くする) */
-html, body {
-    min-height: 100dvh;
-    overflow-x: hidden;
-    overflow-y: auto; 
-    -webkit-overflow-scrolling: touch; /* iOSの滑らかな慣性スクロール */
-}
-
-body {
-    font-family: "Segoe UI", "Yu Gothic UI", sans-serif;
-    background: #f4f7fb;
-    color: #333;
-    line-height: 1.4;
-}
-
-/* 3. Container */
-.container {
-    max-width: 500px;
-    margin: 0 auto;
-    padding: 10px;
-    position: relative;
-    /* 下部にiPhoneのホームバー対策の余白を確保 */
-    padding-bottom: calc(20px + env(safe-area-inset-bottom));
-}
-
-/* 4. Header (★画面上部に完全固定) */
-header {
-    position: fixed;
-    top: 10px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: calc(100% - 20px);
-    max-width: 480px;
-    z-index: 100;
-
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: #ffffff;
-    padding: 10px 12px;
-    border-radius: 12px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.06);
-}
-
-.header-title h1 {
-    font-size: 1.1rem;
-    margin-bottom: 2px;
-}
-
-.header-title p {
-    font-size: 0.7rem;
-    color: #666;
-}
-
-/* Right Info Panel */
-.header-info {
-    text-align: right;
-    display: flex;
-    gap: 8px;
-}
-
-.info-block {
-    display: flex;
-    flex-direction: column;
-}
-
-.info-title {
-    font-size: 0.6rem;
-    color: #888;
-}
-
-#current-date, #last-update-date {
-    font-size: 0.6rem;
-    color: #666;
-}
-
-#current-time, #last-update-time {
-    font-size: 0.8rem;
-    font-weight: bold;
-    color: #222;
-}
-
-/* 5. Status Bar (★ヘッダーの下に完全固定) */
-#status-bar {
-    position: fixed;
-    top: 82px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: calc(100% - 20px);
-    max-width: 480px;
-    z-index: 99;
-
-    background: #e8f5e9;
-    color: #2e7d32;
-    padding: 8px 10px;
-    border-radius: 10px;
-    font-weight: bold;
-    font-size: 0.8rem;
-}
-
-/* 6. Main Layout */
-.app-body {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-/* (★地図とモードボタンエリアをステータスバーの下に完全固定) */
-.app-left {
-    position: fixed;
-    top: 128px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: calc(100% - 20px);
-    max-width: 480px;
-    z-index: 98;
-    background: #f4f7fb; /* スクロールしてきたカードが隙間から透けないように背景と同化 */
-    padding-bottom: 5px;
-}
-
-/* (★リストを固定要素の下に潜り込ませるために巨大なマージンを空ける) */
-.app-right {
-    width: 100%;
-    background: #ffffff;
-    border-radius: 14px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.04);
-    padding: 10px;
-    margin-top: 465px; /* 上部の固定要素（ヘッダー〜地図）の合計高さ分の余白 */
-    position: relative;
-    z-index: 10;
-}
-
-/* 7. Map Area */
-#map {
-    height: 280px;
-    background: #ddd;
-    border-radius: 14px;
-    margin-bottom: 10px;
-}
-
-/* 8. Mode Buttons */
-#mode-select {
-    display: flex;
-    gap: 8px;
-}
-
-button {
-    flex: 1;
-    padding: 12px;
-    border: none;
-    border-radius: 10px;
-    background: #ffffff;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.06);
-    cursor: pointer;
-    font-weight: bold;
-    font-size: 0.85rem;
-    transition: 0.2s;
-}
-
-button:active {
-    transform: scale(0.98);
-}
-
-/* 9. Earthquake List (★独立スクロールは廃止し、bodyのスクロールに身を委ねる) */
-#earthquake-list {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-}
-
-/* 10. Earthquake Card Base */
-.earthquake-card {
-    background: #f8f9fa;
-    padding: 12px;
-    border-radius: 12px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.02);
-    border-left: 5px solid transparent;
-    cursor: pointer;
-    transition: 0.15s;
-}
-
-/* 選択（アクティブ）時のスタイル */
-.earthquake-card.active {
-    background: #e3f2fd !important;
-    border-left-color: #2196f3 !important;
-}
-
-/* 震度別の左線と背景色 */
-.earthquake-card.low {
-    border-left-color: #4caf50;
-}
-.earthquake-card.warn {
-    border-left-color: #ffb300;
-    background: #fffbe6;
-}
-.earthquake-card.mid {
-    border-left-color: #ff5722;
-    background: #fff3e0;
-}
-.earthquake-card.high {
-    border-left-color: #c62828;
-    background: #ffe5e5;
-    font-weight: bold;
-}
-
-/* 11. Card Internal Layout */
-.card-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-}
-
-.card-title {
-    font-size: 14px;
-    font-weight: bold;
-    line-height: 1.3;
-}
-
-.card-scale-box {
-    text-align: center;
-    min-width: 45px;
-}
-
-.scale-label {
-    font-size: 9px;
-    color: #666;
-}
-
-.scale-value {
-    font-size: 20px;
-    font-weight: bold;
-    line-height: 1;
-}
-
-.card-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 4px;
-    font-size: 0.8rem;
-}
-
-.card-location {
-    flex: 1;
-    margin-right: 8px;
-    color: #555;
-}
-
-.card-depth {
-    white-space: nowrap;
-    color: #666;
-}
-
-.card-footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 4px;
-}
-
-.card-time {
-    color: #888;
-    font-size: 11px;
-}
-
-.card-mag {
-    font-weight: bold;
-    color: #444;
-    font-size: 12px;
-}
+/* 暑さの強さ: 紫 → 赤 → 橙 → 黄 → 白 */
+.temp-extreme { color: #fff; background: linear-gradient(115deg, #3d155f, #8e267a 62%, #e156a2); border-color: #d984ff; }.temp-purple { color: #fff; background: linear-gradient(115deg, #591342, #a4265e 62%, #f0608e); border-color: #fc79b0; }.temp-red { color: #fff; background: linear-gradient(115deg, #75152a, #d53d32 62%, #ff8868); border-color: #ff7f67; }.temp-orange { color: #fff; background: linear-gradient(115deg, #8c3c10, #df7a1b 62%, #ffc650); border-color: #ffbd4a; }.temp-yellow { color: #fff; background: linear-gradient(115deg, #9a7112, #ddba35 65%, #fff39a); border-color: #ffe47a; }.temp-normal { color: #193148; background: linear-gradient(115deg, #c6dbe0, #edf6ed 65%, #fff); border-color: #e6fff6; }.temp-cool { color: #12345c; background: linear-gradient(115deg, #a6cdf1, #eaf6ff 65%, #fff); border-color: #e8f7ff; }.temp-normal .rank-score, .temp-cool .rank-score, .temp-normal .place em, .temp-cool .place em { color: #274a72; }
+.capital-section { margin-top: 24px; }.capital-note { margin: -6px 0 10px; color: #bdc8db; font-size: .74rem; text-align: center; }.capital-temperature-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 7px; }.capital-card { position: relative; min-height: 79px; overflow: hidden; padding: 12px 7px 9px 38px; border: 1px solid #ffffff66; border-radius: 13px; box-shadow: inset 0 0 17px #fff1; }.capital-card .capital-rank { position: absolute; top: 0; left: 0; display: grid; width: 31px; height: 31px; border-radius: 0 0 11px 0; background: #ffffff2a; font-size: .7rem; font-weight: 900; place-items: center; }.capital-place b, .capital-place small { display: block; }.capital-place b { font-size: .84rem; }.capital-place small { font-size: .7rem; opacity: .9; }.capital-card > strong { display: block; margin-top: 3px; font-size: 1.2rem; line-height: 1; }.capital-card.temp-missing { color: #fff; background: linear-gradient(135deg, #526274, #8391a0); border-color: #a6b4c3; }.capital-card.temp-missing > strong { margin-top: 8px; font-size: .85rem; }
+.all-stations-section { margin-top: 26px; }.all-stations-note { margin: -6px 0 10px; color: #bdc8db; font-size: .74rem; text-align: center; }.all-temperature-stations { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 4px; }.all-station-card { display: grid; grid-template-columns: 25px minmax(0, 1fr) auto; align-items: center; min-height: 34px; padding: 4px 6px; border: 1px solid #ffffff66; border-radius: 7px; box-shadow: inset 0 0 11px #fff1; }.all-station-card span { opacity: .75; font-size: .58rem; text-align: center; }.all-station-card b { overflow: hidden; padding: 0 4px; font-size: .68rem; text-overflow: ellipsis; white-space: nowrap; }.all-station-card strong { font-size: .77rem; white-space: nowrap; }
+.loading, .error { margin: 0; padding: 34px 14px; text-align: center; }.error { color: #ffd1d7; }footer { margin-top: 22px; padding: 16px 8px 0; border-top: 1px solid #304568; color: #bdc8db; font-size: .7rem; line-height: 1.65; text-align: center; }footer p { margin: 0; }
+@media (min-width: 520px) { .site-shell { margin-top: 12px; margin-bottom: 12px; border: 1px solid #102d5d; border-radius: 12px; }.character img { width: 120px; height: 120px; }.contestants { padding-right: 20px; padding-left: 20px; }.capital-temperature-list { grid-template-columns: repeat(3, minmax(0, 1fr)); }.all-temperature-stations { grid-template-columns: repeat(3, minmax(0, 1fr)); } }

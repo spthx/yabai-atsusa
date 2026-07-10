@@ -1,0 +1,33 @@
+const CONFIG = {
+  kumagayaStationId: "43056",
+  kumagayaStationName: "熊谷市",
+  latestTimeUrl: "https://www.jma.go.jp/bosai/amedas/data/latest_time.txt",
+  stationTableUrl: "https://www.jma.go.jp/bosai/amedas/const/amedastable.json",
+  mapDataBaseUrl: "https://www.jma.go.jp/bosai/amedas/data/map",
+  capitalStations: [
+    { prefecture: "北海道", city: "札幌市", id: "14163" }, { prefecture: "青森県", city: "青森市", id: "31312" },
+    { prefecture: "岩手県", city: "盛岡市", id: "33431" }, { prefecture: "宮城県", city: "仙台市", id: "34392" },
+    { prefecture: "秋田県", city: "秋田市", id: "32402" }, { prefecture: "山形県", city: "山形市", id: "35426" },
+    { prefecture: "福島県", city: "福島市", id: "36127" }, { prefecture: "茨城県", city: "水戸市", id: "40201" },
+    { prefecture: "栃木県", city: "宇都宮市", id: "41277" }, { prefecture: "群馬県", city: "前橋市", id: "42251" },
+    { prefecture: "埼玉県", city: "さいたま市", id: "43241" }, { prefecture: "千葉県", city: "千葉市", id: "45212" },
+    { prefecture: "東京都", city: "新宿区", id: "44132" }, { prefecture: "神奈川県", city: "横浜市", id: "46106" },
+    { prefecture: "新潟県", city: "新潟市", id: "54232" }, { prefecture: "富山県", city: "富山市", id: "55102" },
+    { prefecture: "石川県", city: "金沢市", id: "56227" }, { prefecture: "福井県", city: "福井市", id: "57066" },
+    { prefecture: "山梨県", city: "甲府市", id: "49142" }, { prefecture: "長野県", city: "長野市", id: "48156" },
+    { prefecture: "岐阜県", city: "岐阜市", id: "52586" }, { prefecture: "静岡県", city: "静岡市", id: "50331" },
+    { prefecture: "愛知県", city: "名古屋市", id: "51106" }, { prefecture: "三重県", city: "津市", id: "53133" },
+    { prefecture: "滋賀県", city: "大津市", id: "60216" }, { prefecture: "京都府", city: "京都市", id: "61286" },
+    { prefecture: "大阪府", city: "大阪市", id: "62078" }, { prefecture: "兵庫県", city: "神戸市", id: "63518" },
+    { prefecture: "奈良県", city: "奈良市", id: "64036" }, { prefecture: "和歌山県", city: "和歌山市", id: "65042" },
+    { prefecture: "鳥取県", city: "鳥取市", id: "69122" }, { prefecture: "島根県", city: "松江市", id: "68132" },
+    { prefecture: "岡山県", city: "岡山市", id: "66408" }, { prefecture: "広島県", city: "広島市", id: "67437" },
+    { prefecture: "山口県", city: "山口市", id: "81286" }, { prefecture: "徳島県", city: "徳島市", id: "71106" },
+    { prefecture: "香川県", city: "高松市", id: "72086" }, { prefecture: "愛媛県", city: "松山市", id: "73166" },
+    { prefecture: "高知県", city: "高知市", id: "74182" }, { prefecture: "福岡県", city: "福岡市", id: "82182" },
+    { prefecture: "佐賀県", city: "佐賀市", id: "85142" }, { prefecture: "長崎県", city: "長崎市", id: "84496" },
+    { prefecture: "熊本県", city: "熊本市", id: "86141" }, { prefecture: "大分県", city: "大分市", id: "83216" },
+    { prefecture: "宮崎県", city: "宮崎市", id: "87376" }, { prefecture: "鹿児島県", city: "鹿児島市", id: "88317" },
+    { prefecture: "沖縄県", city: "那覇市", id: "91197" }
+  ]
+};

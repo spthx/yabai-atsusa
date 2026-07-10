@@ -1,73 +1,58 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ja">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Earthquake Viewer</title>
-
-    <link rel="stylesheet" href="css/style.css">
-
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#06142c">
+  <title>最強熊谷伝説 | 全国の暑さ比較</title>
+  <link rel="stylesheet" href="css/style.css">
 </head>
-
 <body>
+  <main class="site-shell">
+    <header class="hero">
+      <p class="eyebrow">全国の暑さを熊谷基準で判定</p>
+      <h1>最強熊谷伝説</h1>
+      <p id="observation-time" class="observation-time">観測時刻：取得中</p>
+      <p class="fairness-note">この比較は同一観測時刻のアメダス気温から算出しています</p>
+    </header>
 
-    <div class="container">
+    <section class="comparison-section" aria-labelledby="comparison-heading">
+      <div class="section-heading"><span>🔥</span><h2 id="comparison-heading">ただいまの暑さ対決</h2></div>
+      <div id="comparison-card" class="comparison-card" aria-live="polite">
+        <p class="loading">アメダス観測値を読み込み中…</p>
+      </div>
+      <button id="refresh-button" class="refresh-button" type="button">最新の観測値を更新</button>
+      <p id="location-note" class="location-note">位置情報を許可すると、近い観測地点と比較します。</p>
+    </section>
 
-        <header>
-            <div class="header-title">
-                <h1>🌎 Earthquake Viewer</h1>
-                <p>最新の地震情報を47件表示しています</p>
-            </div>
+    <section class="ranking-section" aria-labelledby="ranking-heading">
+      <div class="section-heading"><span>🏆</span><h2 id="ranking-heading">県庁所在地・暑さベスト10</h2></div>
+      <p id="ranking-time" class="ranking-time">観測時刻：取得中</p>
+      <div id="heat-ranking-list" class="heat-ranking-list" aria-live="polite"></div>
+    </section>
 
-            <div class="header-info">
-                <div class="info-block">
-                    <span class="info-title">⏱️ 現在時刻</span>
-                    <span id="current-date">----/--/--</span>
-                    <span id="current-time">--:--:--</span>
-                </div>
-                <div class="info-block">
-                    <span class="info-title">🔄 最終更新</span>
-                    <span id="last-update-date">----/--/--</span>
-                    <span id="last-update-time">--:--:--</span>
-                </div>
-            </div>
-        </header>
+    <section class="capital-section" aria-labelledby="capital-heading">
+      <div class="section-heading"><span>🗾</span><h2 id="capital-heading">47都道府県・県庁所在地</h2></div>
+      <p class="capital-note">すべて同じ観測時刻のアメダス気温です</p>
+      <div id="capital-temperature-list" class="capital-temperature-list" aria-live="polite"></div>
+    </section>
 
-        <section id="status-bar">
-            🟢 現在、大きな地震情報はありません
-        </section>
+    <section class="all-stations-section" aria-labelledby="all-stations-heading">
+      <div class="section-heading"><span>🌡️</span><h2 id="all-stations-heading">全国アメダス気温一覧</h2></div>
+      <p id="all-stations-note" class="all-stations-note">同一観測時刻の気温を暑い順に表示しています</p>
+      <div id="all-temperature-stations" class="all-temperature-stations" aria-live="polite"></div>
+    </section>
 
-        <div class="app-body">
-
-            <div class="app-left">
-                <section id="map-section">
-                    <div id="map"></div>
-                </section>
-
-                <section id="mode-select">
-                    <button id="refresh-button">
-                        🔄 最新情報に更新
-                    </button>
-                </section>
-            </div>
-
-            <div class="app-right">
-                <section id="earthquake-list">
-                    </section>
-            </div>
-
-        </div></div><script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-
-    <script src="js/config.js"></script>
-    <script src="js/utils.js"></script>
-    <script src="js/api.js"></script>
-    <script src="js/map.js"></script>
-    <script src="js/ui.js"></script>
-    <script src="js/app.js"></script>
-
+    <footer>
+      <p>本サイトの比較・ランキングは、同一観測時刻の気象庁アメダス観測値を加工して作成しています。</p>
+      <p>「熊谷偏差値」「熊谷よりマシ」判定は本サイト独自の演出・目安です。</p>
+    </footer>
+  </main>
+  <script src="js/config.js"></script>
+  <script src="js/utils.js"></script>
+  <script src="js/characters.js"></script>
+  <script src="js/amedas.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/app.js"></script>
 </body>
-
 </html>

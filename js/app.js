@@ -1,96 +1,57 @@
-function formatDateTime(date) {
+let currentSnapshot = null;
+let selectedStation = null;
 
-    const yyyy = date.getFullYear();
-    const mm = String(date.getMonth() + 1).padStart(2, "0");
-    const dd = String(date.getDate()).padStart(2, "0");
-
-    const hh = String(date.getHours()).padStart(2, "0");
-    const mi = String(date.getMinutes()).padStart(2, "0");
-    const ss = String(date.getSeconds()).padStart(2, "0");
-
-    return {
-        date: `${yyyy}/${mm}/${dd}`,
-        time: `${hh}:${mi}:${ss}`
-    };
+function setObservationTime(latestTime) {
+  const text = `観測時刻：${formatObservationTime(latestTime)}`;
+  document.getElementById("observation-time").textContent = text;
+  document.getElementById("ranking-time").textContent = text;
 }
 
-// ==========================
-// 現在時刻（毎秒更新）
-// ==========================
-function updateClock() {
-
-    const now = new Date();
-    const dt = formatDateTime(now);
-
-    document.getElementById("current-date").textContent = dt.date;
-    document.getElementById("current-time").textContent = dt.time;
-
+function renderSnapshot(snapshot, target) {
+  const ranking = buildTemperatureRanking(snapshot.readings, snapshot.stations);
+  const capitalRanking = buildCapitalTemperatureList(snapshot.readings, snapshot.stations);
+  const kumagaya = ranking.find(item => item.id === CONFIG.kumagayaStationId);
+  if (!kumagaya) throw new Error("熊谷の気温を確認できませんでした。");
+  const selectedFromCurrentData = target && ranking.find(item => item.id === target.id);
+  const defaultCapital = capitalRanking.find(item => item.temperature !== null && item.id !== kumagaya.id);
+  selectedStation = selectedFromCurrentData || defaultCapital || kumagaya;
+  const capitalInfo = getCapitalByStationId(selectedStation.id);
+  if (capitalInfo) selectedStation = { ...selectedStation, ...capitalInfo };
+  setObservationTime(snapshot.latestTime);
+  renderComparison(kumagaya, selectedStation);
+  renderHeatRanking(capitalRanking.filter(item => item.temperature !== null).slice(0, 10), kumagaya.temperature);
+  renderCapitalTemperatureList(capitalRanking);
+  renderAllTemperatureStations(ranking);
 }
 
-// ==========================
-// 最終更新時刻
-// ==========================
-function updateLastUpdateTime() {
-
-    const now = new Date();
-    const dt = formatDateTime(now);
-
-    document.getElementById("last-update-date").textContent = dt.date;
-    document.getElementById("last-update-time").textContent = dt.time;
-
+async function reloadHeatData() {
+  const button = document.getElementById("refresh-button");
+  button.disabled = true;
+  button.textContent = "更新中…";
+  try {
+    currentSnapshot = await fetchAmedasSnapshot();
+    renderSnapshot(currentSnapshot, selectedStation);
+  } catch (error) {
+    console.error(error);
+    showError("観測値を取得できませんでした。");
+  } finally {
+    button.disabled = false;
+    button.textContent = "最新の観測値を更新";
+  }
 }
 
-// ==========================
-// 時計開始
-// ==========================
-updateClock();
-updateLastUpdateTime();
-setInterval(updateClock, 1000);
-
-// ==========================
-// 地震情報更新
-// ==========================
-async function reloadEarthquake() {
-    
-    const statusBar = document.getElementById("status-bar");
-    
-    statusBar.textContent = "🔄 地震情報を更新しています...";
-
-    try {
-
-        const data = await fetchEarthquakeData();
-        console.log(data[0].earthquake.time);
-        updateStatusBar(data);
-        renderEarthquakeList(data);
-        addMarkers(data);
-
-        updateLastUpdateTime();
-
-    } catch (error) {
-
-        console.error(error);
-
-        statusBar.textContent = "❌ 地震情報の取得に失敗しました。";
-
-    }
+function useCurrentLocation() {
+  if (!navigator.geolocation) return;
+  navigator.geolocation.getCurrentPosition(position => {
+    if (!currentSnapshot) return;
+    const nearest = findNearestTemperatureStation(position, buildTemperatureRanking(currentSnapshot.readings, currentSnapshot.stations));
+    if (!nearest) return;
+    document.getElementById("location-note").textContent = `現在地に近い観測地点「${nearest.name}」（約${nearest.distance.toFixed(0)}km）と比較しています。県庁所在地一覧には県名・市名を表示しています。`;
+    renderSnapshot(currentSnapshot, nearest);
+  }, () => {
+    document.getElementById("location-note").textContent = "位置情報を取得できなかったため、暑さランキング上位の地点と比較しています。";
+  }, { enableHighAccuracy: false, timeout: 8000, maximumAge: 300000 });
 }
 
-// ==========================
-// アプリ起動
-// ==========================
-async function startApp() {
-
-    await reloadEarthquake();
-
-}
-
-// 起動
-startApp();
-
-// ==========================
-// 更新ボタン
-// ==========================
-document.getElementById("refresh-button")?.addEventListener("click", async () => {
-    await reloadEarthquake();
-    updateLastUpdateTime();
-});
+document.getElementById("refresh-button").addEventListener("click", reloadHeatData);
+reloadHeatData().then(useCurrentLocation);
