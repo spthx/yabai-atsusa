@@ -49,7 +49,8 @@ function getTempClass(temp) {
   if (temp >= 38) return "temp-purple";
   if (temp >= 35) return "temp-red";
   if (temp >= 30) return "temp-orange";
-  if (temp >= 25) return "temp-yellow";
-  if (temp >= 20) return "temp-normal";
-  return "temp-cool";
+  if (temp >= 27) return "temp-yellow";
+  if (temp >= 24) return "temp-green";
+  if (temp >= 20) return "temp-blue";
+  return "temp-cold";
 }

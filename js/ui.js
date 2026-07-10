@@ -52,24 +52,23 @@ function renderHeatRanking(ranking, kumagayaTemp) {
   list.innerHTML = "";
 
   ranking.forEach((item, index) => {
-    const comparison = getComparison(item.temperature, kumagayaTemp);
     const score = getKumagayaDeviation(item.temperature, kumagayaTemp);
-    const delta = Math.abs(comparison.diff).toFixed(1);
-    const diffText = comparison.diff === 0 ? "熊谷と同じ" : `${comparison.label} ${delta}℃`;
+    const rank = index + 1;
+    const rankIcon = rank === 1 ? "👑" : rank === 2 ? "🥈" : rank === 3 ? "🥉" : "";
 
     const row = document.createElement("article");
-    row.className = `ranking-card rank-${index + 1} ${index >= 10 ? "extra-kumagaya-line" : ""} ${getTempClass(item.temperature)}`;
+    row.className = `ranking-card rank-${rank} ${index >= 10 ? "extra-kumagaya-line" : ""} ${getTempClass(item.temperature)}`;
     row.innerHTML = `
-      ${prefectureMascotMarkup(item.prefecture, index + 1)}
-      <span class="rank">${index + 1}位</span>
+      <span class="rank-icon" aria-hidden="true">${rankIcon}</span>
+      <span class="rank">${rank}位</span>
+      <strong class="rank-temperature">${formatTemperature(item.temperature)}</strong>
+      ${prefectureMascotMarkup(item.prefecture, rank)}
       <span class="place">
         <em>${item.prefecture}</em>
         <b>${item.city}</b>
         <small>観測地点：${item.name}</small>
       </span>
-      <strong>${formatTemperature(item.temperature)}</strong>
-      <span class="rank-diff">${diffText}</span>
-      <span class="rank-score">熊谷偏差値<br><b>${score ?? "–"}</b></span>`;
+      <span class="rank-score">熊谷偏差値<b>${score ?? "–"}</b></span>`;
     list.appendChild(row);
   });
 }
