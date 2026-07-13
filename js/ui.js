@@ -57,6 +57,7 @@ function renderHeatRanking(ranking, kumagayaTemp) {
     const score = getKumagayaDeviation(item.temperature, kumagayaTemp);
     const rank = index + 1;
     const rankIcon = rank === 1 ? "👑" : rank === 2 ? "🥈" : rank === 3 ? "🥉" : "";
+    const municipality = item.city || item.location || item.name;
 
     const row = document.createElement("article");
     row.className = `ranking-card rank-${rank} ${index >= 10 ? "extra-kumagaya-line" : ""} ${getTempClass(item.temperature)}`;
@@ -66,8 +67,8 @@ function renderHeatRanking(ranking, kumagayaTemp) {
       <strong class="rank-temperature">${formatTemperature(item.temperature)}</strong>
       ${prefectureMascotMarkup(item.prefecture, rank)}
       <span class="place">
-        <em>${item.prefecture}</em>
-        <b>${item.city}</b>
+        <em>${item.prefecture || "都道府県情報なし"}</em>
+        <b>${municipality}</b>
         <small>観測地点：${item.name}</small>
       </span>
       <span class="rank-score">熊谷偏差値<b>${score ?? "–"}</b></span>`;

@@ -190,9 +190,9 @@ body {
   position: relative;
   z-index: 1;
   display: grid;
-  grid-template-columns: 1fr 80px 1fr;
-  align-items: center;
-  padding: 17px 8px 5px;
+  grid-template-columns: minmax(0, 1fr) 66px minmax(0, 1fr);
+  align-items: start;
+  padding: 14px 8px 5px;
 }
 
 .contestant {
@@ -203,8 +203,9 @@ body {
 
 .fighter-photo {
   position: relative;
-  width: 118px;
-  height: 130px;
+  width: min(100%, 205px);
+  aspect-ratio: 3 / 4;
+  height: auto;
   margin: 0 auto 6px;
   overflow: hidden;
   background: #193b74;
@@ -228,12 +229,12 @@ body {
 }
 
 .character.hot .fighter-photo img {
-  transform: translateY(8px) scale(1.2);
+  transform: scale(1.08);
   transform-origin: 40% 40%;
 }
 
 .character.cool .fighter-photo img {
-  transform: scale(.96);
+  transform: scale(1.03);
   transform-origin: 50% 46%;
 }
 
@@ -328,7 +329,7 @@ body {
   position: relative;
   z-index: 1;
   display: grid;
-  width: 80px;
+  width: 66px;
   height: 94px;
   margin: auto;
   border: 0;
@@ -977,8 +978,7 @@ footer p {
 
 @media (max-width: 430px) {
   .fighter-photo {
-    width: 104px;
-    height: 116px;
+    width: min(100%, 154px);
   }
 
   .ranking-card {
@@ -1043,8 +1043,7 @@ footer p {
   }
 
   .fighter-photo {
-    width: 132px;
-    height: 146px;
+    width: min(100%, 218px);
   }
 
   .contestants {

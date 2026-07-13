@@ -23,13 +23,12 @@ function renderSnapshot(snapshot, target) {
   setObservationTime(snapshot.latestTime);
   renderComparison(kumagaya, selectedStation, ranking);
 
-  const validCapitalRanking = capitalRanking.filter(item => item.temperature !== null);
-  const featuredCapitalRanking = validCapitalRanking.filter((item, index) => {
+  const featuredNationwideRanking = ranking.filter((item, index) => {
     const score = getKumagayaDeviation(item.temperature, kumagaya.temperature);
     return index < 10 || (score !== null && score >= 100);
   });
 
-  renderHeatRanking(featuredCapitalRanking, kumagaya.temperature);
+  renderHeatRanking(featuredNationwideRanking, kumagaya.temperature);
   renderCapitalTemperatureList(capitalRanking);
   renderAllTemperatureStations(ranking, kumagaya);
 }
