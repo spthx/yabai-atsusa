@@ -1059,3 +1059,318 @@ footer p {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
+
+/* 2026 真夏キャンペーン / シェア導線 */
+
+.site-shell {
+  max-width: 760px;
+  padding-top: 14px;
+  background:
+    radial-gradient(circle at 12% 5%, #65142666 0, transparent 27%),
+    radial-gradient(circle at 88% 8%, #0754a866 0, transparent 29%),
+    radial-gradient(circle at 50% 24%, #172c5b 0, #07142a 38%, #020713 82%);
+}
+
+.hero {
+  position: relative;
+  padding-top: 14px;
+}
+
+.season-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin: 0 0 10px;
+  padding: 5px 11px;
+  border: 1px solid #ffbc4d88;
+  border-radius: 99px;
+  color: #ffe8ad;
+  background: #3a162acc;
+  box-shadow: 0 0 20px #ff4f3a33;
+  font-size: .7rem;
+  font-weight: 900;
+  letter-spacing: .12em;
+}
+
+.season-badge span {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  color: #fff;
+}
+
+.season-badge span::before {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #ff395f;
+  box-shadow: 0 0 9px #ff395f;
+  content: "";
+  animation: live-pulse 1.5s ease-in-out infinite;
+}
+
+.hero h1 {
+  margin-bottom: 5px;
+  background: linear-gradient(90deg, #fff4d2 0, #ffb12f 32%, #fff 50%, #6ddcff 72%, #dffaff 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 4px 0 #111a34);
+  text-shadow: none;
+}
+
+.hero-catch {
+  margin: 0 0 12px;
+  color: #fff;
+  font-size: clamp(1.15rem, 5vw, 1.75rem);
+  font-style: italic;
+  font-weight: 900;
+  letter-spacing: .05em;
+  text-shadow: 0 0 12px #ff512a, 0 0 24px #148eff;
+}
+
+.campaign-visual {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  margin: 0 0 30px;
+  border: 1px solid #ffffff88;
+  border-radius: 22px;
+  color: #fff;
+  background: #081730;
+  box-shadow: 0 18px 46px #0008, 0 0 26px #2aa7ff22, 0 0 26px #ff442222;
+  text-decoration: none;
+  transform: translateZ(0);
+}
+
+.campaign-visual::after {
+  position: absolute;
+  inset: 0;
+  border: 2px solid transparent;
+  border-radius: inherit;
+  background: linear-gradient(110deg, #ff9a37aa, transparent 38%, transparent 61%, #53d7ffaa) border-box;
+  content: "";
+  pointer-events: none;
+  -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+}
+
+.campaign-visual img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 40 / 21;
+  object-fit: cover;
+  transition: transform .35s ease, filter .35s ease;
+}
+
+.campaign-visual:hover img {
+  filter: saturate(1.08) contrast(1.04);
+  transform: scale(1.015);
+}
+
+.campaign-visual > span {
+  position: absolute;
+  right: 14px;
+  bottom: 12px;
+  padding: 9px 14px;
+  border: 1px solid #fff8;
+  border-radius: 99px;
+  color: #fff;
+  background: #030a19d9;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 5px 18px #0008;
+  font-size: .78rem;
+  font-weight: 900;
+  letter-spacing: .04em;
+}
+
+.campaign-visual > span b {
+  color: #ffd75c;
+  font-size: 1rem;
+}
+
+.comparison-section {
+  scroll-margin-top: 16px;
+}
+
+.comparison-card {
+  box-shadow: 0 15px 40px #0007, 0 0 32px #0788d355, inset 0 0 36px #fd367044;
+}
+
+.share-actions {
+  display: grid;
+  grid-template-columns: minmax(0, 1.65fr) minmax(0, 1fr);
+  gap: 8px;
+  margin-top: 9px;
+}
+
+.share-button {
+  display: flex;
+  min-height: 49px;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 10px 12px;
+  border: 1px solid #ffffff66;
+  border-radius: 13px;
+  color: #fff;
+  font: inherit;
+  font-size: .88rem;
+  font-weight: 900;
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform .15s ease, filter .15s ease;
+}
+
+.share-button:hover {
+  filter: brightness(1.1);
+  transform: translateY(-1px);
+}
+
+.share-button:active {
+  transform: translateY(1px);
+}
+
+.share-primary {
+  border-color: #ffe56e;
+  background: linear-gradient(115deg, #ff3a4e, #ff851b 58%, #ffd43d);
+  box-shadow: 0 6px 20px #ff4e293d;
+  text-shadow: 0 1px 2px #7b1b0f;
+}
+
+.share-x {
+  background: linear-gradient(135deg, #141a25, #02050a);
+}
+
+.share-status {
+  min-height: 1.3em;
+  margin: 6px 0 0;
+  color: #ffe783;
+  font-size: .72rem;
+  font-weight: 700;
+  text-align: center;
+}
+
+.viral-card {
+  position: relative;
+  overflow: hidden;
+  margin: 24px 0 30px;
+  padding: 25px 24px;
+  border: 1px solid #ffce6e;
+  border-radius: 22px;
+  background:
+    linear-gradient(115deg, #4f1024e8, #171438e8 52%, #073c70e8),
+    url("../assets/characters/kumagaya-anime.png") center / cover;
+  box-shadow: inset 0 0 38px #fff1, 0 12px 32px #0005;
+  text-align: left;
+}
+
+.viral-card::after {
+  position: absolute;
+  top: -50px;
+  right: -30px;
+  width: 180px;
+  height: 180px;
+  border: 28px solid #45c9ff22;
+  border-radius: 50%;
+  content: "";
+}
+
+.viral-kicker {
+  margin: 0 0 8px;
+  color: #75ddff;
+  font-size: .66rem;
+  font-weight: 900;
+  letter-spacing: .18em;
+}
+
+.viral-card h2 {
+  margin: 0;
+  font-size: clamp(1.65rem, 7vw, 2.65rem);
+  line-height: 1.05;
+  text-shadow: 0 3px 0 #180515;
+}
+
+.viral-card h2 em {
+  color: #ffdf57;
+  font-style: normal;
+  text-shadow: 0 0 16px #ff5229;
+}
+
+.viral-card > p:not(.viral-kicker, .hashtag) {
+  position: relative;
+  z-index: 1;
+  max-width: 510px;
+  margin: 14px 0 0;
+  color: #e4e9f4;
+  font-size: .82rem;
+  font-weight: 700;
+  line-height: 1.7;
+}
+
+.hashtag {
+  position: relative;
+  z-index: 1;
+  display: inline-block;
+  margin: 15px 0 0;
+  padding: 7px 10px;
+  border: 1px solid #ffffff4d;
+  border-radius: 8px;
+  color: #fff5c6;
+  background: #060b1c99;
+  font-size: .7rem;
+  font-weight: 900;
+}
+
+button:focus-visible,
+a:focus-visible,
+summary:focus-visible {
+  outline: 3px solid #fff06a;
+  outline-offset: 3px;
+}
+
+@keyframes live-pulse {
+  0%, 100% { opacity: .45; transform: scale(.8); }
+  50% { opacity: 1; transform: scale(1.15); }
+}
+
+@media (max-width: 430px) {
+  .site-shell {
+    padding-right: 11px;
+    padding-left: 11px;
+  }
+
+  .campaign-visual {
+    margin-right: -3px;
+    margin-left: -3px;
+    border-radius: 16px;
+  }
+
+  .campaign-visual > span {
+    right: 8px;
+    bottom: 7px;
+    padding: 7px 10px;
+    font-size: .66rem;
+  }
+
+  .share-actions {
+    grid-template-columns: 1fr;
+  }
+
+  .viral-card {
+    padding: 22px 18px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .season-badge span::before,
+  .heat-spark {
+    animation: none;
+  }
+
+  .campaign-visual img,
+  .share-button {
+    transition: none;
+  }
+}

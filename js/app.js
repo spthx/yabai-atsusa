@@ -1,5 +1,6 @@
 let currentSnapshot = null;
 let selectedStation = null;
+let latestShareText = "最強熊谷伝説｜全国アメダスの最新気温で熊谷と暑さ対決！ #最強熊谷伝説 #熊谷に勝てるか";
 
 function setObservationTime(latestTime) {
   const text = `観測時刻：${formatObservationTime(latestTime)}`;
@@ -22,6 +23,7 @@ function renderSnapshot(snapshot, target) {
 
   setObservationTime(snapshot.latestTime);
   renderComparison(kumagaya, selectedStation, ranking);
+  updateShareLinks();
 
   const featuredNationwideRanking = ranking.filter((item, index) => {
     const score = getKumagayaDeviation(item.temperature, kumagaya.temperature);
@@ -33,6 +35,32 @@ function renderSnapshot(snapshot, target) {
   renderAllTemperatureStations(ranking, kumagaya);
 }
 
+function updateShareLinks() {
+  const link = document.getElementById("x-share-link");
+  if (!link) return;
+  link.href = "https://twitter.com/intent/tweet?text=" + encodeURIComponent(latestShareText) + "&url=" + encodeURIComponent(location.href.split("#")[0]);
+}
+
+async function shareBattleResult() {
+  const status = document.getElementById("share-status");
+  const shareData = {
+    title: "最強熊谷伝説｜熊谷に勝てるか？",
+    text: latestShareText,
+    url: location.href.split("#")[0]
+  };
+
+  try {
+    if (navigator.share) {
+      await navigator.share(shareData);
+      status.textContent = "対決結果をシェアしました！";
+    } else {
+      await navigator.clipboard.writeText(shareData.text + "\n" + shareData.url);
+      status.textContent = "結果とURLをコピーしました！";
+    }
+  } catch (error) {
+    if (error.name !== "AbortError") status.textContent = "共有できませんでした。Xで拡散ボタンをお試しください。";
+  }
+}
 async function reloadHeatData() {
   const button = document.getElementById("refresh-button");
   button.disabled = true;
@@ -75,4 +103,5 @@ function useCurrentLocation() {
 }
 
 document.getElementById("refresh-button").addEventListener("click", reloadHeatData);
+document.getElementById("share-button").addEventListener("click", shareBattleResult);
 reloadHeatData().then(useCurrentLocation);

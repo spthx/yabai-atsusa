@@ -20,6 +20,8 @@ function renderComparison(kumagaya, target, ranking) {
     : comparison.diff > -1 ? "ほぼ熊谷"
     : `熊谷超え ${difference}℃！`;
 
+  latestShareText = targetMunicipality + " " + formatTemperature(target.temperature) + " vs 熊谷 " + formatTemperature(kumagaya.temperature) + "｜判定は「" + verdictText + "」熊谷偏差値" + (targetScore ?? "–") + "！ #最強熊谷伝説 #熊谷に勝てるか";
+
   document.getElementById("comparison-card").innerHTML = `
     <div class="battle-backdrop" aria-hidden="true">
       <img src="assets/japan-silhouette.svg" alt="">
