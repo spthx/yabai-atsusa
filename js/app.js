@@ -173,8 +173,29 @@ function setupHydrationAction() {
   });
 }
 
+function setupStationCastTrigger() {
+  const trigger = document.getElementById("station-cast-trigger");
+  const details = document.getElementById("all-stations-details");
+  if (!trigger || !details) return;
+
+  const sync = () => {
+    trigger.setAttribute("aria-expanded", String(details.open));
+    const label = trigger.querySelector(".station-trigger-copy strong");
+    if (label) label.textContent = details.open ? "全国の観測地点を閉じる" : "全国の観測地点を開く";
+    trigger.classList.toggle("is-open", details.open);
+  };
+
+  trigger.addEventListener("click", () => {
+    details.open = !details.open;
+    sync();
+    if (details.open) details.scrollIntoView({ behavior: "smooth", block: "start" });
+  });
+  details.addEventListener("toggle", sync);
+  sync();
+}
 setupScrollReveals();
 setupHydrationAction();
+setupStationCastTrigger();
 document.getElementById("refresh-button").addEventListener("click", reloadHeatData);
 document.getElementById("share-button").addEventListener("click", shareTemperatureResult);
 reloadHeatData().then(useCurrentLocation);

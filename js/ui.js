@@ -112,6 +112,79 @@ function renderComparison(kumagaya, target, ranking) {
     </div>`;
 }
 
+const REGION_DISPLAY_LABELS = {
+  hokkaido: "北海道", tohoku: "東北", kanto: "関東", chubu: "中部",
+  kinki: "近畿", chugoku: "中国", shikoku: "四国", kyushu: "九州・沖縄"
+};
+let activeCapitalRegion = "all";
+
+function setCapitalRegionFilter(regionKey) {
+  activeCapitalRegion = regionKey;
+  const cards = [...document.querySelectorAll("#capital-temperature-list .capital-card")];
+  const visibleCards = cards.filter(card => regionKey === "all" || card.dataset.region === regionKey);
+  cards.forEach(card => { card.hidden = regionKey !== "all" && card.dataset.region !== regionKey; });
+
+  document.querySelectorAll("[data-region-key]").forEach(button => {
+    const selected = button.dataset.regionKey === regionKey;
+    button.setAttribute("aria-pressed", String(selected));
+    button.classList.toggle("is-active", selected);
+  });
+
+  const status = document.getElementById("region-filter-status");
+  if (status) {
+    status.textContent = regionKey === "all"
+      ? `全国${visibleCards.length}都道府県を表示`
+      : `${REGION_DISPLAY_LABELS[regionKey]}の${visibleCards.length}都道府県を表示`;
+  }
+}
+
+function renderCapitalRegionUI(capitals) {
+  const spotlight = document.getElementById("regional-heat-spotlight");
+  const hottest = capitals.find(item => item.temperature !== null);
+  if (spotlight && hottest) {
+    const regionKey = getRegionKeyForPrefecture(hottest.prefecture);
+    const character = REGIONAL_CHARACTERS[regionKey];
+    spotlight.style.setProperty("--spotlight-accent", character.accent);
+    spotlight.querySelector("img").src = character.image;
+    spotlight.querySelector("img").alt = `${REGION_DISPLAY_LABELS[regionKey]}の案内役`;
+    spotlight.querySelector("strong").textContent = `${hottest.prefecture} ${formatTemperature(hottest.temperature)}`;
+    spotlight.querySelector("span").textContent = `${REGION_DISPLAY_LABELS[regionKey]}の案内役が、県庁所在地ランキング首位を案内中`;
+  }
+
+  const filter = document.getElementById("region-character-filter");
+  if (!filter) return;
+  filter.innerHTML = Object.entries(REGIONAL_CHARACTERS).map(([key, character]) => {
+    const count = (PREFECTURE_REGION_MAP[key] || []).length;
+    return `<button type="button" class="region-character-button" data-region-key="${key}" aria-pressed="false" style="--region-accent:${character.accent}">
+      <img src="${character.image}" alt="" loading="lazy" decoding="async">
+      <span><b>${REGION_DISPLAY_LABELS[key]}</b><small>${count}都道府県</small></span>
+    </button>`;
+  }).join("");
+
+  document.querySelectorAll("[data-region-key]").forEach(button => {
+    button.onclick = () => setCapitalRegionFilter(button.dataset.regionKey);
+  });
+  if (activeCapitalRegion !== "all" && !REGIONAL_CHARACTERS[activeCapitalRegion]) activeCapitalRegion = "all";
+  setCapitalRegionFilter(activeCapitalRegion);
+}
+
+function renderTop10RegionRibbon(ranking) {
+  const ribbon = document.getElementById("top10-region-ribbon");
+  if (!ribbon) return;
+  const counts = new Map();
+  ranking.forEach(item => {
+    const key = getRegionKeyForPrefecture(item.prefecture);
+    counts.set(key, (counts.get(key) || 0) + 1);
+  });
+  const regions = [...counts.entries()].sort((a, b) => b[1] - a[1]);
+  ribbon.innerHTML = `<div class="top10-ribbon-title"><small>TOP10 REGIONAL SIGNAL</small><strong>いま上位にいる地方</strong></div>` + regions.map(([key, count]) => {
+    const character = REGIONAL_CHARACTERS[key];
+    return `<div class="top10-region-chip" style="--region-accent:${character.accent}">
+      <img src="${character.image}" alt="" loading="lazy" decoding="async">
+      <span><b>${REGION_DISPLAY_LABELS[key]}</b><small>TOP10に ${count}地点</small></span>
+    </div>`;
+  }).join("");
+}
 function renderHeatRanking(ranking, kumagayaTemp) {
   const list = document.getElementById("heat-ranking-list");
   list.innerHTML = "";
@@ -124,7 +197,11 @@ function renderHeatRanking(ranking, kumagayaTemp) {
 
     const row = document.createElement("article");
     row.className = `ranking-card rank-${rank} ${index >= 10 ? "extra-kumagaya-line" : ""} ${getTempClass(item.temperature)}`;
+    const regionKey = getRegionKeyForPrefecture(item.prefecture);
+    const regionCharacter = REGIONAL_CHARACTERS[regionKey];
+    row.dataset.region = regionKey;
     row.style.setProperty("--delay", `${Math.min(index, 14) * 45}ms`);
+    row.style.setProperty("--girl-watermark", `url("../${regionCharacter.image}")`);
     row.innerHTML = `
       <span class="rank-icon" aria-hidden="true">${rankIcon}</span>
       <span class="rank">${rank}位</span>
@@ -138,6 +215,7 @@ function renderHeatRanking(ranking, kumagayaTemp) {
       <span class="rank-score">熊谷偏差値<b>${score ?? "–"}</b></span>`;
     list.appendChild(row);
   });
+  renderTop10RegionRibbon(ranking);
 }
 
 function renderCapitalTemperatureList(capitals) {
@@ -147,6 +225,10 @@ function renderCapitalTemperatureList(capitals) {
   capitals.forEach((item, index) => {
     const card = document.createElement("article");
     const missing = item.temperature === null;
+    const regionKey = getRegionKeyForPrefecture(item.prefecture);
+    const regionCharacter = REGIONAL_CHARACTERS[regionKey];
+    card.dataset.region = regionKey;
+    card.style.setProperty("--girl-watermark", `url("../${regionCharacter.image}")`);
     card.className = `capital-card ${missing ? "temp-missing" : getTempClass(item.temperature)}`;
     card.innerHTML = `
       <span class="capital-rank">${index + 1}</span>
@@ -157,6 +239,7 @@ function renderCapitalTemperatureList(capitals) {
       <strong>${missing ? "観測なし" : formatTemperature(item.temperature)}</strong>`;
     list.appendChild(card);
   });
+  renderCapitalRegionUI(capitals);
 }
 
 function renderAllTemperatureStations(ranking) {
@@ -168,6 +251,8 @@ function renderAllTemperatureStations(ranking) {
   const remainingRanking = ranking.slice(10);
 
   note.textContent = `11位以下の${remainingRanking.length}地点を、同一観測時刻・高い順で集計しています。`;
+  const stationCastCount = document.querySelector(".station-cast-count");
+  if (stationCastCount) stationCastCount.textContent = `${remainingRanking.length}地点`;
 
   if (summary) {
     summary.textContent = kumagayaRank
@@ -184,7 +269,11 @@ function renderAllTemperatureStations(ranking) {
     const isKumagaya = item.id === CONFIG.kumagayaStationId;
     const prefectureLabel = item.prefecture || "都道府県情報なし";
     const locationLabel = item.location || "市区町村情報なし";
+    const regionKey = getRegionKeyForPrefecture(prefectureLabel);
+    const regionCharacter = REGIONAL_CHARACTERS[regionKey];
 
+    card.dataset.region = regionKey;
+    card.style.setProperty("--girl-watermark", `url("../${regionCharacter.image}")`);
     card.className = `all-station-card ${isKumagaya ? "kumagaya-marker" : ""} ${getTempClass(item.temperature)}`;
     card.innerHTML = `
       <span class="station-rank">${index + 1}</span>

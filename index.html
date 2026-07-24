@@ -67,9 +67,14 @@
 
     <section class="capital-section" aria-labelledby="capital-heading">
       <div class="section-heading"><span>🗾</span><h2 id="capital-heading">47都道府県・気温ランキング</h2></div>
-      <div class="character-showcase character-showcase-duo showcase-capital" aria-hidden="true">
-        <img class="showcase-girl showcase-girl-left" src="assets/characters/region-hokkaido.webp" alt="" loading="lazy" decoding="async">
-        <img class="showcase-girl showcase-girl-right" src="assets/characters/region-kyushu.webp" alt="" loading="lazy" decoding="async">
+      <div id="regional-heat-spotlight" class="regional-heat-spotlight" aria-live="polite">
+        <img src="assets/characters/region-kanto.webp" alt="" loading="lazy" decoding="async">
+        <div><small>NOW LEADING REGION</small><strong>集計中…</strong><span>47都道府県の最新気温を確認しています</span></div>
+      </div>
+      <div class="region-filter-panel">
+        <div class="region-filter-heading"><strong>キャラで地方を絞り込む</strong><button type="button" data-region-key="all" aria-pressed="true">全国47</button></div>
+        <div id="region-character-filter" class="region-character-filter"></div>
+        <p id="region-filter-status">全国47都道府県を表示</p>
       </div>
       <p class="capital-note">県庁所在地付近の代表アメダス地点を、すべて同じ観測時刻で比較しています。</p>
       <div id="capital-temperature-list" class="capital-temperature-list" aria-live="polite"></div>
@@ -77,10 +82,7 @@
 
     <section class="ranking-section" aria-labelledby="ranking-heading">
       <div class="section-heading"><span>🔥</span><h2 id="ranking-heading">特に暑い観測地点 TOP10</h2></div>
-      <div class="character-showcase character-showcase-duo showcase-ranking" aria-hidden="true">
-        <img class="showcase-girl showcase-girl-left" src="assets/characters/region-kanto.webp" alt="" loading="lazy" decoding="async">
-        <img class="showcase-girl showcase-girl-right" src="assets/characters/region-chubu.webp" alt="" loading="lazy" decoding="async">
-      </div>
+      <div id="top10-region-ribbon" class="top10-region-ribbon" aria-label="TOP10に入った地方"></div>
       <p id="ranking-time" class="ranking-time">観測時刻：取得中</p>
       <p class="ranking-note">全国アメダスの現在気温上位10地点を表示しています。</p>
       <div class="hot-ranking-panel">
@@ -96,13 +98,16 @@
 
     <section class="all-stations-section" aria-labelledby="all-stations-heading">
       <div class="section-heading"><span>🔎</span><h2 id="all-stations-heading">全国アメダス 11位以下</h2></div>
-      <div class="character-showcase character-showcase-trio showcase-stations" aria-hidden="true">
-        <img class="showcase-girl showcase-girl-left" src="assets/characters/region-kinki.webp" alt="" loading="lazy" decoding="async">
-        <img class="showcase-girl showcase-girl-center" src="assets/characters/region-chugoku.webp" alt="" loading="lazy" decoding="async">
-        <img class="showcase-girl showcase-girl-right" src="assets/characters/region-shikoku.webp" alt="" loading="lazy" decoding="async">
-      </div>
+      <button id="station-cast-trigger" class="station-cast-trigger" type="button" aria-expanded="false" aria-controls="all-stations-details">
+        <span class="station-trigger-cast" aria-hidden="true">
+          <img src="assets/characters/region-kinki.webp" alt="" loading="lazy" decoding="async">
+          <img src="assets/characters/region-chugoku.webp" alt="" loading="lazy" decoding="async">
+          <img src="assets/characters/region-shikoku.webp" alt="" loading="lazy" decoding="async">
+        </span>
+        <span class="station-trigger-copy"><small>ALL AMEDAS GATE</small><strong>全国の観測地点を開く</strong><b class="station-cast-count">集計中…</b></span>
+      </button>
       <p id="all-stations-note" class="all-stations-note">TOP10以外の観測地点を高い順に確認できます。</p>
-      <details class="all-stations-details">
+      <details id="all-stations-details" class="all-stations-details">
         <summary><span>11位以下を開く</span><small id="all-stations-summary">集計中…</small></summary>
         <div id="all-temperature-stations" class="all-temperature-stations" aria-live="polite"></div>
       </details>
