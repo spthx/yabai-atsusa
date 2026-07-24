@@ -1,14 +1,28 @@
 function characterMarkup(character, side) {
-  return `<div class="character ${side}"><div class="fighter-photo"><img src="${character.image}" alt="${character.name}"></div><p>${character.catchphrase}</p></div>`;
+  const style = `--character-accent:${character.accent || "#55c4ff"};--character-focus:${character.focus || "50% 45%"}`;
+  return `<div class="character ${side}" style="${style}">
+    <span class="region-ribbon">${character.region || "地方代表"}</span>
+    <div class="fighter-photo"><img src="${character.image}" alt="${character.name}"></div>
+    <p>${character.catchphrase}</p>
+  </div>`;
+}
+
+function renderRegionalRoster() {
+  const roster = document.getElementById("regional-roster");
+  if (!roster) return;
+  roster.innerHTML = getRegionalCharacterList().map((character, index) => `
+    <article class="regional-fighter" style="--character-accent:${character.accent};--delay:${index * 70}ms">
+      <div class="regional-fighter-photo"><img src="${character.image}" alt="${character.name}" style="object-position:${character.focus || "50% 45%"}"></div>
+      <div><b>${character.region}</b><small>${character.role}</small></div>
+    </article>`).join("");
 }
 
 function renderComparison(kumagaya, target, ranking) {
   const comparison = getComparison(target.temperature, kumagaya.temperature);
   const kumagayaScore = getKumagayaDeviation(kumagaya.temperature, kumagaya.temperature);
   const targetScore = getKumagayaDeviation(target.temperature, kumagaya.temperature);
-  const targetCharacter = getCharacterForStation(target.name);
-  const targetMunicipality = target.city || target.location || target.name;
-  const targetLocation = `${target.prefecture || "所在地不明"}<small>${targetMunicipality}</small>`;
+  const targetPrefecture = normalizePrefectureName(target.prefecture);
+  const targetCharacter = getCharacterForPrefecture(targetPrefecture);
   const kumagayaRank = ranking.findIndex(item => item.id === kumagaya.id) + 1;
   const targetRank = ranking.findIndex(item => item.id === target.id) + 1;
   const difference = Math.abs(comparison.diff).toFixed(1);
@@ -20,7 +34,7 @@ function renderComparison(kumagaya, target, ranking) {
     : comparison.diff > -1 ? "ほぼ熊谷"
     : `熊谷超え ${difference}℃！`;
 
-  latestShareText = targetMunicipality + " " + formatTemperature(target.temperature) + " vs 熊谷 " + formatTemperature(kumagaya.temperature) + "｜判定は「" + verdictText + "」熊谷偏差値" + (targetScore ?? "–") + "！ #最強熊谷伝説 #熊谷に勝てるか";
+  latestShareText = targetPrefecture + " " + formatTemperature(target.temperature) + " vs 熊谷 " + formatTemperature(kumagaya.temperature) + "｜判定は「" + verdictText + "」熊谷偏差値" + (targetScore ?? "–") + "！ #最強熊谷伝説 #熊谷に勝てるか";
 
   document.getElementById("comparison-card").innerHTML = `
     <div class="battle-backdrop" aria-hidden="true">
@@ -38,7 +52,7 @@ function renderComparison(kumagaya, target, ranking) {
       </article>
       <div class="versus">VS</div>
       <article class="contestant target-side ${targetWins ? "is-winner" : ""}">${targetWins ? '<span class="winner-badge">WIN!</span>' : ""}${characterMarkup(targetCharacter, "cool")}
-        <h3>${targetLocation}</h3>
+        <h3>${targetPrefecture}<small>観測地点 非公開</small></h3>
         <p class="heat-rank">全国暑さ <b>${targetRank}位</b></p>
         <p class="score-label">熊谷偏差値</p>
         <p class="score">${targetScore ?? "–"}</p>
@@ -63,6 +77,7 @@ function renderHeatRanking(ranking, kumagayaTemp) {
 
     const row = document.createElement("article");
     row.className = `ranking-card rank-${rank} ${index >= 10 ? "extra-kumagaya-line" : ""} ${getTempClass(item.temperature)}`;
+    row.style.setProperty("--delay", `${Math.min(index, 14) * 45}ms`);
     row.innerHTML = `
       <span class="rank-icon" aria-hidden="true">${rankIcon}</span>
       <span class="rank">${rank}位</span>

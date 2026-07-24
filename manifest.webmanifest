@@ -1,0 +1,25 @@
+{
+  "name": "最強熊谷伝説｜熊谷に勝てるか？",
+  "short_name": "最強熊谷伝説",
+  "description": "全国アメダスの最新気温で、あなたの県と熊谷が真夏の暑さ対決。",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#020713",
+  "theme_color": "#ff4b3e",
+  "icons": [
+    {
+      "src": "assets/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "assets/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

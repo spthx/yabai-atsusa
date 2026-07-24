@@ -1239,9 +1239,6 @@ footer p {
   text-shadow: 0 1px 2px #7b1b0f;
 }
 
-.share-x {
-  background: linear-gradient(135deg, #141a25, #02050a);
-}
 
 .share-status {
   min-height: 1.3em;
@@ -1252,76 +1249,6 @@ footer p {
   text-align: center;
 }
 
-.viral-card {
-  position: relative;
-  overflow: hidden;
-  margin: 24px 0 30px;
-  padding: 25px 24px;
-  border: 1px solid #ffce6e;
-  border-radius: 22px;
-  background:
-    linear-gradient(115deg, #4f1024e8, #171438e8 52%, #073c70e8),
-    url("../assets/characters/kumagaya-anime.png") center / cover;
-  box-shadow: inset 0 0 38px #fff1, 0 12px 32px #0005;
-  text-align: left;
-}
-
-.viral-card::after {
-  position: absolute;
-  top: -50px;
-  right: -30px;
-  width: 180px;
-  height: 180px;
-  border: 28px solid #45c9ff22;
-  border-radius: 50%;
-  content: "";
-}
-
-.viral-kicker {
-  margin: 0 0 8px;
-  color: #75ddff;
-  font-size: .66rem;
-  font-weight: 900;
-  letter-spacing: .18em;
-}
-
-.viral-card h2 {
-  margin: 0;
-  font-size: clamp(1.65rem, 7vw, 2.65rem);
-  line-height: 1.05;
-  text-shadow: 0 3px 0 #180515;
-}
-
-.viral-card h2 em {
-  color: #ffdf57;
-  font-style: normal;
-  text-shadow: 0 0 16px #ff5229;
-}
-
-.viral-card > p:not(.viral-kicker, .hashtag) {
-  position: relative;
-  z-index: 1;
-  max-width: 510px;
-  margin: 14px 0 0;
-  color: #e4e9f4;
-  font-size: .82rem;
-  font-weight: 700;
-  line-height: 1.7;
-}
-
-.hashtag {
-  position: relative;
-  z-index: 1;
-  display: inline-block;
-  margin: 15px 0 0;
-  padding: 7px 10px;
-  border: 1px solid #ffffff4d;
-  border-radius: 8px;
-  color: #fff5c6;
-  background: #060b1c99;
-  font-size: .7rem;
-  font-weight: 900;
-}
 
 button:focus-visible,
 a:focus-visible,
@@ -1372,5 +1299,571 @@ summary:focus-visible {
   .campaign-visual img,
   .share-button {
     transition: none;
+  }
+}
+/* 2026-07-24 地方代表・拡散強化 */
+:root {
+  --summer-cyan: #56ddff;
+  --summer-blue: #0878e8;
+  --heat-yellow: #ffe45c;
+  --heat-orange: #ff7a1a;
+  --heat-pink: #ff3b68;
+  --ink-navy: #031025;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background:
+    radial-gradient(circle at 10% 0%, #ff4a3533 0 18%, transparent 42%),
+    radial-gradient(circle at 90% 8%, #008cff3d 0 20%, transparent 45%),
+    linear-gradient(155deg, #020713 0%, #061a36 48%, #020713 100%);
+  background-attachment: fixed;
+}
+
+.page-heat {
+  position: fixed;
+  z-index: -1;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.page-heat i {
+  position: absolute;
+  width: 34vw;
+  min-width: 250px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  opacity: .18;
+  filter: blur(60px);
+  animation: ambient-drift 13s ease-in-out infinite alternate;
+}
+
+.page-heat i:nth-child(1) {
+  top: -12%;
+  left: -9%;
+  background: #ff3b4e;
+}
+
+.page-heat i:nth-child(2) {
+  top: 25%;
+  right: -12%;
+  background: #169cff;
+  animation-delay: -4s;
+}
+
+.page-heat i:nth-child(3) {
+  bottom: -8%;
+  left: 32%;
+  background: #ff9b24;
+  animation-delay: -8s;
+}
+
+.site-shell {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  border-right: 1px solid #ffffff10;
+  border-left: 1px solid #ffffff10;
+  box-shadow: 0 0 90px #000b;
+}
+
+.site-shell::before {
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  left: 50%;
+  width: 980px;
+  height: 520px;
+  background:
+    repeating-linear-gradient(112deg, transparent 0 32px, #ffffff08 34px, transparent 36px),
+    radial-gradient(circle, #ffffff12 0 2px, transparent 3px) 0 0 / 28px 28px;
+  content: "";
+  opacity: .65;
+  transform: translateX(-50%);
+  mask-image: linear-gradient(#000, transparent 88%);
+}
+
+.hero {
+  isolation: isolate;
+}
+
+.hero::before,
+.hero::after {
+  position: absolute;
+  z-index: -1;
+  top: 28px;
+  width: 104px;
+  aspect-ratio: 1;
+  border: 1px solid #ffffff24;
+  border-radius: 50%;
+  content: "";
+  box-shadow: 0 0 35px #ff932c33, inset 0 0 24px #ffb53722;
+  animation: sun-spin 18s linear infinite;
+}
+
+.hero::before { left: -18px; }
+.hero::after {
+  right: -18px;
+  border-style: dashed;
+  border-color: #5edfff3d;
+  box-shadow: 0 0 35px #35aaff33, inset 0 0 24px #4bdfff22;
+  animation-direction: reverse;
+}
+
+.hero h1 {
+  position: relative;
+  transform: perspective(400px) rotateX(4deg);
+  animation: title-rise .85s cubic-bezier(.18,.9,.22,1) both;
+}
+
+.hero-catch {
+  animation: catch-glow 2.6s ease-in-out infinite;
+}
+
+.hero-stats {
+  display: inline-grid;
+  grid-template-columns: repeat(3, auto);
+  overflow: hidden;
+  margin: 2px auto 9px;
+  border: 1px solid #ffffff2e;
+  border-radius: 12px;
+  background: #030b1bb3;
+  box-shadow: inset 0 0 18px #2aa8ff12;
+  backdrop-filter: blur(8px);
+}
+
+.hero-stats span {
+  min-width: 76px;
+  padding: 6px 10px;
+  color: #c9d7ea;
+  font-size: .64rem;
+  font-weight: 800;
+}
+
+.hero-stats span + span {
+  border-left: 1px solid #ffffff1e;
+}
+
+.hero-stats b {
+  margin-right: 3px;
+  color: #fff2a7;
+  font-size: .8rem;
+}
+
+.section-kicker {
+  margin: 0 0 -3px;
+  color: var(--summer-cyan);
+  font-size: .61rem;
+  font-weight: 900;
+  letter-spacing: .22em;
+  text-align: center;
+  text-shadow: 0 0 12px #1ab6ff;
+}
+
+.campaign-visual {
+  isolation: isolate;
+  animation: hero-card-in .8s .15s cubic-bezier(.2,.85,.25,1) both;
+}
+
+.campaign-visual::before {
+  position: absolute;
+  z-index: 2;
+  top: -35%;
+  left: -45%;
+  width: 28%;
+  height: 170%;
+  background: linear-gradient(90deg, transparent, #fff8, transparent);
+  content: "";
+  pointer-events: none;
+  transform: rotate(16deg);
+  animation: visual-shine 4.8s 1.2s ease-in-out infinite;
+}
+
+.campaign-visual > span {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  column-gap: 8px;
+  line-height: 1.15;
+}
+
+.campaign-visual > span small {
+  grid-column: 1 / -1;
+  color: #66ddff;
+  font-size: .48rem;
+  letter-spacing: .16em;
+}
+
+.comparison-section,
+.regional-section,
+.ranking-section,
+.capital-section,
+.all-stations-section {
+  position: relative;
+}
+
+.comparison-card {
+  border-color: #73dfff;
+  animation: battle-border 3s ease-in-out infinite;
+}
+
+.contestants {
+  padding-top: 18px;
+}
+
+.kumagaya-side .character {
+  animation: fighter-left-in .72s cubic-bezier(.18,.9,.2,1) both;
+}
+
+.target-side .character {
+  animation: fighter-right-in .72s .08s cubic-bezier(.18,.9,.2,1) both;
+}
+
+.region-ribbon {
+  position: absolute;
+  z-index: 4;
+  top: 4px;
+  left: 50%;
+  min-width: 74%;
+  padding: 4px 8px;
+  border: 1px solid #ffffff9a;
+  border-radius: 99px;
+  color: #061027;
+  background: linear-gradient(90deg, #fff, var(--character-accent));
+  box-shadow: 0 4px 14px #0008, 0 0 13px color-mix(in srgb, var(--character-accent) 65%, transparent);
+  font-size: .58rem;
+  font-weight: 900;
+  letter-spacing: .03em;
+  transform: translateX(-50%) rotate(-2deg);
+  white-space: nowrap;
+}
+
+.target-side .region-ribbon {
+  transform: translateX(-50%) rotate(2deg);
+}
+
+.fighter-photo {
+  width: min(100%, 238px);
+  border: 1px solid color-mix(in srgb, var(--character-accent) 72%, #fff);
+  background: linear-gradient(160deg, color-mix(in srgb, var(--character-accent) 42%, #193b74), #08152f);
+  box-shadow: inset 0 0 24px #0005;
+}
+
+.fighter-photo img {
+  object-position: var(--character-focus, 50% 45%);
+}
+
+.character p {
+  position: relative;
+  z-index: 3;
+  max-width: 148px;
+  min-height: 34px;
+  margin-top: -2px;
+  padding: 5px 7px;
+  border: 1px solid #ffffff38;
+  border-radius: 8px;
+  background: #031029d9;
+  box-shadow: 0 5px 14px #0007;
+  font-size: .63rem;
+  line-height: 1.35;
+}
+
+.temperature {
+  animation: temperature-pulse 2.2s ease-in-out infinite;
+}
+
+.versus {
+  animation: versus-beat 1.9s ease-in-out infinite;
+}
+
+.winner-badge {
+  animation: winner-pop .65s .35s cubic-bezier(.15,1.5,.2,1) both;
+}
+
+.share-actions {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.share-primary {
+  position: relative;
+  isolation: isolate;
+  min-height: 58px;
+  overflow: hidden;
+  border-color: #ffffffb0;
+  color: #fff;
+  background: linear-gradient(120deg, #05070c 0 38%, #1b2230 55%, #05070c 100%);
+  box-shadow: 0 8px 24px #0008, 0 0 20px #ff6c2d2e;
+  font-size: 1rem;
+  letter-spacing: .04em;
+  text-shadow: 0 1px 2px #000;
+  animation: share-breathe 2.6s ease-in-out infinite;
+}
+
+.share-primary::before {
+  position: absolute;
+  z-index: -1;
+  inset: -80% -20%;
+  background: conic-gradient(from 90deg, transparent, #ff3b68, #ffe45c, #45d9ff, transparent 42%);
+  content: "";
+  opacity: .48;
+  animation: share-orbit 4s linear infinite;
+}
+
+.share-primary::after {
+  position: absolute;
+  z-index: -1;
+  inset: 2px;
+  border-radius: 10px;
+  background: linear-gradient(110deg, #070a10, #1c2534 53%, #070a10);
+  content: "";
+}
+
+.share-primary span {
+  display: grid;
+  width: 27px;
+  height: 27px;
+  border-radius: 7px;
+  background: #fff;
+  color: #000;
+  font-size: 1rem;
+  place-items: center;
+}
+
+.location-note {
+  position: relative;
+  padding: 10px 12px 10px 35px;
+  border: 1px solid #64d7ff36;
+  border-radius: 12px;
+  background: #06172aab;
+  line-height: 1.55;
+}
+
+.location-note::before {
+  position: absolute;
+  top: 10px;
+  left: 11px;
+  content: "🔒";
+}
+
+.regional-section {
+  margin: 26px 0 31px;
+  padding: 22px 0 18px;
+  border-top: 1px solid #ffffff1c;
+  border-bottom: 1px solid #ffffff1c;
+  background: linear-gradient(90deg, transparent, #0e2a5359 12% 88%, transparent);
+}
+
+.regional-note {
+  max-width: 570px;
+  margin: 0 auto 14px;
+  padding: 0 16px;
+  color: #cbd8e9;
+  font-size: .75rem;
+  font-weight: 700;
+  line-height: 1.65;
+  text-align: center;
+}
+
+.regional-roster {
+  display: grid;
+  grid-auto-columns: 150px;
+  grid-auto-flow: column;
+  gap: 11px;
+  overflow-x: auto;
+  margin: 0 -16px;
+  padding: 5px 18px 12px;
+  scroll-padding-inline: 18px;
+  scroll-snap-type: x mandatory;
+  scrollbar-color: #58cff6 #06152e;
+  scrollbar-width: thin;
+}
+
+.regional-fighter {
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--character-accent) 62%, #fff);
+  border-radius: 16px;
+  background: linear-gradient(155deg, color-mix(in srgb, var(--character-accent) 18%, #10234a), #050c1d 67%);
+  box-shadow: 0 9px 21px #0007, inset 0 0 20px #ffffff08;
+  scroll-snap-align: start;
+  animation: roster-card-in .58s var(--delay) cubic-bezier(.2,.8,.25,1) both;
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+
+.regional-fighter:hover {
+  box-shadow: 0 13px 28px #0009, 0 0 18px color-mix(in srgb, var(--character-accent) 34%, transparent);
+  transform: translateY(-4px);
+}
+
+.regional-fighter-photo {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 3 / 4;
+  background: #13294f;
+}
+
+.regional-fighter-photo::after {
+  position: absolute;
+  inset: auto 0 0;
+  height: 34%;
+  background: linear-gradient(transparent, #050c1d);
+  content: "";
+}
+
+.regional-fighter-photo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform .25s ease;
+}
+
+.regional-fighter:hover img {
+  transform: scale(1.035);
+}
+
+.regional-fighter > div:last-child {
+  display: grid;
+  min-height: 65px;
+  align-content: center;
+  padding: 8px 9px 10px;
+}
+
+.regional-fighter b {
+  color: #fff;
+  font-size: .78rem;
+}
+
+.regional-fighter small {
+  margin-top: 2px;
+  color: var(--character-accent);
+  font-size: .62rem;
+  font-weight: 800;
+}
+
+.ranking-card {
+  animation: ranking-card-in .5s var(--delay, 0ms) ease-out both;
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+
+.ranking-card:hover {
+  z-index: 2;
+  box-shadow: 0 10px 24px #0008, 0 0 20px #ffce4428;
+  transform: translateY(-3px) scale(1.008);
+}
+
+@keyframes ambient-drift {
+  from { transform: translate3d(-5%, -3%, 0) scale(.9); }
+  to { transform: translate3d(12%, 10%, 0) scale(1.12); }
+}
+
+@keyframes sun-spin { to { transform: rotate(360deg); } }
+@keyframes title-rise {
+  from { opacity: 0; transform: perspective(400px) translateY(18px) rotateX(18deg) scale(.94); }
+  to { opacity: 1; transform: perspective(400px) translateY(0) rotateX(4deg) scale(1); }
+}
+@keyframes catch-glow {
+  0%, 100% { filter: brightness(.92); transform: scale(.99); }
+  50% { filter: brightness(1.16); transform: scale(1.015); }
+}
+@keyframes hero-card-in {
+  from { opacity: 0; transform: translateY(22px) scale(.97); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes visual-shine {
+  0%, 58% { left: -45%; }
+  78%, 100% { left: 125%; }
+}
+@keyframes battle-border {
+  0%, 100% { box-shadow: 0 15px 40px #0007, 0 0 22px #ff3d5833, inset 0 0 36px #fd367044; }
+  50% { box-shadow: 0 15px 40px #0007, 0 0 34px #38cfff55, inset 0 0 48px #2b8fff38; }
+}
+@keyframes fighter-left-in {
+  from { opacity: 0; transform: translateX(-26px) rotate(-2deg); }
+  to { opacity: 1; transform: translateX(0) rotate(0); }
+}
+@keyframes fighter-right-in {
+  from { opacity: 0; transform: translateX(26px) rotate(2deg); }
+  to { opacity: 1; transform: translateX(0) rotate(0); }
+}
+@keyframes versus-beat {
+  0%, 100% { filter: brightness(.9); transform: skew(-10deg) scale(.96); }
+  50% { filter: brightness(1.22); transform: skew(-10deg) scale(1.055); }
+}
+@keyframes temperature-pulse {
+  0%, 100% { filter: saturate(.95); transform: translateY(0); }
+  50% { filter: saturate(1.25) brightness(1.08); transform: translateY(-1px); }
+}
+@keyframes winner-pop {
+  from { opacity: 0; transform: scale(.3) rotate(22deg); }
+  to { opacity: 1; transform: scale(1) rotate(7deg); }
+}
+@keyframes share-breathe {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-2px); }
+}
+@keyframes share-orbit { to { transform: rotate(360deg); } }
+@keyframes roster-card-in {
+  from { opacity: 0; transform: translateY(14px) scale(.97); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes ranking-card-in {
+  from { opacity: 0; transform: translateY(9px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (min-width: 720px) {
+  .regional-roster {
+    grid-auto-columns: 162px;
+    margin-right: -10px;
+    margin-left: -10px;
+  }
+}
+
+@media (max-width: 430px) {
+  .hero-stats span {
+    min-width: 68px;
+    padding-right: 7px;
+    padding-left: 7px;
+  }
+
+  .fighter-photo {
+    width: min(100%, 178px);
+  }
+
+  .region-ribbon {
+    max-width: 100%;
+    min-width: 82%;
+    font-size: .51rem;
+  }
+
+  .regional-roster {
+    margin-right: -11px;
+    margin-left: -11px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .page-heat i,
+  .hero::before,
+  .hero::after,
+  .hero h1,
+  .hero-catch,
+  .campaign-visual,
+  .campaign-visual::before,
+  .comparison-card,
+  .kumagaya-side .character,
+  .target-side .character,
+  .temperature,
+  .versus,
+  .winner-badge,
+  .share-primary,
+  .share-primary::before,
+  .regional-fighter,
+  .ranking-card {
+    animation: none !important;
   }
 }

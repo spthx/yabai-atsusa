@@ -15,7 +15,7 @@ function renderSnapshot(snapshot, target) {
   if (!kumagaya) throw new Error("熊谷の気温を確認できませんでした。");
 
   const selectedFromCurrentData = target && ranking.find(item => item.id === target.id);
-  const defaultCapital = capitalRanking.find(item => item.temperature !== null && item.id !== kumagaya.id);
+  const defaultCapital = capitalRanking.filter(item => item.temperature !== null && item.id !== kumagaya.id).sort((a, b) => b.temperature - a.temperature)[0];
   selectedStation = selectedFromCurrentData || defaultCapital || kumagaya;
 
   const capitalInfo = getCapitalByStationId(selectedStation.id);
@@ -35,31 +35,22 @@ function renderSnapshot(snapshot, target) {
   renderAllTemperatureStations(ranking, kumagaya);
 }
 
-function updateShareLinks() {
-  const link = document.getElementById("x-share-link");
-  if (!link) return;
-  link.href = "https://twitter.com/intent/tweet?text=" + encodeURIComponent(latestShareText) + "&url=" + encodeURIComponent(location.href.split("#")[0]);
+function getXShareUrl() {
+  const pageUrl = location.href.split("#")[0].split("?")[0];
+  return "https://x.com/intent/post?text=" + encodeURIComponent(latestShareText) + "&url=" + encodeURIComponent(pageUrl);
 }
 
-async function shareBattleResult() {
-  const status = document.getElementById("share-status");
-  const shareData = {
-    title: "最強熊谷伝説｜熊谷に勝てるか？",
-    text: latestShareText,
-    url: location.href.split("#")[0]
-  };
+function updateShareLinks() {
+  const button = document.getElementById("share-button");
+  if (button) button.dataset.shareUrl = getXShareUrl();
+}
 
-  try {
-    if (navigator.share) {
-      await navigator.share(shareData);
-      status.textContent = "対決結果をシェアしました！";
-    } else {
-      await navigator.clipboard.writeText(shareData.text + "\n" + shareData.url);
-      status.textContent = "結果とURLをコピーしました！";
-    }
-  } catch (error) {
-    if (error.name !== "AbortError") status.textContent = "共有できませんでした。Xで拡散ボタンをお試しください。";
-  }
+function shareBattleResult() {
+  const button = document.getElementById("share-button");
+  const status = document.getElementById("share-status");
+  const shareUrl = button?.dataset.shareUrl || getXShareUrl();
+  status.textContent = "Xの投稿画面を開いています…";
+  location.assign(shareUrl);
 }
 async function reloadHeatData() {
   const button = document.getElementById("refresh-button");
@@ -91,9 +82,9 @@ function useCurrentLocation() {
 
     if (!nearest) return;
 
-    const locationLabel = [nearest.prefecture, nearest.location].filter(Boolean).join("・") || "所在地情報なし";
+    const prefectureLabel = normalizePrefectureName(nearest.prefecture);
     document.getElementById("location-note").textContent =
-      `現在地に近い ${locationLabel} の観測地点「${nearest.name}」（約${nearest.distance.toFixed(0)}km）と比較しています。`;
+      `${prefectureLabel}の近い観測データと比較しています。観測地点名は対戦画面やX投稿に表示しません。`;
 
     renderSnapshot(currentSnapshot, nearest);
   }, () => {
@@ -102,6 +93,7 @@ function useCurrentLocation() {
   }, { enableHighAccuracy: false, timeout: 8000, maximumAge: 300000 });
 }
 
+renderRegionalRoster();
 document.getElementById("refresh-button").addEventListener("click", reloadHeatData);
 document.getElementById("share-button").addEventListener("click", shareBattleResult);
 reloadHeatData().then(useCurrentLocation);

@@ -8,54 +8,64 @@
   <meta property="og:type" content="website">
   <meta property="og:locale" content="ja_JP">
   <meta property="og:site_name" content="最強熊谷伝説">
-  <meta property="og:title" content="最強熊谷伝説｜熊谷に勝てるか？">
-  <meta property="og:description" content="全国アメダスの最新気温で、あなたの街と熊谷が真夏の暑さ対決！">
+  <meta property="og:title" content="最強熊谷伝説｜あなたの県は熊谷に勝てるか？">
+  <meta property="og:description" content="全国アメダスの最新気温で、あなたの県と熊谷が真夏の暑さ対決。観測地点名はシェアされません。">
   <meta property="og:url" content="https://spthx.github.io/yabai-atsusa/">
-  <meta property="og:image" content="https://spthx.github.io/yabai-atsusa/assets/og-kumagaya-battle.jpg">
+  <meta property="og:image" content="https://spthx.github.io/yabai-atsusa/assets/og-kumagaya-battle-v2.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
-  <meta property="og:image:alt" content="赤と青の女性キャラクターが全国アメダスの暑さ対決をする最強熊谷伝説">
+  <meta property="og:image:alt" content="真夏の青空の下で女性キャラクターが暑さ対決する最強熊谷伝説">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="最強熊谷伝説｜熊谷に勝てるか？">
-  <meta name="twitter:description" content="現在地の気温を熊谷偏差値で判定。真夏の暑さ対決をシェアしよう！">
-  <meta name="twitter:image" content="https://spthx.github.io/yabai-atsusa/assets/og-kumagaya-battle.jpg">
+  <meta name="twitter:title" content="最強熊谷伝説｜あなたの県は熊谷に勝てるか？">
+  <meta name="twitter:description" content="現在地の県を熊谷偏差値で判定。観測地点名を出さずにXへシェア！">
+  <meta name="twitter:image" content="https://spthx.github.io/yabai-atsusa/assets/og-kumagaya-battle-v2.png">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="最強熊谷伝説">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/favicon-32.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/icons/apple-touch-icon.png">
   <title>最強熊谷伝説 | 熊谷に勝てるか？</title>
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+  <div class="page-heat" aria-hidden="true"><i></i><i></i><i></i></div>
   <main class="site-shell">
     <header class="hero">
       <p class="season-badge"><span>LIVE</span> 2026 真夏決戦</p>
       <p class="eyebrow">全国の暑さを熊谷基準で判定！</p>
       <h1>最強熊谷伝説</h1>
       <p class="hero-catch">熊谷に、勝てるか？</p>
+      <div class="hero-stats" aria-label="サイトの特徴">
+        <span><b>916</b>地点</span><span><b>8</b>地方代表</span><span><b>LIVE</b>気温</span>
+      </div>
       <p id="observation-time" class="observation-time">観測時刻：取得中</p>
       <p class="fairness-note">この比較は、同一観測時刻のアメダス気温データ（全国916地点）から算出しています。</p>
     </header>
     <a class="campaign-visual" href="#comparison-heading" aria-label="ただいまの暑さ対決を見る">
-      <img src="assets/og-kumagaya-battle.jpg" alt="最強熊谷伝説、熊谷に勝てるか？ 全国アメダス暑さ対決">
-      <span>最新気温で対決する <b>↓</b></span>
+      <img src="assets/og-kumagaya-battle-v2.png" alt="最強熊谷伝説、真夏の熊谷対全国暑さ対決">
+      <span><small>SCROLL TO BATTLE</small> 最新気温で対決する <b>↓</b></span>
     </a>
 
     <section class="comparison-section" aria-labelledby="comparison-heading">
+      <p class="section-kicker">NOW HEAT BATTLE</p>
       <div class="section-heading"><span>🔥</span><h2 id="comparison-heading">ただいまの暑さ対決</h2></div>
       <div id="comparison-card" class="comparison-card" aria-live="polite">
         <p class="loading">アメダス観測値を読み込み中…</p>
       </div>
       <button id="refresh-button" class="refresh-button" type="button">最新の観測値を更新</button>
       <div class="share-actions" aria-label="対決結果を共有">
-        <button id="share-button" class="share-button share-primary" type="button"><span aria-hidden="true">⚡</span> 対決結果をシェア</button>
-        <a id="x-share-link" class="share-button share-x" href="https://twitter.com/intent/tweet" target="_blank" rel="noopener noreferrer" aria-label="Xで対決結果をシェア">𝕏 で拡散</a>
+        <button id="share-button" class="share-button share-primary" type="button"><span aria-hidden="true">𝕏</span> 対戦結果をシェア</button>
       </div>
       <p id="share-status" class="share-status" role="status" aria-live="polite"></p>
-      <p id="location-note" class="location-note">位置情報を許可すると、近い観測地点と比較します。</p>
+      <p id="location-note" class="location-note">位置情報を許可すると、近い観測データと比較します。観測地点名は対戦画面やX投稿に表示しません。</p>
     </section>
 
-    <section class="viral-card" aria-labelledby="viral-heading">
-      <p class="viral-kicker">SUMMER HEAT CHALLENGE</p>
-      <h2 id="viral-heading">あなたの街は<br><em>熊谷超え</em>してる？</h2>
-      <p>位置情報をオンにすると最寄りのアメダス観測地点と自動対戦。結果画面を友だちに送りつけて、いちばん暑い街を決めよう。</p>
-      <p class="hashtag">#最強熊谷伝説　#熊谷に勝てるか</p>
+    <section class="regional-section" aria-labelledby="regional-heading">
+      <p class="section-kicker">REGIONAL FIGHTERS</p>
+      <div class="section-heading"><span>⚡</span><h2 id="regional-heading">8地方・暑さ代表</h2></div>
+      <p class="regional-note">47人が揃うまで、現在のキャラクターを8地方代表として暫定編成中。対戦相手は県に合わせて切り替わります。</p>
+      <div id="regional-roster" class="regional-roster" aria-label="8地方の代表キャラクター"></div>
     </section>
     <section class="ranking-section" aria-labelledby="ranking-heading">
       <div class="section-heading"><span>🏆</span><h2 id="ranking-heading">全国アメダス・暑さランキング</h2></div>
