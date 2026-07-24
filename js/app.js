@@ -1,6 +1,6 @@
 let currentSnapshot = null;
 let selectedStation = null;
-let latestShareText = "全国アメダスの最新気温から、今日のひと涼み目安を確認。のどが渇く前に水分を。 #熊谷ひと涼み #水分補給";
+let latestShareText = "全国アメダスの最新気温から、今日のひと涼み目安を確認。のどが渇く前に水分を。 #最強熊谷伝説 #水分補給";
 
 function setObservationTime(latestTime) {
   const text = `観測時刻：${formatObservationTime(latestTime)}`;

@@ -73,7 +73,7 @@ function renderComparison(kumagaya, target, ranking) {
       ? `熊谷より ${difference}℃ 高め`
       : "熊谷と同じ気温";
 
-  latestShareText = `${targetPrefecture} ${formatTemperature(target.temperature)}｜${differenceText}。今日の休憩目安は「${guide.label}」。水分を忘れずに。 #熊谷ひと涼み #水分補給`;
+  latestShareText = `${targetPrefecture} ${formatTemperature(target.temperature)}｜${differenceText}。今日の休憩目安は「${guide.label}」。水分を忘れずに。 #最強熊谷伝説 #水分補給`;
 
   const comparisonCard = document.getElementById("comparison-card");
   comparisonCard.className = `comparison-card ${comparisonHeatClass}`;
