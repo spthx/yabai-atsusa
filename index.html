@@ -32,57 +32,27 @@
 <body>
   <div class="page-breeze" aria-hidden="true"><i></i><i></i><i></i></div>
   <main class="site-shell">
-    <header class="hero">
-      <p class="season-badge"><span>LIVE</span> COOL DOWN SUMMER</p>
-      <p class="eyebrow">全国の気温から、休憩と水分補給のタイミングを案内</p>
+    <header class="hero hero-compact">
+      <p class="season-badge"><span>LIVE</span> 全国アメダス気温</p>
       <h1 class="cool-logo"><span>全国アメダス</span><b>最強熊谷伝説</b><small>HEAT LEGEND × COOL BREAK</small></h1>
-      <p class="hero-catch">水を飲んで、木陰へ。<br>気温は勝負じゃなくて、休む目安。</p>
-      <div class="hero-stats" aria-label="サイトの特徴">
-        <span><b>916</b>観測地点</span><span><b>8</b>地方案内役</span><span><b>LIVE</b>気温</span>
-      </div>
+      <p class="hero-catch">あなたの県と熊谷、<strong>いま暑いのはどっち？</strong></p>
       <p id="observation-time" class="observation-time">観測時刻：取得中</p>
-      <p class="fairness-note">同一観測時刻のアメダス気温データを使って、あなたの県と熊谷の温度差を表示します。</p>
     </header>
 
-    <a class="campaign-visual matchup-visual" href="#comparison-heading" aria-label="SUN属性とWATER属性の夏スキル比較を見る">
-      <span class="matchup-cloud cloud-a" aria-hidden="true"></span>
-      <span class="matchup-cloud cloud-b" aria-hidden="true"></span>
-      <article class="matchup-card matchup-card-sun">
-        <span class="matchup-type">SUN TYPE</span>
-        <img src="assets/characters/region-shikoku.webp" alt="日差しと照り返しを確認する夏の案内役">
-        <div class="matchup-card-copy">
-          <small>FIELD SKILL</small>
-          <b>日差しセンサー</b>
-          <span>照り返しチェック</span>
-        </div>
-      </article>
-      <div class="matchup-center" aria-label="勝敗ではなく比較">
-        <small>SUMMER SKILL</small>
-        <b>×</b>
-        <strong>COMPARE</strong>
-        <span>勝敗なし</span>
-      </div>
-      <article class="matchup-card matchup-card-water">
-        <span class="matchup-type">WATER TYPE</span>
-        <img src="assets/icons/icon-512.png" alt="冷たい水と休憩を案内する夏のヒロイン">
-        <div class="matchup-card-copy">
-          <small>CARE SKILL</small>
-          <b>水分ナビ</b>
-          <span>ひと涼み提案</span>
-        </div>
-      </article>
-      <div class="matchup-caption">
-        <small>FRIENDLY MATCH UP</small>
-        <b>得意分野を並べて、今日の過ごし方を比較</b>
-        <span>いまの気温カードへ ↓</span>
-      </div>
-    </a>
-
-    <section class="comparison-section" aria-labelledby="comparison-heading">
-      <p class="section-kicker">COOL-DOWN CHECK</p>
-      <div class="section-heading"><span>💧</span><h2 id="comparison-heading">いま、どれくらい休む？</h2></div>
+    <section class="comparison-section comparison-first" aria-labelledby="comparison-heading">
+      <p class="section-kicker">LIVE HEAT COMPARISON</p>
+      <div class="section-heading"><span>🌡️</span><h2 id="comparison-heading">いまの暑さを比較</h2></div>
       <div id="comparison-card" class="comparison-card" aria-live="polite">
         <p class="loading">アメダス観測値を読み込み中…</p>
+      </div>
+      <div class="hydration-action" aria-labelledby="hydration-heading">
+        <div class="hydration-copy">
+          <small>HYDRATION FIRST</small>
+          <strong id="hydration-heading">まず、水分補給。</strong>
+          <span>のどが渇く前に、こまめに飲もう。</span>
+        </div>
+        <button id="hydration-button" type="button"><span aria-hidden="true">🥤</span> 水分補給した</button>
+        <p id="hydration-status" role="status" aria-live="polite">水分補給を記録できます</p>
       </div>
       <button id="refresh-button" class="refresh-button" type="button">最新の気温を確認</button>
       <div class="share-actions" aria-label="気温と休憩目安を共有">
@@ -90,22 +60,6 @@
       </div>
       <p id="share-status" class="share-status" role="status" aria-live="polite"></p>
       <p id="location-note" class="location-note">位置情報を許可すると、近い観測データと比較します。観測地点名は画面やX投稿に表示しません。</p>
-    </section>
-
-    <aside class="hydration-strip" aria-label="夏の水分補給メモ">
-      <p><span>🥤</span><b>ひと涼みメモ</b></p>
-      <ul>
-        <li>のどが渇く前に、こまめに水分を</li>
-        <li>木陰や冷房のある涼しい場所へ</li>
-        <li>体調が悪いときは無理をしない</li>
-      </ul>
-    </aside>
-
-    <section class="regional-section" aria-labelledby="regional-heading">
-      <p class="section-kicker">SUMMER GUIDES</p>
-      <div class="section-heading"><span>🌿</span><h2 id="regional-heading">8地方・夏の案内役</h2></div>
-      <p class="regional-note">47人が揃うまで、現在のキャラクターを8地方の案内役として暫定編成中。県に合わせて担当キャラが切り替わります。</p>
-      <div id="regional-roster" class="regional-roster" aria-label="8地方の夏の案内役"></div>
     </section>
 
     <section class="ranking-section" aria-labelledby="ranking-heading">

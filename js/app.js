@@ -103,7 +103,7 @@ function useCurrentLocation() {
 
 function setupScrollReveals() {
   const blocks = document.querySelectorAll(
-    ".comparison-section, .hydration-strip, .regional-section, .ranking-section, .capital-section, .all-stations-section"
+    ".comparison-section, .ranking-section, .capital-section, .all-stations-section"
   );
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
@@ -126,8 +126,40 @@ function setupScrollReveals() {
   });
 }
 
+function setupHydrationAction() {
+  const button = document.getElementById("hydration-button");
+  const status = document.getElementById("hydration-status");
+  if (!button || !status) return;
+
+  const storageKey = "saikyo-kumagaya-hydration-time";
+  const showRecordedTime = timestamp => {
+    const time = new Date(timestamp);
+    if (!Number.isFinite(time.getTime())) return;
+    status.textContent = `${time.toLocaleTimeString("ja-JP", { hour: "2-digit", minute: "2-digit" })} に水分補給を記録しました`;
+  };
+
+  try {
+    const saved = localStorage.getItem(storageKey);
+    if (saved) showRecordedTime(saved);
+  } catch (_) {
+    // Storage may be unavailable in private browsing.
+  }
+
+  button.addEventListener("click", () => {
+    const timestamp = new Date().toISOString();
+    try {
+      localStorage.setItem(storageKey, timestamp);
+    } catch (_) {
+      // The on-screen record still works without storage.
+    }
+    showRecordedTime(timestamp);
+    button.classList.add("is-recorded");
+    button.innerHTML = '<span aria-hidden="true">✓</span> 記録しました';
+  });
+}
+
 setupScrollReveals();
-renderRegionalRoster();
+setupHydrationAction();
 document.getElementById("refresh-button").addEventListener("click", reloadHeatData);
 document.getElementById("share-button").addEventListener("click", shareTemperatureResult);
 reloadHeatData().then(useCurrentLocation);
