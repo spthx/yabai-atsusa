@@ -214,9 +214,6 @@ function renderAllTemperatureStations(ranking) {
   const remainingRanking = ranking.slice(10);
 
   note.textContent = `11位以下の${remainingRanking.length}地点を、同一観測時刻・高い順で集計しています。`;
-  const stationCastCount = document.querySelector(".station-cast-count");
-  if (stationCastCount) stationCastCount.textContent = `${remainingRanking.length}地点`;
-
   if (summary) {
     summary.textContent = kumagayaRank
       ? `${remainingRanking.length}地点・熊谷は全国${kumagayaRank}位`
