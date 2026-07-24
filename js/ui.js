@@ -159,28 +159,27 @@ function renderCapitalTemperatureList(capitals) {
   });
 }
 
-function renderAllTemperatureStations(ranking, kumagaya) {
+function renderAllTemperatureStations(ranking) {
   const list = document.getElementById("all-temperature-stations");
   const note = document.getElementById("all-stations-note");
   const summary = document.getElementById("all-stations-summary");
   const kumagayaIndex = ranking.findIndex(item => item.id === CONFIG.kumagayaStationId);
   const kumagayaRank = kumagayaIndex >= 0 ? kumagayaIndex + 1 : null;
-  const hotterThanKumagaya = kumagaya
-    ? ranking.filter(item => item.temperature > kumagaya.temperature).length
-    : null;
+  const remainingRanking = ranking.slice(10);
 
-  note.textContent = `${ranking.length}地点の気温を、同一観測時刻・高い順で集計しています。`;
+  note.textContent = `11位以下の${remainingRanking.length}地点を、同一観測時刻・高い順で集計しています。`;
 
   if (summary) {
     summary.textContent = kumagayaRank
-      ? `熊谷は${kumagayaRank}位 / ${ranking.length}地点中・熊谷より高温${hotterThanKumagaya}地点`
-      : `${ranking.length}地点を表示`;
+      ? `${remainingRanking.length}地点・熊谷は全国${kumagayaRank}位`
+      : `${remainingRanking.length}地点を表示`;
   }
 
   list.innerHTML = "";
   const fragment = document.createDocumentFragment();
 
-  ranking.forEach((item, index) => {
+  remainingRanking.forEach((item, remainingIndex) => {
+    const index = remainingIndex + 10;
     const card = document.createElement("article");
     const isKumagaya = item.id === CONFIG.kumagayaStationId;
     const prefectureLabel = item.prefecture || "都道府県情報なし";

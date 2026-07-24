@@ -31,31 +31,48 @@ function renderSnapshot(snapshot, target) {
 
   setObservationTime(snapshot.latestTime);
   renderComparison(kumagaya, selectedStation, ranking);
-  updateShareLinks();
 
   const featuredNationwideRanking = ranking.slice(0, 10);
 
   renderHeatRanking(featuredNationwideRanking, kumagaya.temperature);
   renderCapitalTemperatureList(capitalRanking);
-  renderAllTemperatureStations(ranking, kumagaya);
+  renderAllTemperatureStations(ranking);
 }
 
-function getXShareUrl() {
-  const pageUrl = location.href.split("#")[0].split("?")[0];
-  return "https://x.com/intent/post?text=" + encodeURIComponent(latestShareText) + "&url=" + encodeURIComponent(pageUrl);
-}
-
-function updateShareLinks() {
-  const button = document.getElementById("share-button");
-  if (button) button.dataset.shareUrl = getXShareUrl();
-}
-
-function shareTemperatureResult() {
-  const button = document.getElementById("share-button");
+async function shareTemperatureResult() {
   const status = document.getElementById("share-status");
-  const shareUrl = button?.dataset.shareUrl || getXShareUrl();
-  status.textContent = "Xの投稿画面を開いています…";
-  location.assign(shareUrl);
+  const payload = {
+    title: "最強熊谷伝説",
+    text: latestShareText,
+    url: location.href.split("#")[0].split("?")[0]
+  };
+
+  if (navigator.share) {
+    try {
+      await navigator.share(payload);
+      status.textContent = "共有しました";
+    } catch (error) {
+      if (error?.name !== "AbortError") status.textContent = "共有できませんでした";
+    }
+    return;
+  }
+
+  const shareText = `${payload.text}\n${payload.url}`;
+  try {
+    await navigator.clipboard.writeText(shareText);
+    status.textContent = "結果とURLをコピーしました";
+  } catch (_) {
+    const textarea = document.createElement("textarea");
+    textarea.value = shareText;
+    textarea.setAttribute("readonly", "");
+    textarea.style.position = "fixed";
+    textarea.style.opacity = "0";
+    document.body.appendChild(textarea);
+    textarea.select();
+    const copied = document.execCommand("copy");
+    textarea.remove();
+    status.textContent = copied ? "結果とURLをコピーしました" : "共有できませんでした";
+  }
 }
 
 async function reloadHeatData() {

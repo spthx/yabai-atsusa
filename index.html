@@ -32,6 +32,14 @@
 <body>
   <div class="page-breeze" aria-hidden="true"><i></i><i></i><i></i></div>
   <main class="site-shell">
+    <div class="character-bg-gallery" aria-hidden="true">
+      <img src="assets/characters/region-hokkaido.webp" alt="" loading="lazy" decoding="async">
+      <img src="assets/characters/region-kanto.webp" alt="" loading="lazy" decoding="async">
+      <img src="assets/characters/region-chubu.webp" alt="" loading="lazy" decoding="async">
+      <img src="assets/characters/region-kinki.webp" alt="" loading="lazy" decoding="async">
+      <img src="assets/characters/region-chugoku.webp" alt="" loading="lazy" decoding="async">
+      <img src="assets/characters/region-kyushu.webp" alt="" loading="lazy" decoding="async">
+    </div>
     <header class="hero hero-compact">
       <p class="season-badge"><span>LIVE</span> 全国アメダス気温</p>
       <h1 class="cool-logo"><span>全国アメダス</span><b>最強熊谷伝説</b><small>HEAT LEGEND × COOL BREAK</small></h1>
@@ -46,20 +54,23 @@
         <p class="loading">アメダス観測値を読み込み中…</p>
       </div>
       <div class="hydration-action" aria-labelledby="hydration-heading">
-        <div class="hydration-copy">
-          <small>HYDRATION FIRST</small>
-          <strong id="hydration-heading">まず、水分補給。</strong>
-          <span>のどが渇く前に、こまめに飲もう。</span>
+        <div class="hydration-lead">
+          <img class="hydration-girl" src="assets/characters/region-tohoku.webp" alt="" loading="lazy" decoding="async">
+          <div class="hydration-copy">
+            <small>HYDRATION FIRST</small>
+            <strong id="hydration-heading">まず、水分補給。</strong>
+            <span>のどが渇く前に、こまめに飲もう。</span>
+          </div>
         </div>
         <button id="hydration-button" type="button"><span aria-hidden="true">🥤</span> 水分補給した</button>
         <p id="hydration-status" role="status" aria-live="polite">水分補給を記録できます</p>
       </div>
       <button id="refresh-button" class="refresh-button" type="button">最新の気温を確認</button>
       <div class="share-actions" aria-label="気温と休憩目安を共有">
-        <button id="share-button" class="share-button share-primary" type="button"><span aria-hidden="true">𝕏</span> この気温を共有</button>
+        <button id="share-button" class="share-button share-primary" type="button"><span aria-hidden="true">↗</span> 結果を共有</button>
       </div>
       <p id="share-status" class="share-status" role="status" aria-live="polite"></p>
-      <p id="location-note" class="location-note">位置情報を許可すると、近い観測データと比較します。観測地点名は画面やX投稿に表示しません。</p>
+      <p id="location-note" class="location-note">位置情報を許可すると、近い観測データと比較します。観測地点名は画面や共有内容に表示しません。</p>
     </section>
 
     <section class="capital-section" aria-labelledby="capital-heading">
@@ -70,9 +81,9 @@
 
     <section class="ranking-section" aria-labelledby="ranking-heading">
       <div class="section-heading"><span>🔥</span><h2 id="ranking-heading">特に暑い観測地点 TOP10</h2></div>
-      <p class="ranking-note">全国アメダスの現在気温上位10地点です。必要なときだけ開いて確認できます。</p>
-      <details class="all-stations-details hot-ranking-details">
-        <summary><span>上位10地点を開く</span><small id="ranking-time">観測時刻：取得中</small></summary>
+      <p id="ranking-time" class="ranking-time">観測時刻：取得中</p>
+      <p class="ranking-note">全国アメダスの現在気温上位10地点を表示しています。</p>
+      <div class="hot-ranking-panel">
         <div class="temperature-legend" aria-label="気温カードの色分け">
           <span class="temp-extreme">40℃〜</span><span class="temp-purple">38℃〜</span>
           <span class="temp-red">35℃〜</span><span class="temp-orange">30℃〜</span>
@@ -80,14 +91,14 @@
           <span class="temp-blue">20℃〜</span><span class="temp-cold">〜19.9℃</span>
         </div>
         <div id="heat-ranking-list" class="heat-ranking-list" aria-live="polite"></div>
-      </details>
+      </div>
     </section>
 
     <section class="all-stations-section" aria-labelledby="all-stations-heading">
-      <div class="section-heading"><span>🔎</span><h2 id="all-stations-heading">全国アメダス気温一覧</h2></div>
-      <p id="all-stations-note" class="all-stations-note">同一観測時刻の気温を高い順に集計しています。</p>
+      <div class="section-heading"><span>🔎</span><h2 id="all-stations-heading">全国アメダス 11位以下</h2></div>
+      <p id="all-stations-note" class="all-stations-note">TOP10以外の観測地点を高い順に確認できます。</p>
       <details class="all-stations-details">
-        <summary><span>全国一覧を開く</span><small id="all-stations-summary">集計中…</small></summary>
+        <summary><span>11位以下を開く</span><small id="all-stations-summary">集計中…</small></summary>
         <div id="all-temperature-stations" class="all-temperature-stations" aria-live="polite"></div>
       </details>
     </section>

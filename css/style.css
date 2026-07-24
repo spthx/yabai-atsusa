@@ -3365,3 +3365,106 @@ body.site-heat.temp-extreme .season-badge {
 .hot-ranking-details[open] .heat-ranking-list {
   margin-top: 2px;
 }
+/* SHARE, VISIBLE TOP10, CHARACTER BACKDROP */
+.site-shell {
+  isolation: isolate;
+}
+
+.site-shell > :not(.character-bg-gallery) {
+  position: relative;
+  z-index: 1;
+}
+
+.character-bg-gallery {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.character-bg-gallery img {
+  position: absolute;
+  width: min(48vw, 330px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  object-fit: cover;
+  opacity: .075;
+  filter: saturate(.72) contrast(.9);
+  mix-blend-mode: multiply;
+  -webkit-mask-image: radial-gradient(circle at center, #000 28%, #000a 52%, transparent 72%);
+  mask-image: radial-gradient(circle at center, #000 28%, #000a 52%, transparent 72%);
+  animation: background-girl-drift 13s ease-in-out infinite alternate;
+}
+
+.character-bg-gallery img:nth-child(1) { top: 15%; left: -18%; transform: rotate(-8deg); }
+.character-bg-gallery img:nth-child(2) { top: 29%; right: -19%; animation-delay: -3s; transform: rotate(7deg); }
+.character-bg-gallery img:nth-child(3) { top: 43%; left: -16%; animation-delay: -6s; transform: rotate(-5deg); }
+.character-bg-gallery img:nth-child(4) { top: 57%; right: -17%; animation-delay: -9s; transform: rotate(6deg); }
+.character-bg-gallery img:nth-child(5) { top: 72%; left: -18%; animation-delay: -4s; transform: rotate(-7deg); }
+.character-bg-gallery img:nth-child(6) { top: 87%; right: -18%; animation-delay: -8s; transform: rotate(5deg); }
+
+.hydration-lead {
+  display: grid;
+  grid-template-columns: 56px minmax(0, 1fr);
+  gap: 9px;
+  align-items: center;
+  min-width: 0;
+}
+
+.hydration-girl {
+  width: 56px;
+  height: 56px;
+  border: 2px solid #ffffffde;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: 50% 42%;
+  background: #b9eef4;
+  box-shadow: 0 5px 15px #064b6266, inset 0 0 8px #fff8;
+}
+
+.hot-ranking-panel {
+  padding-top: 2px;
+}
+
+.hot-ranking-panel .temperature-legend {
+  margin-top: 0;
+}
+
+.share-primary > span {
+  display: inline-grid;
+  width: 1.5em;
+  height: 1.5em;
+  margin-right: .2em;
+  border: 1px solid #ffffff9c;
+  border-radius: 50%;
+  place-items: center;
+  font-size: .9em;
+  line-height: 1;
+}
+
+@keyframes background-girl-drift {
+  from { translate: 0 -8px; }
+  to { translate: 0 12px; }
+}
+
+@media (max-width: 520px) {
+  .character-bg-gallery img {
+    width: 245px;
+    opacity: .085;
+  }
+  .character-bg-gallery img:nth-child(odd) { left: -28%; }
+  .character-bg-gallery img:nth-child(even) { right: -28%; }
+  .hydration-lead {
+    grid-template-columns: 50px minmax(0, 1fr);
+    gap: 7px;
+  }
+  .hydration-girl {
+    width: 50px;
+    height: 50px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .character-bg-gallery img { animation: none; }
+}
