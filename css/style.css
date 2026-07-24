@@ -3719,18 +3719,14 @@ footer > * {
 .all-station-card::after {
   position: absolute;
   z-index: 0;
-  top: 50%;
-  right: -6px;
-  width: 112px;
-  aspect-ratio: 1;
+  inset: 0;
   content: "";
   pointer-events: none;
-  background: var(--girl-watermark) center / contain no-repeat;
-  opacity: .10;
-  filter: saturate(.68) contrast(.9);
-  transform: translateY(-50%);
-  -webkit-mask-image: radial-gradient(circle, #000 56%, transparent 78%);
-  mask-image: radial-gradient(circle, #000 56%, transparent 78%);
+  background: var(--girl-watermark) calc(100% - 8px) center / 62px auto no-repeat;
+  opacity: .075;
+  filter: saturate(.55) contrast(.82);
+  -webkit-mask-image: linear-gradient(90deg, transparent 42%, rgba(0,0,0,.45) 64%, #000 100%);
+  mask-image: linear-gradient(90deg, transparent 42%, rgba(0,0,0,.45) 64%, #000 100%);
 }
 .all-station-card > * { position: relative; z-index: 1; }
 
