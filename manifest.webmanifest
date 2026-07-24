@@ -1,13 +1,13 @@
 {
-  "name": "最強熊谷伝説｜熊谷に勝てるか？",
-  "short_name": "最強熊谷伝説",
-  "description": "全国アメダスの最新気温で、あなたの県と熊谷が真夏の暑さ対決。",
+  "name": "熊谷ひと涼み案内｜全国アメダス気温",
+  "short_name": "熊谷ひと涼み",
+  "description": "あなたの県と熊谷の気温差から、休憩と水分補給の目安を案内します。",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
   "orientation": "portrait-primary",
-  "background_color": "#020713",
-  "theme_color": "#ff4b3e",
+  "background_color": "#e9fbff",
+  "theme_color": "#0d7896",
   "icons": [
     {
       "src": "assets/icons/icon-192.png",

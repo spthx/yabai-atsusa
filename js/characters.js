@@ -1,63 +1,63 @@
 const CHARACTER_REGISTRY = {
   kumagaya: {
-    region: "熊谷代表",
-    name: "くまがや灼熱くま",
+    region: "熊谷の案内役",
+    name: "くまがや水分係",
     image: "assets/characters/kumagaya-anime.png",
-    catchphrase: "基準点は まかせるクマ！",
-    role: "絶対王者・熊谷",
-    accent: "#ff3d62",
+    catchphrase: "ひと休みしていくクマ？",
+    role: "熊谷の休憩案内",
+    accent: "#39c8d7",
     focus: "50% 42%"
   }
 };
 
 const REGIONAL_CHARACTERS = {
   hokkaido: {
-    region: "北海道代表",
-    name: "北国の温度観測係",
+    region: "北海道の案内役",
+    name: "北国の涼み案内",
     image: "assets/characters/region-hokkaido.webp",
-    catchphrase: "25℃？ こっちはもう真夏だよ。",
-    role: "北の温度観測",
+    catchphrase: "冷たい水、用意してあるよ。",
+    role: "北のひと涼み",
     accent: "#83e5ff",
     focus: "50% 44%"
   },
   tohoku: {
-    region: "東北代表",
-    name: "水田の水温管理係",
+    region: "東北の案内役",
+    name: "水辺の休憩案内",
     image: "assets/characters/region-tohoku.webp",
-    catchphrase: "水温の変化、見逃さないよ。",
-    role: "水田の水温管理",
+    catchphrase: "水分補給、忘れないでね。",
+    role: "水辺の休憩案内",
     accent: "#ffd45c",
     focus: "50% 45%"
   },
   kanto: {
-    region: "関東代表",
-    name: "関東ヒート判定員",
+    region: "関東の案内役",
+    name: "木陰サーチ係",
     image: "assets/characters/default-anime.png",
-    catchphrase: "関東の熱気、受けて立つ！",
-    role: "都市熱の判定",
+    catchphrase: "いちばん近い木陰、探そっか。",
+    role: "街なかの木陰案内",
     accent: "#ff6f91",
     focus: "50% 45%"
   },
   chubu: {
-    region: "中部代表",
-    name: "山影ルート調査係",
+    region: "中部の案内役",
+    name: "山風ルート調査係",
     image: "assets/characters/region-chubu.webp",
-    catchphrase: "日陰の逃げ道、こっち。",
-    role: "山影ルート調査",
+    catchphrase: "涼しい山風、こっちだよ。",
+    role: "山風ルート案内",
     accent: "#6fdb8d",
     focus: "50% 43%"
   },
   kinki: {
-    region: "近畿代表",
-    name: "木陰ルートランナー",
+    region: "近畿の案内役",
+    name: "木陰ルート案内係",
     image: "assets/characters/region-kinki.webp",
-    catchphrase: "暑さも勢いで駆け抜ける！",
-    role: "木陰ルート探索",
+    catchphrase: "急がず、木陰でひと休み。",
+    role: "木陰ルート案内",
     accent: "#ff9f43",
     focus: "50% 44%"
   },
   chugoku: {
-    region: "中国代表",
+    region: "中国の案内役",
     name: "涼風ナビゲーター",
     image: "assets/characters/region-chugoku.webp",
     catchphrase: "風の通り道、見つけた！",
@@ -66,20 +66,20 @@ const REGIONAL_CHARACTERS = {
     focus: "50% 42%"
   },
   shikoku: {
-    region: "四国代表",
-    name: "照り返しファイター",
+    region: "四国の案内役",
+    name: "打ち水サポーター",
     image: "assets/characters/region-shikoku.webp",
-    catchphrase: "照り返しごと勝負するよ！",
-    role: "日差し迎撃",
+    catchphrase: "冷たい水で、ひと息つこう。",
+    role: "打ち水と休憩案内",
     accent: "#ff6954",
     focus: "50% 42%"
   },
   kyushu: {
-    region: "九州・沖縄代表",
-    name: "南国ヒートランナー",
+    region: "九州・沖縄の案内役",
+    name: "南国クールダウン係",
     image: "assets/characters/region-kyushu.webp",
-    catchphrase: "この暑さ、まだまだ負けない！",
-    role: "南国の暑さ耐久",
+    catchphrase: "日陰で水分、ちゃんと取ろう。",
+    role: "南国の休憩案内",
     accent: "#ff5ebc",
     focus: "50% 42%"
   }

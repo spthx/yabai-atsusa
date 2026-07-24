@@ -1,7 +1,7 @@
 function characterMarkup(character, side) {
   const style = `--character-accent:${character.accent || "#55c4ff"};--character-focus:${character.focus || "50% 45%"}`;
   return `<div class="character ${side}" style="${style}">
-    <span class="region-ribbon">${character.region || "地方代表"}</span>
+    <span class="region-ribbon">${character.region || "地方の案内役"}</span>
     <div class="fighter-photo"><img src="${character.image}" alt="${character.name}"></div>
     <p>${character.catchphrase}</p>
   </div>`;
@@ -17,8 +17,32 @@ function renderRegionalRoster() {
     </article>`).join("");
 }
 
+function getCoolDownGuide(temperature) {
+  if (temperature >= 35) return {
+    label: "いったん、涼しい場所へ",
+    detail: "無理を続けず、冷房のある場所や木陰で休みながら、こまめに水分をとりましょう。",
+    className: "guide-urgent"
+  };
+  if (temperature >= 30) return {
+    label: "こまめに、ひと涼み",
+    detail: "のどが渇く前に水分をとり、暑さを感じたら早めに涼しい場所で休みましょう。",
+    className: "guide-break"
+  };
+  if (temperature >= 25) return {
+    label: "水分を忘れずに",
+    detail: "過ごしやすく感じても、外出中は水分と休憩を忘れないようにしましょう。",
+    className: "guide-water"
+  };
+  return {
+    label: "気持ちよく、ひと休み",
+    detail: "気温が低めでも、活動量や体調に合わせて水分をとりましょう。",
+    className: "guide-gentle"
+  };
+}
+
 function renderComparison(kumagaya, target, ranking) {
   const comparison = getComparison(target.temperature, kumagaya.temperature);
+  const guide = getCoolDownGuide(target.temperature);
   const kumagayaScore = getKumagayaDeviation(kumagaya.temperature, kumagaya.temperature);
   const targetScore = getKumagayaDeviation(target.temperature, kumagaya.temperature);
   const targetPrefecture = normalizePrefectureName(target.prefecture);
@@ -26,42 +50,41 @@ function renderComparison(kumagaya, target, ranking) {
   const kumagayaRank = ranking.findIndex(item => item.id === kumagaya.id) + 1;
   const targetRank = ranking.findIndex(item => item.id === target.id) + 1;
   const difference = Math.abs(comparison.diff).toFixed(1);
-  const kumagayaWins = comparison.diff > 0;
-  const targetWins = comparison.diff < 0;
+  const differenceText = comparison.diff > 0
+    ? `熊谷より ${difference}℃ 低め`
+    : comparison.diff < 0
+      ? `熊谷より ${difference}℃ 高め`
+      : "熊谷と同じ気温";
 
-  const verdictText = comparison.diff >= 3 ? `熊谷より ${difference}℃ かなりマシ！`
-    : comparison.diff >= 1 ? `熊谷より ${difference}℃ マシ！`
-    : comparison.diff > -1 ? "ほぼ熊谷"
-    : `熊谷超え ${difference}℃！`;
-
-  latestShareText = targetPrefecture + " " + formatTemperature(target.temperature) + " vs 熊谷 " + formatTemperature(kumagaya.temperature) + "｜判定は「" + verdictText + "」熊谷偏差値" + (targetScore ?? "–") + "！ #最強熊谷伝説 #熊谷に勝てるか";
+  latestShareText = `${targetPrefecture} ${formatTemperature(target.temperature)}｜${differenceText}。今日の休憩目安は「${guide.label}」。水分を忘れずに。 #熊谷ひと涼み #水分補給`;
 
   document.getElementById("comparison-card").innerHTML = `
-    <div class="battle-backdrop" aria-hidden="true">
+    <div class="cool-backdrop" aria-hidden="true">
       <img src="assets/japan-silhouette.svg" alt="">
-      <i class="battle-flame flame-left"></i><i class="battle-flame flame-right"></i>
-      <span class="heat-spark spark-one">✦</span><span class="heat-spark spark-two">✦</span>
+      <i class="water-ring ring-left"></i><i class="water-ring ring-right"></i>
+      <span class="cool-bubble bubble-one"></span><span class="cool-bubble bubble-two"></span><span class="cool-bubble bubble-three"></span>
     </div>
     <div class="contestants">
-      <article class="contestant kumagaya-side ${kumagayaWins ? "is-winner" : ""}">${kumagayaWins ? '<span class="winner-badge">WIN!</span>' : ""}${characterMarkup(CHARACTER_REGISTRY.kumagaya, "hot")}
-        <h3>埼玉県<small>${CONFIG.kumagayaStationName}</small></h3>
-        <p class="heat-rank">全国暑さ <b>${kumagayaRank}位</b></p>
+      <article class="contestant kumagaya-side">${characterMarkup(CHARACTER_REGISTRY.kumagaya, "hot")}
+        <h3>埼玉県<small>熊谷・基準地点</small></h3>
+        <p class="heat-rank">全国気温 <b>${kumagayaRank}位</b></p>
         <p class="score-label">熊谷偏差値</p>
         <p class="score">${kumagayaScore ?? "–"}</p>
         <p class="temperature">${formatTemperature(kumagaya.temperature)}</p>
       </article>
-      <div class="versus">VS</div>
-      <article class="contestant target-side ${targetWins ? "is-winner" : ""}">${targetWins ? '<span class="winner-badge">WIN!</span>' : ""}${characterMarkup(targetCharacter, "cool")}
+      <div class="versus"><span>熊谷と</span>比較</div>
+      <article class="contestant target-side">${characterMarkup(targetCharacter, "cool")}
         <h3>${targetPrefecture}<small>観測地点 非公開</small></h3>
-        <p class="heat-rank">全国暑さ <b>${targetRank}位</b></p>
+        <p class="heat-rank">全国気温 <b>${targetRank}位</b></p>
         <p class="score-label">熊谷偏差値</p>
         <p class="score">${targetScore ?? "–"}</p>
         <p class="temperature">${formatTemperature(target.temperature)}</p>
       </article>
     </div>
-    <div class="verdict ${comparison.className}">
-      <strong>${verdictText}</strong>
-      <span>${comparison.detail}</span>
+    <div class="verdict ${guide.className}">
+      <small>${differenceText}</small>
+      <strong>${guide.label}</strong>
+      <span>${guide.detail}</span>
     </div>`;
 }
 
@@ -72,7 +95,7 @@ function renderHeatRanking(ranking, kumagayaTemp) {
   ranking.forEach((item, index) => {
     const score = getKumagayaDeviation(item.temperature, kumagayaTemp);
     const rank = index + 1;
-    const rankIcon = rank === 1 ? "👑" : rank === 2 ? "🥈" : rank === 3 ? "🥉" : "";
+    const rankIcon = rank === 1 ? "🧊" : rank === 2 ? "💧" : rank === 3 ? "🌿" : "";
     const municipality = item.city || item.location || item.name;
 
     const row = document.createElement("article");
@@ -122,11 +145,11 @@ function renderAllTemperatureStations(ranking, kumagaya) {
     ? ranking.filter(item => item.temperature > kumagaya.temperature).length
     : null;
 
-  note.textContent = `${ranking.length}地点の気温を、同一観測時刻・暑い順で集計しています。`;
+  note.textContent = `${ranking.length}地点の気温を、同一観測時刻・高い順で集計しています。`;
 
   if (summary) {
     summary.textContent = kumagayaRank
-      ? `熊谷は${kumagayaRank}位 / ${ranking.length}地点中・熊谷超え${hotterThanKumagaya}地点`
+      ? `熊谷は${kumagayaRank}位 / ${ranking.length}地点中・熊谷より高温${hotterThanKumagaya}地点`
       : `${ranking.length}地点を表示`;
   }
 

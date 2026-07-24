@@ -1,6 +1,6 @@
 let currentSnapshot = null;
 let selectedStation = null;
-let latestShareText = "最強熊谷伝説｜全国アメダスの最新気温で熊谷と暑さ対決！ #最強熊谷伝説 #熊谷に勝てるか";
+let latestShareText = "全国アメダスの最新気温から、今日のひと涼み目安を確認。のどが渇く前に水分を。 #熊谷ひと涼み #水分補給";
 
 function setObservationTime(latestTime) {
   const text = `観測時刻：${formatObservationTime(latestTime)}`;
@@ -15,7 +15,9 @@ function renderSnapshot(snapshot, target) {
   if (!kumagaya) throw new Error("熊谷の気温を確認できませんでした。");
 
   const selectedFromCurrentData = target && ranking.find(item => item.id === target.id);
-  const defaultCapital = capitalRanking.filter(item => item.temperature !== null && item.id !== kumagaya.id).sort((a, b) => b.temperature - a.temperature)[0];
+  const defaultCapital = capitalRanking
+    .filter(item => item.temperature !== null && item.id !== kumagaya.id)
+    .sort((a, b) => b.temperature - a.temperature)[0];
   selectedStation = selectedFromCurrentData || defaultCapital || kumagaya;
 
   const capitalInfo = getCapitalByStationId(selectedStation.id);
@@ -45,17 +47,18 @@ function updateShareLinks() {
   if (button) button.dataset.shareUrl = getXShareUrl();
 }
 
-function shareBattleResult() {
+function shareTemperatureResult() {
   const button = document.getElementById("share-button");
   const status = document.getElementById("share-status");
   const shareUrl = button?.dataset.shareUrl || getXShareUrl();
   status.textContent = "Xの投稿画面を開いています…";
   location.assign(shareUrl);
 }
+
 async function reloadHeatData() {
   const button = document.getElementById("refresh-button");
   button.disabled = true;
-  button.textContent = "更新中…";
+  button.textContent = "確認中…";
 
   try {
     currentSnapshot = await fetchAmedasSnapshot();
@@ -65,7 +68,7 @@ async function reloadHeatData() {
     showError("観測値を取得できませんでした。");
   } finally {
     button.disabled = false;
-    button.textContent = "最新の観測値を更新";
+    button.textContent = "最新の気温を確認";
   }
 }
 
@@ -84,16 +87,16 @@ function useCurrentLocation() {
 
     const prefectureLabel = normalizePrefectureName(nearest.prefecture);
     document.getElementById("location-note").textContent =
-      `${prefectureLabel}の近い観測データと比較しています。観測地点名は対戦画面やX投稿に表示しません。`;
+      `${prefectureLabel}の近い観測データから休憩目安を出しています。観測地点名は画面やX投稿に表示しません。`;
 
     renderSnapshot(currentSnapshot, nearest);
   }, () => {
     document.getElementById("location-note").textContent =
-      "位置情報を取得できなかったため、暑さランキング上位の地点と比較しています。";
+      "位置情報を取得できなかったため、気温ランキング上位の県データから休憩目安を表示しています。";
   }, { enableHighAccuracy: false, timeout: 8000, maximumAge: 300000 });
 }
 
 renderRegionalRoster();
 document.getElementById("refresh-button").addEventListener("click", reloadHeatData);
-document.getElementById("share-button").addEventListener("click", shareBattleResult);
+document.getElementById("share-button").addEventListener("click", shareTemperatureResult);
 reloadHeatData().then(useCurrentLocation);
