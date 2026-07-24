@@ -3468,3 +3468,124 @@ body.site-heat.temp-extreme .season-badge {
 @media (prefers-reduced-motion: reduce) {
   .character-bg-gallery img { animation: none; }
 }
+/* VISIBLE CHARACTER WATERMARKS */
+.character-bg-gallery img {
+  opacity: .15;
+  filter: saturate(.78) contrast(.94) brightness(.98);
+  mix-blend-mode: multiply;
+}
+
+.character-bg-gallery img:nth-child(odd) { left: -8%; }
+.character-bg-gallery img:nth-child(even) { right: -8%; }
+
+:is(.capital-section, .ranking-section, .all-stations-section) {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  border-radius: 22px;
+}
+
+:is(.capital-section, .ranking-section, .all-stations-section)::before {
+  position: absolute;
+  z-index: 0;
+  top: -28px;
+  right: -35px;
+  width: 220px;
+  aspect-ratio: 1;
+  content: "";
+  pointer-events: none;
+  background: var(--section-girl) center / cover no-repeat;
+  opacity: .14;
+  filter: saturate(.7) contrast(.92);
+  -webkit-mask-image: radial-gradient(circle, #000 25%, #000c 52%, transparent 74%);
+  mask-image: radial-gradient(circle, #000 25%, #000c 52%, transparent 74%);
+}
+
+.capital-section { --section-girl: url("../assets/characters/region-hokkaido.webp"); }
+.ranking-section { --section-girl: url("../assets/characters/region-chugoku.webp"); }
+.all-stations-section { --section-girl: url("../assets/characters/region-kinki.webp"); }
+
+:is(.capital-section, .ranking-section, .all-stations-section) > * {
+  position: relative;
+  z-index: 1;
+}
+
+:is(.capital-card, .ranking-card) {
+  --girl-watermark: url("../assets/characters/region-hokkaido.webp");
+}
+:is(.capital-card, .ranking-card):nth-child(6n + 2) { --girl-watermark: url("../assets/characters/region-kanto.webp"); }
+:is(.capital-card, .ranking-card):nth-child(6n + 3) { --girl-watermark: url("../assets/characters/region-chubu.webp"); }
+:is(.capital-card, .ranking-card):nth-child(6n + 4) { --girl-watermark: url("../assets/characters/region-kinki.webp"); }
+:is(.capital-card, .ranking-card):nth-child(6n + 5) { --girl-watermark: url("../assets/characters/region-chugoku.webp"); }
+:is(.capital-card, .ranking-card):nth-child(6n) { --girl-watermark: url("../assets/characters/region-kyushu.webp"); }
+
+:is(.capital-card, .ranking-card)::before {
+  position: absolute;
+  z-index: 0;
+  top: -24%;
+  right: 10%;
+  width: 48%;
+  aspect-ratio: 1;
+  content: "";
+  pointer-events: none;
+  background: var(--girl-watermark) center / cover no-repeat;
+  opacity: .19;
+  filter: saturate(.62) contrast(.92);
+  -webkit-mask-image: radial-gradient(circle, #000 30%, #000b 54%, transparent 76%);
+  mask-image: radial-gradient(circle, #000 30%, #000b 54%, transparent 76%);
+}
+
+:is(.capital-card, .ranking-card) > * {
+  position: relative;
+  z-index: 1;
+}
+
+:is(.capital-card, .ranking-card).temp-cold::before {
+  opacity: .16;
+}
+
+footer {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+footer::before {
+  position: absolute;
+  z-index: 0;
+  right: -42px;
+  bottom: -58px;
+  width: 210px;
+  aspect-ratio: 1;
+  content: "";
+  pointer-events: none;
+  background: url("../assets/characters/region-kyushu.webp") center / cover no-repeat;
+  opacity: .12;
+  filter: saturate(.65);
+  -webkit-mask-image: radial-gradient(circle, #000 28%, #000b 54%, transparent 76%);
+  mask-image: radial-gradient(circle, #000 28%, #000b 54%, transparent 76%);
+}
+
+footer > * {
+  position: relative;
+  z-index: 1;
+}
+
+@media (max-width: 520px) {
+  .character-bg-gallery img {
+    width: 255px;
+    opacity: .18;
+  }
+  .character-bg-gallery img:nth-child(odd) { left: -13%; }
+  .character-bg-gallery img:nth-child(even) { right: -13%; }
+  :is(.capital-section, .ranking-section, .all-stations-section)::before {
+    right: -62px;
+    width: 190px;
+    opacity: .16;
+  }
+  :is(.capital-card, .ranking-card)::before {
+    right: 4%;
+    width: 54%;
+    opacity: .21;
+  }
+}
