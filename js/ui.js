@@ -116,7 +116,7 @@ const REGION_DISPLAY_LABELS = {
   hokkaido: "北海道", tohoku: "東北", kanto: "関東", chubu: "中部",
   kinki: "近畿", chugoku: "中国", shikoku: "四国", kyushu: "九州・沖縄"
 };
-function renderCapitalRegionUI(capitals) {
+function renderCapitalHeatSpotlight(capitals) {
   const spotlight = document.getElementById("regional-heat-spotlight");
   const hottest = capitals.find(item => item.temperature !== null);
   if (spotlight && hottest) {
@@ -124,20 +124,10 @@ function renderCapitalRegionUI(capitals) {
     const character = REGIONAL_CHARACTERS[regionKey];
     spotlight.style.setProperty("--spotlight-accent", character.accent);
     spotlight.querySelector("img").src = character.image;
-    spotlight.querySelector("img").alt = `${REGION_DISPLAY_LABELS[regionKey]}の案内役`;
+    spotlight.querySelector("img").alt = `${REGION_DISPLAY_LABELS[regionKey]}キャラクター`;
     spotlight.querySelector("strong").textContent = `${hottest.prefecture} ${formatTemperature(hottest.temperature)}`;
-    spotlight.querySelector("span").textContent = `${REGION_DISPLAY_LABELS[regionKey]}の案内役が、県庁所在地ランキング首位を案内中`;
+    spotlight.querySelector("span").textContent = `${hottest.prefecture}が県庁所在地ランキング首位。現在の気温を案内中`;
   }
-
-  const filter = document.getElementById("region-character-filter");
-  if (!filter) return;
-  filter.innerHTML = Object.entries(REGIONAL_CHARACTERS).map(([key, character]) => {
-    const count = (PREFECTURE_REGION_MAP[key] || []).length;
-    return `<div class="region-character-button" style="--region-accent:${character.accent}">
-      <img src="${character.image}" alt="" loading="lazy" decoding="async">
-      <span><b>${REGION_DISPLAY_LABELS[key]}</b><small>${count}都道府県</small></span>
-    </div>`;
-  }).join("");
 
 }
 
@@ -212,7 +202,7 @@ function renderCapitalTemperatureList(capitals) {
       <strong>${missing ? "観測なし" : formatTemperature(item.temperature)}</strong>`;
     list.appendChild(card);
   });
-  renderCapitalRegionUI(capitals);
+  renderCapitalHeatSpotlight(capitals);
 }
 
 function renderAllTemperatureStations(ranking) {
