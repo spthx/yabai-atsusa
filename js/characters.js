@@ -5,6 +5,8 @@ const CHARACTER_REGISTRY = {
     image: "assets/characters/kumagaya-anime.png",
     catchphrase: "ひと休みしていくクマ？",
     role: "熊谷の休憩案内",
+    type: "BASE TYPE",
+    skills: ["基準気温", "水分コール"],
     accent: "#39c8d7",
     focus: "50% 50%"
   }
@@ -17,6 +19,8 @@ const REGIONAL_CHARACTERS = {
     image: "assets/characters/region-hokkaido.webp",
     catchphrase: "冷たい水、用意してあるよ。",
     role: "北のひと涼み",
+    type: "ICE TYPE",
+    skills: ["冷気観測", "水分ストック"],
     accent: "#83e5ff",
     focus: "50% 50%"
   },
@@ -26,6 +30,8 @@ const REGIONAL_CHARACTERS = {
     image: "assets/characters/region-tohoku.webp",
     catchphrase: "水分補給、忘れないでね。",
     role: "水辺の休憩案内",
+    type: "WATER TYPE",
+    skills: ["水温チェック", "休憩コール"],
     accent: "#ffd45c",
     focus: "50% 50%"
   },
@@ -35,6 +41,8 @@ const REGIONAL_CHARACTERS = {
     image: "assets/characters/region-kanto.webp",
     catchphrase: "いちばん近い木陰、探そっか。",
     role: "街なかの木陰案内",
+    type: "SHADE TYPE",
+    skills: ["木陰サーチ", "街風レーダー"],
     accent: "#ff6f91",
     focus: "50% 50%"
   },
@@ -44,6 +52,8 @@ const REGIONAL_CHARACTERS = {
     image: "assets/characters/region-chubu.webp",
     catchphrase: "涼しい山風、こっちだよ。",
     role: "山風ルート案内",
+    type: "WIND TYPE",
+    skills: ["山風キャッチ", "日陰ルート"],
     accent: "#6fdb8d",
     focus: "50% 50%"
   },
@@ -53,6 +63,8 @@ const REGIONAL_CHARACTERS = {
     image: "assets/characters/region-kinki.webp",
     catchphrase: "急がず、木陰でひと休み。",
     role: "木陰ルート案内",
+    type: "ROUTE TYPE",
+    skills: ["木陰ナビ", "休憩ポイント"],
     accent: "#ff9f43",
     focus: "50% 50%"
   },
@@ -62,6 +74,8 @@ const REGIONAL_CHARACTERS = {
     image: "assets/characters/region-chugoku.webp",
     catchphrase: "風の通り道、見つけた！",
     role: "涼風ルート案内",
+    type: "BREEZE TYPE",
+    skills: ["涼風サーチ", "水辺ナビ"],
     accent: "#5ec8ff",
     focus: "50% 50%"
   },
@@ -71,6 +85,8 @@ const REGIONAL_CHARACTERS = {
     image: "assets/characters/region-shikoku.webp",
     catchphrase: "冷たい水で、ひと息つこう。",
     role: "打ち水と休憩案内",
+    type: "SUN TYPE",
+    skills: ["日差しセンサー", "照り返しチェック"],
     accent: "#ff6954",
     focus: "50% 50%"
   },
@@ -80,6 +96,8 @@ const REGIONAL_CHARACTERS = {
     image: "assets/characters/region-kyushu.webp",
     catchphrase: "日陰で水分、ちゃんと取ろう。",
     role: "南国の休憩案内",
+    type: "TROPICAL TYPE",
+    skills: ["湿度レーダー", "水分タイマー"],
     accent: "#ff5ebc",
     focus: "50% 50%"
   }

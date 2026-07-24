@@ -1,8 +1,11 @@
 function characterMarkup(character, side) {
-  const style = `--character-accent:${character.accent || "#55c4ff"};--character-focus:${character.focus || "50% 45%"}`;
+  const style = `--character-accent:${character.accent || "#55c4ff"};--character-focus:${character.focus || "50% 50%"}`;
+  const skills = (character.skills || []).map(skill => `<span>${skill}</span>`).join("");
   return `<div class="character ${side}" style="${style}">
     <span class="region-ribbon">${character.region || "地方の案内役"}</span>
+    <small class="attribute-label">${character.type || "GUIDE TYPE"}</small>
     <div class="fighter-photo"><img src="${character.image}" alt="${character.name}"></div>
+    <div class="skill-tags" aria-label="特技">${skills}</div>
     <p>${character.catchphrase}</p>
   </div>`;
 }
@@ -12,8 +15,11 @@ function renderRegionalRoster() {
   if (!roster) return;
   roster.innerHTML = getRegionalCharacterList().map((character, index) => `
     <article class="regional-fighter" style="--character-accent:${character.accent};--delay:${index * 70}ms">
-      <div class="regional-fighter-photo"><img src="${character.image}" alt="${character.name}" style="object-position:${character.focus || "50% 45%"}"></div>
-      <div><b>${character.region}</b><small>${character.role}</small></div>
+      <div class="regional-fighter-photo">
+        <span class="roster-attribute">${character.type || "GUIDE TYPE"}</span>
+        <img src="${character.image}" alt="${character.name}" style="object-position:${character.focus || "50% 50%"}">
+      </div>
+      <div><b>${character.region}</b><small>${character.role}</small><em>★ ${(character.skills || ["夏の案内"])[0]}</em></div>
     </article>`).join("");
 }
 
@@ -21,22 +27,30 @@ function getCoolDownGuide(temperature) {
   if (temperature >= 35) return {
     label: "いったん、涼しい場所へ",
     detail: "無理を続けず、冷房のある場所や木陰で休みながら、こまめに水分をとりましょう。",
-    className: "guide-urgent"
+    className: "guide-urgent",
+    priority: "最優先",
+    level: 92
   };
   if (temperature >= 30) return {
     label: "こまめに、ひと涼み",
     detail: "のどが渇く前に水分をとり、暑さを感じたら早めに涼しい場所で休みましょう。",
-    className: "guide-break"
+    className: "guide-break",
+    priority: "高め",
+    level: 72
   };
   if (temperature >= 25) return {
     label: "水分を忘れずに",
     detail: "過ごしやすく感じても、外出中は水分と休憩を忘れないようにしましょう。",
-    className: "guide-water"
+    className: "guide-water",
+    priority: "ふつう",
+    level: 48
   };
   return {
     label: "気持ちよく、ひと休み",
     detail: "気温が低めでも、活動量や体調に合わせて水分をとりましょう。",
-    className: "guide-gentle"
+    className: "guide-gentle",
+    priority: "低め",
+    level: 28
   };
 }
 
@@ -84,6 +98,11 @@ function renderComparison(kumagaya, target, ranking) {
     <div class="verdict ${guide.className}">
       <small>${differenceText}</small>
       <strong>${guide.label}</strong>
+      <div class="cooldown-meter" style="--guide-level:${guide.level}%">
+        <span>ひと涼み優先度</span>
+        <div><i></i></div>
+        <b>${guide.priority}</b>
+      </div>
       <span>${guide.detail}</span>
     </div>`;
 }

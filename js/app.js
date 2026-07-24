@@ -96,6 +96,32 @@ function useCurrentLocation() {
   }, { enableHighAccuracy: false, timeout: 8000, maximumAge: 300000 });
 }
 
+function setupScrollReveals() {
+  const blocks = document.querySelectorAll(
+    ".comparison-section, .hydration-strip, .regional-section, .ranking-section, .capital-section, .all-stations-section"
+  );
+  const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  if (reducedMotion || !("IntersectionObserver" in window)) {
+    blocks.forEach(block => block.classList.add("is-visible"));
+    return;
+  }
+
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      entry.target.classList.add("is-visible");
+      observer.unobserve(entry.target);
+    });
+  }, { threshold: 0.08, rootMargin: "0px 0px -6% 0px" });
+
+  blocks.forEach(block => {
+    block.classList.add("reveal-block");
+    observer.observe(block);
+  });
+}
+
+setupScrollReveals();
 renderRegionalRoster();
 document.getElementById("refresh-button").addEventListener("click", reloadHeatData);
 document.getElementById("share-button").addEventListener("click", shareTemperatureResult);

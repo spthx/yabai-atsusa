@@ -11,14 +11,15 @@
   <meta property="og:title" content="暑さと張り合うより、ひと涼み。｜熊谷ひと涼み案内">
   <meta property="og:description" content="あなたの県と熊谷の気温を比べて、休憩と水分補給の目安をチェック。観測地点名はシェアされません。">
   <meta property="og:url" content="https://spthx.github.io/yabai-atsusa/">
-  <meta property="og:image" content="https://spthx.github.io/yabai-atsusa/assets/og-kumagaya-cool-v3.png">
+  <meta property="og:image" content="https://spthx.github.io/yabai-atsusa/assets/og-kumagaya-matchup-v4.png">
+  <meta property="og:image:alt" content="SUN属性とWATER属性の女性キャラクターを並べた、夏のスキル比較カード">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
-  <meta property="og:image:alt" content="夏の木陰で冷たい水を手にひと休みする女性キャラクター">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="暑さと張り合うより、ひと涼み。">
   <meta name="twitter:description" content="現在地の県と熊谷の気温差から、今日の休憩目安をチェック。観測地点名は出しません。">
-  <meta name="twitter:image" content="https://spthx.github.io/yabai-atsusa/assets/og-kumagaya-cool-v3.png">
+  <meta name="twitter:image" content="https://spthx.github.io/yabai-atsusa/assets/og-kumagaya-matchup-v4.png">
+  <meta name="twitter:image:alt" content="SUN属性とWATER属性の女性キャラクターを並べた、夏のスキル比較カード">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-title" content="熊谷ひと涼み">
@@ -43,9 +44,38 @@
       <p class="fairness-note">同一観測時刻のアメダス気温データを使って、あなたの県と熊谷の温度差を表示します。</p>
     </header>
 
-    <a class="campaign-visual" href="#comparison-heading" aria-label="いまの休憩目安を見る">
-      <img src="assets/og-kumagaya-cool-v3.png" alt="青空と水辺の木陰で冷たい水を差し出す夏の案内役">
-      <span><small>COOL BREAK START</small> いまの休憩目安を見る <b>↓</b></span>
+    <a class="campaign-visual matchup-visual" href="#comparison-heading" aria-label="SUN属性とWATER属性の夏スキル比較を見る">
+      <span class="matchup-cloud cloud-a" aria-hidden="true"></span>
+      <span class="matchup-cloud cloud-b" aria-hidden="true"></span>
+      <article class="matchup-card matchup-card-sun">
+        <span class="matchup-type">SUN TYPE</span>
+        <img src="assets/characters/region-shikoku.webp" alt="日差しと照り返しを確認する夏の案内役">
+        <div class="matchup-card-copy">
+          <small>FIELD SKILL</small>
+          <b>日差しセンサー</b>
+          <span>照り返しチェック</span>
+        </div>
+      </article>
+      <div class="matchup-center" aria-label="勝敗ではなく比較">
+        <small>SUMMER SKILL</small>
+        <b>×</b>
+        <strong>COMPARE</strong>
+        <span>勝敗なし</span>
+      </div>
+      <article class="matchup-card matchup-card-water">
+        <span class="matchup-type">WATER TYPE</span>
+        <img src="assets/icons/icon-512.png" alt="冷たい水と休憩を案内する夏のヒロイン">
+        <div class="matchup-card-copy">
+          <small>CARE SKILL</small>
+          <b>水分ナビ</b>
+          <span>ひと涼み提案</span>
+        </div>
+      </article>
+      <div class="matchup-caption">
+        <small>FRIENDLY MATCH UP</small>
+        <b>得意分野を並べて、今日の過ごし方を比較</b>
+        <span>いまの気温カードへ ↓</span>
+      </div>
     </a>
 
     <section class="comparison-section" aria-labelledby="comparison-heading">
