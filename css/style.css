@@ -3348,3 +3348,20 @@ body.site-heat.temp-extreme .season-badge {
 @media (prefers-reduced-motion: reduce) {
   #hydration-button { transition: none; }
 }
+/* COLLAPSED HOT STATIONS TOP 10 */
+.hot-ranking-details summary {
+  border-color: color-mix(in srgb, var(--site-heat, #ff921c) 56%, #fff);
+  box-shadow: 0 8px 22px color-mix(in srgb, var(--site-heat-deep, #a94413) 25%, transparent);
+}
+
+.hot-ranking-details summary span::after {
+  color: var(--site-heat-deep, #a94413);
+}
+
+.hot-ranking-details[open] .temperature-legend {
+  margin-top: 9px;
+}
+
+.hot-ranking-details[open] .heat-ranking-list {
+  margin-top: 2px;
+}

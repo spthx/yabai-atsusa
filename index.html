@@ -62,23 +62,25 @@
       <p id="location-note" class="location-note">位置情報を許可すると、近い観測データと比較します。観測地点名は画面やX投稿に表示しません。</p>
     </section>
 
-    <section class="ranking-section" aria-labelledby="ranking-heading">
-      <div class="section-heading"><span>🌡️</span><h2 id="ranking-heading">全国アメダス・気温ランキング</h2></div>
-      <p id="ranking-time" class="ranking-time">観測時刻：取得中</p>
-      <p class="ranking-note">全国の観測地点から、気温上位10地点＋熊谷偏差値100以上（熊谷と同じか高温）の全地点を表示します。熊谷偏差値は熊谷＝100の相対指数で、統計学上の偏差値ではありません。</p>
-      <div class="temperature-legend" aria-label="気温カードの色分け">
-        <span class="temp-extreme">40℃〜</span><span class="temp-purple">38℃〜</span>
-        <span class="temp-red">35℃〜</span><span class="temp-orange">30℃〜</span>
-        <span class="temp-yellow">27℃〜</span><span class="temp-green">24℃〜</span>
-        <span class="temp-blue">20℃〜</span><span class="temp-cold">〜19.9℃</span>
-      </div>
-      <div id="heat-ranking-list" class="heat-ranking-list" aria-live="polite"></div>
-    </section>
-
     <section class="capital-section" aria-labelledby="capital-heading">
-      <div class="section-heading"><span>🗾</span><h2 id="capital-heading">47都道府県代表地点</h2></div>
+      <div class="section-heading"><span>🗾</span><h2 id="capital-heading">47都道府県・気温ランキング</h2></div>
       <p class="capital-note">県庁所在地付近の代表アメダス地点を、すべて同じ観測時刻で比較しています。</p>
       <div id="capital-temperature-list" class="capital-temperature-list" aria-live="polite"></div>
+    </section>
+
+    <section class="ranking-section" aria-labelledby="ranking-heading">
+      <div class="section-heading"><span>🔥</span><h2 id="ranking-heading">特に暑い観測地点 TOP10</h2></div>
+      <p class="ranking-note">全国アメダスの現在気温上位10地点です。必要なときだけ開いて確認できます。</p>
+      <details class="all-stations-details hot-ranking-details">
+        <summary><span>上位10地点を開く</span><small id="ranking-time">観測時刻：取得中</small></summary>
+        <div class="temperature-legend" aria-label="気温カードの色分け">
+          <span class="temp-extreme">40℃〜</span><span class="temp-purple">38℃〜</span>
+          <span class="temp-red">35℃〜</span><span class="temp-orange">30℃〜</span>
+          <span class="temp-yellow">27℃〜</span><span class="temp-green">24℃〜</span>
+          <span class="temp-blue">20℃〜</span><span class="temp-cold">〜19.9℃</span>
+        </div>
+        <div id="heat-ranking-list" class="heat-ranking-list" aria-live="polite"></div>
+      </details>
     </section>
 
     <section class="all-stations-section" aria-labelledby="all-stations-heading">

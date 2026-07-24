@@ -33,9 +33,7 @@ function renderSnapshot(snapshot, target) {
   renderComparison(kumagaya, selectedStation, ranking);
   updateShareLinks();
 
-  const featuredNationwideRanking = ranking.filter((item, index) =>
-    index < 10 || item.temperature >= kumagaya.temperature
-  );
+  const featuredNationwideRanking = ranking.slice(0, 10);
 
   renderHeatRanking(featuredNationwideRanking, kumagaya.temperature);
   renderCapitalTemperatureList(capitalRanking);
