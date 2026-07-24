@@ -32,15 +32,6 @@
 <body>
   <div class="page-breeze" aria-hidden="true"><i></i><i></i><i></i></div>
   <main class="site-shell">
-    <div class="character-bg-gallery" aria-hidden="true">
-      <img src="assets/characters/region-hokkaido.webp" alt="" loading="lazy" decoding="async">
-      <img src="assets/characters/region-kanto.webp" alt="" loading="lazy" decoding="async">
-      <img src="assets/characters/region-chubu.webp" alt="" loading="lazy" decoding="async">
-      <img src="assets/characters/region-kinki.webp" alt="" loading="lazy" decoding="async">
-      <img src="assets/characters/region-chugoku.webp" alt="" loading="lazy" decoding="async">
-      <img src="assets/characters/region-shikoku.webp" alt="" loading="lazy" decoding="async">
-      <img src="assets/characters/region-kyushu.webp" alt="" loading="lazy" decoding="async">
-    </div>
     <header class="hero hero-compact">
       <p class="season-badge"><span>LIVE</span> 全国アメダス気温</p>
       <h1 class="cool-logo"><span>全国アメダス</span><b>最強熊谷伝説</b><small>HEAT LEGEND × COOL BREAK</small></h1>
@@ -76,12 +67,20 @@
 
     <section class="capital-section" aria-labelledby="capital-heading">
       <div class="section-heading"><span>🗾</span><h2 id="capital-heading">47都道府県・気温ランキング</h2></div>
+      <div class="character-showcase character-showcase-duo showcase-capital" aria-hidden="true">
+        <img class="showcase-girl showcase-girl-left" src="assets/characters/region-hokkaido.webp" alt="" loading="lazy" decoding="async">
+        <img class="showcase-girl showcase-girl-right" src="assets/characters/region-kyushu.webp" alt="" loading="lazy" decoding="async">
+      </div>
       <p class="capital-note">県庁所在地付近の代表アメダス地点を、すべて同じ観測時刻で比較しています。</p>
       <div id="capital-temperature-list" class="capital-temperature-list" aria-live="polite"></div>
     </section>
 
     <section class="ranking-section" aria-labelledby="ranking-heading">
       <div class="section-heading"><span>🔥</span><h2 id="ranking-heading">特に暑い観測地点 TOP10</h2></div>
+      <div class="character-showcase character-showcase-duo showcase-ranking" aria-hidden="true">
+        <img class="showcase-girl showcase-girl-left" src="assets/characters/region-kanto.webp" alt="" loading="lazy" decoding="async">
+        <img class="showcase-girl showcase-girl-right" src="assets/characters/region-chubu.webp" alt="" loading="lazy" decoding="async">
+      </div>
       <p id="ranking-time" class="ranking-time">観測時刻：取得中</p>
       <p class="ranking-note">全国アメダスの現在気温上位10地点を表示しています。</p>
       <div class="hot-ranking-panel">
@@ -97,6 +96,11 @@
 
     <section class="all-stations-section" aria-labelledby="all-stations-heading">
       <div class="section-heading"><span>🔎</span><h2 id="all-stations-heading">全国アメダス 11位以下</h2></div>
+      <div class="character-showcase character-showcase-trio showcase-stations" aria-hidden="true">
+        <img class="showcase-girl showcase-girl-left" src="assets/characters/region-kinki.webp" alt="" loading="lazy" decoding="async">
+        <img class="showcase-girl showcase-girl-center" src="assets/characters/region-chugoku.webp" alt="" loading="lazy" decoding="async">
+        <img class="showcase-girl showcase-girl-right" src="assets/characters/region-shikoku.webp" alt="" loading="lazy" decoding="async">
+      </div>
       <p id="all-stations-note" class="all-stations-note">TOP10以外の観測地点を高い順に確認できます。</p>
       <details class="all-stations-details">
         <summary><span>11位以下を開く</span><small id="all-stations-summary">集計中…</small></summary>
@@ -105,6 +109,16 @@
     </section>
 
     <footer>
+      <div class="footer-character-line" aria-hidden="true">
+        <img src="assets/characters/region-hokkaido.webp" alt="" loading="lazy" decoding="async">
+        <img src="assets/characters/region-tohoku.webp" alt="" loading="lazy" decoding="async">
+        <img src="assets/characters/region-kanto.webp" alt="" loading="lazy" decoding="async">
+        <img src="assets/characters/region-chubu.webp" alt="" loading="lazy" decoding="async">
+        <img src="assets/characters/region-kinki.webp" alt="" loading="lazy" decoding="async">
+        <img src="assets/characters/region-chugoku.webp" alt="" loading="lazy" decoding="async">
+        <img src="assets/characters/region-shikoku.webp" alt="" loading="lazy" decoding="async">
+        <img src="assets/characters/region-kyushu.webp" alt="" loading="lazy" decoding="async">
+      </div>
       <p>本サイトの比較・ランキングは、同一観測時刻の気象庁アメダス観測値を加工して作成しています。</p>
       <p>「熊谷偏差値」と休憩目安は、本サイト独自の演出・目安です。</p>
       <p class="safety-note">のどが渇く前に、こまめに水分をとりましょう。水分摂取について医師から指示がある場合は、その指示を優先してください。</p>
