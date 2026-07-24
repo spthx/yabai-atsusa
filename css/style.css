@@ -2497,3 +2497,27 @@ summary:focus-visible { outline-color: #30bfd0; }
   .share-primary,
   .share-primary::before { animation: none !important; }
 }
+/* 2026-07-24 顔サイズ統一：地方キャラは承認済み正方形クロップのみ */
+.fighter-photo,
+.character.hot .fighter-photo,
+.character.cool .fighter-photo {
+  width: min(100%, 205px);
+  aspect-ratio: 1 / 1;
+  clip-path: inset(0 round 20px);
+}
+
+.fighter-photo img,
+.character.hot .fighter-photo img,
+.character.cool .fighter-photo img {
+  object-position: var(--character-focus, 50% 50%);
+  transform: scale(1.06);
+  transform-origin: 50% 50%;
+}
+
+@media (max-width: 430px) {
+  .fighter-photo,
+  .character.hot .fighter-photo,
+  .character.cool .fighter-photo {
+    width: min(100%, 166px);
+  }
+}

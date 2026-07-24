@@ -6,7 +6,7 @@ const CHARACTER_REGISTRY = {
     catchphrase: "ひと休みしていくクマ？",
     role: "熊谷の休憩案内",
     accent: "#39c8d7",
-    focus: "50% 42%"
+    focus: "50% 50%"
   }
 };
 
@@ -18,7 +18,7 @@ const REGIONAL_CHARACTERS = {
     catchphrase: "冷たい水、用意してあるよ。",
     role: "北のひと涼み",
     accent: "#83e5ff",
-    focus: "50% 44%"
+    focus: "50% 50%"
   },
   tohoku: {
     region: "東北の案内役",
@@ -27,16 +27,16 @@ const REGIONAL_CHARACTERS = {
     catchphrase: "水分補給、忘れないでね。",
     role: "水辺の休憩案内",
     accent: "#ffd45c",
-    focus: "50% 45%"
+    focus: "50% 50%"
   },
   kanto: {
     region: "関東の案内役",
     name: "木陰サーチ係",
-    image: "assets/characters/default-anime.png",
+    image: "assets/characters/region-kanto.webp",
     catchphrase: "いちばん近い木陰、探そっか。",
     role: "街なかの木陰案内",
     accent: "#ff6f91",
-    focus: "50% 45%"
+    focus: "50% 50%"
   },
   chubu: {
     region: "中部の案内役",
@@ -45,7 +45,7 @@ const REGIONAL_CHARACTERS = {
     catchphrase: "涼しい山風、こっちだよ。",
     role: "山風ルート案内",
     accent: "#6fdb8d",
-    focus: "50% 43%"
+    focus: "50% 50%"
   },
   kinki: {
     region: "近畿の案内役",
@@ -54,7 +54,7 @@ const REGIONAL_CHARACTERS = {
     catchphrase: "急がず、木陰でひと休み。",
     role: "木陰ルート案内",
     accent: "#ff9f43",
-    focus: "50% 44%"
+    focus: "50% 50%"
   },
   chugoku: {
     region: "中国の案内役",
@@ -63,7 +63,7 @@ const REGIONAL_CHARACTERS = {
     catchphrase: "風の通り道、見つけた！",
     role: "涼風ルート案内",
     accent: "#5ec8ff",
-    focus: "50% 42%"
+    focus: "50% 50%"
   },
   shikoku: {
     region: "四国の案内役",
@@ -72,7 +72,7 @@ const REGIONAL_CHARACTERS = {
     catchphrase: "冷たい水で、ひと息つこう。",
     role: "打ち水と休憩案内",
     accent: "#ff6954",
-    focus: "50% 42%"
+    focus: "50% 50%"
   },
   kyushu: {
     region: "九州・沖縄の案内役",
@@ -81,7 +81,7 @@ const REGIONAL_CHARACTERS = {
     catchphrase: "日陰で水分、ちゃんと取ろう。",
     role: "南国の休憩案内",
     accent: "#ff5ebc",
-    focus: "50% 42%"
+    focus: "50% 50%"
   }
 };
 
