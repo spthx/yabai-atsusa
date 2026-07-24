@@ -12,6 +12,12 @@ function renderSnapshot(snapshot, target) {
   const ranking = buildTemperatureRanking(snapshot.readings, snapshot.stations);
   const capitalRanking = buildCapitalTemperatureList(snapshot.readings, snapshot.stations);
   const kumagaya = ranking.find(item => item.id === CONFIG.kumagayaStationId);
+  const siteHeatClass = getTempClass(ranking[0]?.temperature ?? kumagaya?.temperature ?? 0);
+  document.body.classList.remove(
+    "temp-extreme", "temp-purple", "temp-red", "temp-orange",
+    "temp-yellow", "temp-green", "temp-blue", "temp-cold"
+  );
+  document.body.classList.add("site-heat", siteHeatClass);
   if (!kumagaya) throw new Error("熊谷の気温を確認できませんでした。");
 
   const selectedFromCurrentData = target && ranking.find(item => item.id === target.id);
@@ -27,10 +33,9 @@ function renderSnapshot(snapshot, target) {
   renderComparison(kumagaya, selectedStation, ranking);
   updateShareLinks();
 
-  const featuredNationwideRanking = ranking.filter((item, index) => {
-    const score = getKumagayaDeviation(item.temperature, kumagaya.temperature);
-    return index < 10 || (score !== null && score >= 100);
-  });
+  const featuredNationwideRanking = ranking.filter((item, index) =>
+    index < 10 || item.temperature >= kumagaya.temperature
+  );
 
   renderHeatRanking(featuredNationwideRanking, kumagaya.temperature);
   renderCapitalTemperatureList(capitalRanking);

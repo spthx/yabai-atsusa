@@ -57,6 +57,9 @@ function getCoolDownGuide(temperature) {
 function renderComparison(kumagaya, target, ranking) {
   const comparison = getComparison(target.temperature, kumagaya.temperature);
   const guide = getCoolDownGuide(target.temperature);
+  const kumagayaHeatClass = getTempClass(kumagaya.temperature);
+  const targetHeatClass = getTempClass(target.temperature);
+  const comparisonHeatClass = getTempClass(Math.max(kumagaya.temperature, target.temperature));
   const kumagayaScore = getKumagayaDeviation(kumagaya.temperature, kumagaya.temperature);
   const targetScore = getKumagayaDeviation(target.temperature, kumagaya.temperature);
   const targetPrefecture = normalizePrefectureName(target.prefecture);
@@ -72,14 +75,16 @@ function renderComparison(kumagaya, target, ranking) {
 
   latestShareText = `${targetPrefecture} ${formatTemperature(target.temperature)}｜${differenceText}。今日の休憩目安は「${guide.label}」。水分を忘れずに。 #熊谷ひと涼み #水分補給`;
 
-  document.getElementById("comparison-card").innerHTML = `
+  const comparisonCard = document.getElementById("comparison-card");
+  comparisonCard.className = `comparison-card ${comparisonHeatClass}`;
+  comparisonCard.innerHTML = `
     <div class="cool-backdrop" aria-hidden="true">
       <img src="assets/japan-silhouette.svg" alt="">
       <i class="water-ring ring-left"></i><i class="water-ring ring-right"></i>
       <span class="cool-bubble bubble-one"></span><span class="cool-bubble bubble-two"></span><span class="cool-bubble bubble-three"></span>
     </div>
     <div class="contestants">
-      <article class="contestant kumagaya-side">${characterMarkup(CHARACTER_REGISTRY.kumagaya, "hot")}
+      <article class="contestant kumagaya-side ${kumagayaHeatClass}">${characterMarkup(CHARACTER_REGISTRY.kumagaya, "hot")}
         <h3>埼玉県<small>熊谷・基準地点</small></h3>
         <p class="heat-rank">全国気温 <b>${kumagayaRank}位</b></p>
         <p class="score-label">熊谷偏差値</p>
@@ -87,7 +92,7 @@ function renderComparison(kumagaya, target, ranking) {
         <p class="temperature">${formatTemperature(kumagaya.temperature)}</p>
       </article>
       <div class="versus"><span>熊谷と</span>比較</div>
-      <article class="contestant target-side">${characterMarkup(targetCharacter, "cool")}
+      <article class="contestant target-side ${targetHeatClass}">${characterMarkup(targetCharacter, "cool")}
         <h3>${targetPrefecture}<small>観測地点 非公開</small></h3>
         <p class="heat-rank">全国気温 <b>${targetRank}位</b></p>
         <p class="score-label">熊谷偏差値</p>

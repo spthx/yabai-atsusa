@@ -2948,3 +2948,240 @@ summary:focus-visible { outline-color: #30bfd0; }
   .cooldown-meter i::after { animation: none !important; }
   .reveal-block { opacity: 1; transform: none; transition: none; }
 }
+/* DYNAMIC HEAT PALETTE — restored */
+body.site-heat {
+  --site-heat: #ffad2f;
+  --site-heat-deep: #b94818;
+  --site-heat-soft: #fff1c9;
+  color: #173d53;
+  background:
+    radial-gradient(circle at 7% 12%, color-mix(in srgb, var(--site-heat) 34%, transparent), transparent 24%),
+    radial-gradient(circle at 93% 30%, color-mix(in srgb, var(--site-heat-deep) 24%, transparent), transparent 27%),
+    linear-gradient(155deg, var(--site-heat-soft), #eafaff 42%, #fff7dc 100%);
+  transition: background .7s ease;
+}
+body.site-heat.temp-extreme { --site-heat: #d43b86; --site-heat-deep: #40104e; --site-heat-soft: #ffe0ed; }
+body.site-heat.temp-purple  { --site-heat: #df3d76; --site-heat-deep: #64143f; --site-heat-soft: #ffe1e8; }
+body.site-heat.temp-red     { --site-heat: #ff503d; --site-heat-deep: #8c1e19; --site-heat-soft: #ffe3d8; }
+body.site-heat.temp-orange  { --site-heat: #ff921c; --site-heat-deep: #a94413; --site-heat-soft: #fff0cf; }
+body.site-heat.temp-yellow  { --site-heat: #f2c526; --site-heat-deep: #9a7010; --site-heat-soft: #fff8c9; }
+body.site-heat.temp-green   { --site-heat: #42b86f; --site-heat-deep: #176541; --site-heat-soft: #e3f8df; }
+body.site-heat.temp-blue    { --site-heat: #399bd5; --site-heat-deep: #17649a; --site-heat-soft: #e0f5ff; }
+body.site-heat.temp-cold    { --site-heat: #91cadf; --site-heat-deep: #4a8ba7; --site-heat-soft: #eefaff; }
+
+body.site-heat .site-shell {
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--site-heat) 24%, transparent),
+    0 22px 74px color-mix(in srgb, var(--site-heat-deep) 24%, transparent);
+}
+body.site-heat .season-badge {
+  border-color: color-mix(in srgb, var(--site-heat) 58%, #fff);
+  box-shadow: 0 5px 18px color-mix(in srgb, var(--site-heat-deep) 25%, transparent);
+}
+body.site-heat.temp-orange .season-badge,
+body.site-heat.temp-red .season-badge,
+body.site-heat.temp-purple .season-badge,
+body.site-heat.temp-extreme .season-badge {
+  color: #fff;
+  background: linear-gradient(110deg, var(--site-heat-deep), var(--site-heat));
+}
+
+/* The main comparison uses the hotter of the two temperatures. */
+.comparison-card[class*="temp-"] {
+  --heat-a: #19667f;
+  --heat-b: #3db8ca;
+  --heat-c: #dffaff;
+  --heat-ink: #fff;
+  border-color: color-mix(in srgb, var(--heat-b) 74%, #fff);
+  background:
+    radial-gradient(circle at 50% 8%, color-mix(in srgb, var(--heat-c) 72%, transparent), transparent 34%),
+    linear-gradient(122deg, var(--heat-a), var(--heat-b) 56%, var(--heat-c));
+  box-shadow:
+    0 18px 46px color-mix(in srgb, var(--heat-a) 34%, transparent),
+    inset 0 0 42px color-mix(in srgb, var(--heat-c) 23%, transparent);
+  animation: heat-card-breathe 3.2s ease-in-out infinite;
+}
+.comparison-card.temp-extreme { --heat-a: #26062e; --heat-b: #7d176f; --heat-c: #f05eaa; }
+.comparison-card.temp-purple  { --heat-a: #4a0d34; --heat-b: #a91f58; --heat-c: #ff7192; }
+.comparison-card.temp-red     { --heat-a: #681116; --heat-b: #db382c; --heat-c: #ff9161; }
+.comparison-card.temp-orange  { --heat-a: #7c300e; --heat-b: #ef7215; --heat-c: #ffd05d; }
+.comparison-card.temp-yellow  { --heat-a: #79570a; --heat-b: #d5a816; --heat-c: #fff29a; }
+.comparison-card.temp-green   { --heat-a: #13513b; --heat-b: #28a56c; --heat-c: #a9f2bf; }
+.comparison-card.temp-blue    { --heat-a: #123d6d; --heat-b: #238ccf; --heat-c: #a5e8ff; }
+.comparison-card.temp-cold    { --heat-a: #2a708d; --heat-b: #82c6dc; --heat-c: #eefcff; }
+
+.comparison-card[class*="temp-"] .cool-backdrop {
+  background:
+    repeating-linear-gradient(112deg, transparent 0 26px, #ffffff12 27px 29px),
+    radial-gradient(circle at 50% 10%, #fff4, transparent 42%);
+}
+.comparison-card.temp-orange::before,
+.comparison-card.temp-red::before,
+.comparison-card.temp-purple::before,
+.comparison-card.temp-extreme::before {
+  position: absolute;
+  z-index: 0;
+  top: -42%;
+  left: -18%;
+  width: 36%;
+  height: 190%;
+  content: "";
+  pointer-events: none;
+  background: linear-gradient(90deg, transparent, #fff3, transparent);
+  transform: rotate(12deg);
+  animation: heat-sweep 3.8s ease-in-out infinite;
+}
+
+/* Each heroine receives the color of her own observation point. */
+.contestant[class*="temp-"] {
+  --local-heat: #42b9cf;
+  --local-deep: #16647c;
+  --local-ink: #fff;
+  margin: 7px 4px;
+  padding: 10px 5px 8px;
+  border: 1px solid color-mix(in srgb, var(--local-heat) 66%, #fff);
+  border-radius: 22px;
+  color: var(--local-ink);
+  background: linear-gradient(165deg, color-mix(in srgb, var(--local-deep) 72%, transparent), color-mix(in srgb, var(--local-heat) 48%, transparent));
+  box-shadow: 0 10px 24px color-mix(in srgb, var(--local-deep) 36%, transparent), inset 0 0 24px #ffffff16;
+}
+.contestant.temp-extreme { --local-heat: #f354aa; --local-deep: #3a093d; }
+.contestant.temp-purple  { --local-heat: #ef4e82; --local-deep: #581033; }
+.contestant.temp-red     { --local-heat: #ff634c; --local-deep: #721710; }
+.contestant.temp-orange  { --local-heat: #ff9c27; --local-deep: #82350d; }
+.contestant.temp-yellow  { --local-heat: #f0cb35; --local-deep: #78560b; }
+.contestant.temp-green   { --local-heat: #43c47d; --local-deep: #175a3e; }
+.contestant.temp-blue    { --local-heat: #49ace4; --local-deep: #15527d; }
+.contestant.temp-cold    { --local-heat: #9cd9ec; --local-deep: #39758e; }
+
+.contestant[class*="temp-"] h3,
+.contestant[class*="temp-"] h3 small,
+.contestant[class*="temp-"] .score-label,
+.contestant[class*="temp-"] .score,
+.contestant[class*="temp-"] .temperature {
+  color: var(--local-ink);
+  text-shadow: 0 2px 4px color-mix(in srgb, var(--local-deep) 80%, transparent), 0 0 14px color-mix(in srgb, var(--local-heat) 52%, transparent);
+}
+.contestant[class*="temp-"] .heat-rank {
+  border-color: #ffffff75;
+  color: #fff;
+  background: #170b0759;
+}
+.contestant[class*="temp-"] .heat-rank b { color: #fff7ad; }
+.contestant[class*="temp-"] .fighter-photo,
+.contestant[class*="temp-"] .character.hot .fighter-photo,
+.contestant[class*="temp-"] .character.cool .fighter-photo {
+  border-color: #fff;
+  background: linear-gradient(155deg, color-mix(in srgb, var(--local-heat) 48%, #fff), var(--local-heat));
+  box-shadow:
+    0 0 0 3px color-mix(in srgb, var(--local-heat) 42%, transparent),
+    0 10px 26px color-mix(in srgb, var(--local-deep) 52%, transparent),
+    inset 0 0 18px #fff8;
+}
+.comparison-card[class*="temp-"] .versus {
+  color: var(--heat-a);
+  box-shadow: 0 8px 24px color-mix(in srgb, var(--heat-a) 44%, transparent), inset 0 0 20px color-mix(in srgb, var(--heat-c) 35%, transparent);
+}
+
+/* Full color temperature cards. */
+:is(.ranking-card, .capital-card, .all-station-card)[class*="temp-"] {
+  --card-a: #24647e;
+  --card-b: #65bbd3;
+  --card-c: #dff8ff;
+  --card-ink: #fff;
+  --card-soft: #eaffff;
+  overflow: hidden;
+  isolation: isolate;
+  color: var(--card-ink);
+  border-color: color-mix(in srgb, var(--card-b) 72%, #fff);
+  background: linear-gradient(115deg, var(--card-a), var(--card-b) 62%, var(--card-c));
+  box-shadow: inset 5px 0 0 var(--card-b), 0 8px 20px color-mix(in srgb, var(--card-a) 28%, transparent);
+}
+:is(.ranking-card, .capital-card, .all-station-card).temp-extreme { --card-a: #280631; --card-b: #77176d; --card-c: #ed5ca8; --card-soft: #ffd5ef; }
+:is(.ranking-card, .capital-card, .all-station-card).temp-purple  { --card-a: #4a0d35; --card-b: #a51e58; --card-c: #f8658e; --card-soft: #ffd4e3; }
+:is(.ranking-card, .capital-card, .all-station-card).temp-red     { --card-a: #6e1418; --card-b: #d53b30; --card-c: #ff8560; --card-soft: #ffe0bd; }
+:is(.ranking-card, .capital-card, .all-station-card).temp-orange  { --card-a: #81360f; --card-b: #e97718; --card-c: #ffc958; --card-soft: #fff0b1; }
+:is(.ranking-card, .capital-card, .all-station-card).temp-yellow  { --card-a: #76580a; --card-b: #cfae22; --card-c: #fff094; --card-soft: #fffbd1; }
+:is(.ranking-card, .capital-card, .all-station-card).temp-green   { --card-a: #16513d; --card-b: #28a46d; --card-c: #9beebe; --card-soft: #d9ffe7; }
+:is(.ranking-card, .capital-card, .all-station-card).temp-blue    { --card-a: #123e70; --card-b: #258bcf; --card-c: #9ee5ff; --card-soft: #ddf7ff; }
+:is(.ranking-card, .capital-card, .all-station-card).temp-cold    { --card-a: #d6edf6; --card-b: #edf9fd; --card-c: #fff; --card-ink: #173b51; --card-soft: #2b6680; }
+
+:is(.ranking-card, .capital-card, .all-station-card)[class*="temp-"] :is(
+  .rank, .place, .place b, .place small, .rank-temperature, .rank-score, .rank-score b,
+  .capital-rank, .capital-place, .capital-place b, .capital-place small,
+  .station-rank, .station-info, .station-info b, .station-info small
+),
+:is(.capital-card, .all-station-card)[class*="temp-"] > strong {
+  color: var(--card-ink);
+  text-shadow: 0 2px 4px color-mix(in srgb, var(--card-a) 82%, transparent);
+}
+:is(.ranking-card, .capital-card, .all-station-card)[class*="temp-"] :is(.place em, .station-info em) {
+  color: var(--card-soft);
+  text-shadow: 0 2px 4px color-mix(in srgb, var(--card-a) 82%, transparent);
+}
+:is(.ranking-card, .capital-card, .all-station-card).temp-cold :is(
+  .rank, .place, .place b, .place em, .place small, .rank-temperature, .rank-score, .rank-score b,
+  .capital-rank, .capital-place, .capital-place b, .capital-place small,
+  .station-rank, .station-info, .station-info b, .station-info em, .station-info small
+),
+:is(.capital-card, .all-station-card).temp-cold > strong {
+  text-shadow: none;
+}
+.all-station-card.kumagaya-marker {
+  outline: 3px solid #66f1ff;
+  outline-offset: -3px;
+  box-shadow: inset 5px 0 0 #c9fbff, 0 0 0 2px #087f98, 0 9px 22px #075a713d;
+}
+
+.temperature-legend {
+  display: flex;
+  gap: 5px;
+  margin: 0 0 12px;
+  padding: 4px 2px 7px;
+  overflow-x: auto;
+  scrollbar-width: thin;
+}
+.temperature-legend span {
+  flex: 0 0 auto;
+  min-width: 58px;
+  padding: 6px 7px;
+  border: 1px solid #ffffffb8;
+  border-radius: 999px;
+  color: #fff;
+  font-size: .59rem;
+  font-weight: 900;
+  text-align: center;
+  text-shadow: 0 1px 2px #0008;
+  box-shadow: 0 3px 9px #173b5420;
+}
+.temperature-legend .temp-extreme { background: linear-gradient(110deg, #280631, #ed5ca8); }
+.temperature-legend .temp-purple  { background: linear-gradient(110deg, #4a0d35, #f8658e); }
+.temperature-legend .temp-red     { background: linear-gradient(110deg, #6e1418, #ff8560); }
+.temperature-legend .temp-orange  { background: linear-gradient(110deg, #81360f, #ffc958); }
+.temperature-legend .temp-yellow  { background: linear-gradient(110deg, #76580a, #fff094); }
+.temperature-legend .temp-green   { background: linear-gradient(110deg, #16513d, #9beebe); }
+.temperature-legend .temp-blue    { background: linear-gradient(110deg, #123e70, #9ee5ff); }
+.temperature-legend .temp-cold    { color: #173b51; background: linear-gradient(110deg, #d6edf6, #fff); text-shadow: none; }
+
+@keyframes heat-card-breathe {
+  0%, 100% { filter: saturate(1); }
+  50% { filter: saturate(1.1) brightness(1.025); }
+}
+@keyframes heat-sweep {
+  0%, 28% { transform: translateX(-210%) rotate(12deg); opacity: 0; }
+  42% { opacity: .65; }
+  72%, 100% { transform: translateX(430%) rotate(12deg); opacity: 0; }
+}
+
+@media (max-width: 520px) {
+  .contestant[class*="temp-"] { margin-inline: 1px; padding-inline: 3px; border-radius: 17px; }
+  .temperature-legend { margin-inline: -2px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .comparison-card[class*="temp-"] { animation: none; }
+  .comparison-card.temp-orange::before,
+  .comparison-card.temp-red::before,
+  .comparison-card.temp-purple::before,
+  .comparison-card.temp-extreme::before { animation: none; display: none; }
+}
