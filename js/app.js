@@ -37,6 +37,7 @@ function renderSnapshot(snapshot, target) {
   renderHeatRanking(featuredNationwideRanking, kumagaya.temperature);
   renderCapitalTemperatureList(capitalRanking);
   renderAllTemperatureStations(ranking);
+  document.body.classList.add("data-is-live");
 }
 
 async function shareTemperatureResult() {
@@ -77,8 +78,11 @@ async function shareTemperatureResult() {
 
 async function reloadHeatData() {
   const button = document.getElementById("refresh-button");
+  const comparisonCard = document.getElementById("comparison-card");
   button.disabled = true;
   button.textContent = "確認中…";
+  document.body.classList.add("is-refreshing");
+  comparisonCard?.setAttribute("aria-busy", "true");
 
   try {
     currentSnapshot = await fetchAmedasSnapshot();
@@ -89,6 +93,8 @@ async function reloadHeatData() {
   } finally {
     button.disabled = false;
     button.textContent = "最新の気温を確認";
+    document.body.classList.remove("is-refreshing");
+    comparisonCard?.setAttribute("aria-busy", "false");
   }
 }
 
@@ -107,7 +113,7 @@ function useCurrentLocation() {
 
     const prefectureLabel = normalizePrefectureName(nearest.prefecture);
     document.getElementById("location-note").textContent =
-      `${prefectureLabel}の近い観測データから休憩目安を出しています。観測地点名は画面やX投稿に表示しません。`;
+      `${prefectureLabel}の近い観測データから休憩目安を出しています。観測地点名は画面や共有内容に表示しません。`;
 
     renderSnapshot(currentSnapshot, nearest);
   }, () => {
@@ -118,7 +124,7 @@ function useCurrentLocation() {
 
 function setupScrollReveals() {
   const blocks = document.querySelectorAll(
-    ".comparison-section, .ranking-section, .capital-section, .all-stations-section"
+    ".hero, .comparison-section, .ranking-section, .capital-section, .all-stations-section"
   );
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
@@ -144,6 +150,7 @@ function setupScrollReveals() {
 function setupHydrationAction() {
   const button = document.getElementById("hydration-button");
   const status = document.getElementById("hydration-status");
+  const action = button?.closest(".hydration-action");
   if (!button || !status) return;
 
   const storageKey = "saikyo-kumagaya-hydration-time";
@@ -151,6 +158,8 @@ function setupHydrationAction() {
     const time = new Date(timestamp);
     if (!Number.isFinite(time.getTime())) return;
     status.textContent = `${time.toLocaleTimeString("ja-JP", { hour: "2-digit", minute: "2-digit" })} に水分補給を記録しました`;
+    button.classList.add("is-recorded");
+    button.innerHTML = '<span aria-hidden="true">✓</span> 記録しました';
   };
 
   try {
@@ -168,12 +177,59 @@ function setupHydrationAction() {
       // The on-screen record still works without storage.
     }
     showRecordedTime(timestamp);
-    button.classList.add("is-recorded");
-    button.innerHTML = '<span aria-hidden="true">✓</span> 記録しました';
+    if (action && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      action.classList.remove("is-celebrating");
+      requestAnimationFrame(() => {
+        action.classList.add("is-celebrating");
+        window.setTimeout(() => action.classList.remove("is-celebrating"), 950);
+      });
+    }
   });
 }
+
+function setupUltraPresentation() {
+  const root = document.documentElement;
+  const comparisonCard = document.getElementById("comparison-card");
+  const details = document.getElementById("all-stations-details");
+  const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  let progressFrame = 0;
+
+  const updateProgress = () => {
+    const scrollRange = Math.max(1, root.scrollHeight - window.innerHeight);
+    root.style.setProperty("--page-progress", Math.min(1, window.scrollY / scrollRange));
+    progressFrame = 0;
+  };
+
+  window.addEventListener("scroll", () => {
+    if (progressFrame) return;
+    progressFrame = requestAnimationFrame(updateProgress);
+  }, { passive: true });
+  updateProgress();
+
+  details?.addEventListener("toggle", () => {
+    if (details.open) {
+      renderPendingAllTemperatureStations();
+    } else {
+      clearRenderedAllTemperatureStations();
+    }
+  });
+
+  if (!reducedMotion && window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
+    comparisonCard?.addEventListener("pointermove", event => {
+      const bounds = comparisonCard.getBoundingClientRect();
+      comparisonCard.style.setProperty("--pointer-x", `${event.clientX - bounds.left}px`);
+      comparisonCard.style.setProperty("--pointer-y", `${event.clientY - bounds.top}px`);
+    });
+    comparisonCard?.addEventListener("pointerleave", () => {
+      comparisonCard.style.removeProperty("--pointer-x");
+      comparisonCard.style.removeProperty("--pointer-y");
+    });
+  }
+}
+
 setupScrollReveals();
 setupHydrationAction();
+setupUltraPresentation();
 document.getElementById("refresh-button").addEventListener("click", reloadHeatData);
 document.getElementById("share-button").addEventListener("click", shareTemperatureResult);
 reloadHeatData().then(useCurrentLocation);
