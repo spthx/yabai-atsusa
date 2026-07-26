@@ -1,8 +1,9 @@
-function characterMarkup(character, side) {
+function characterMarkup(character, side, ribbonOverride = "") {
   const style = `--character-accent:${character.accent || "#55c4ff"};--character-focus:${character.focus || "50% 50%"}`;
   const skills = (character.skills || []).map(skill => `<span>${skill}</span>`).join("");
+  const ribbonLabel = ribbonOverride || character.region || "地方の案内役";
   return `<div class="character ${side}" style="${style}">
-    <span class="region-ribbon">${character.region || "地方の案内役"}</span>
+    <span class="region-ribbon">${ribbonLabel}</span>
     <small class="attribute-label">${character.type || "GUIDE TYPE"}</small>
     <div class="fighter-photo"><img src="${character.image}" alt="${character.name}"></div>
     <div class="skill-tags" aria-label="特技">${skills}</div>
@@ -41,7 +42,7 @@ function getCoolDownGuide(temperature) {
   };
 }
 
-function renderComparison(kumagaya, target, ranking) {
+function renderComparison(kumagaya, target, ranking, { isFallback = false } = {}) {
   const comparison = getComparison(target.temperature, kumagaya.temperature);
   const guide = getCoolDownGuide(target.temperature);
   const kumagayaHeatClass = getTempClass(kumagaya.temperature);
@@ -50,6 +51,9 @@ function renderComparison(kumagaya, target, ranking) {
   const kumagayaScore = getKumagayaDeviation(kumagaya.temperature, kumagaya.temperature);
   const targetScore = getKumagayaDeviation(target.temperature, kumagaya.temperature);
   const targetPrefecture = normalizePrefectureName(target.prefecture);
+  const targetDisplayName = isFallback ? "47県暫定1位" : targetPrefecture;
+  const targetDetail = isFallback ? `${targetPrefecture}・代表地点` : "観測地点 非公開";
+  const targetShareLabel = isFallback ? `47都道府県代表・暫定1位（${targetPrefecture}）` : targetPrefecture;
   const targetCharacter = getCharacterForPrefecture(targetPrefecture);
   const kumagayaRank = ranking.findIndex(item => item.id === kumagaya.id) + 1;
   const targetRank = ranking.findIndex(item => item.id === target.id) + 1;
@@ -60,21 +64,21 @@ function renderComparison(kumagaya, target, ranking) {
       ? `熊谷より ${difference}℃ 高め`
       : "熊谷と同じ気温";
 
-  latestShareText = `${targetPrefecture} ${formatTemperature(target.temperature)}｜${differenceText}。今日の休憩目安は「${guide.label}」。水分を忘れずに。 #最強熊谷伝説 #水分補給`;
+  latestShareText = `${targetShareLabel} ${formatTemperature(target.temperature)}｜${differenceText}。今日の休憩目安は「${guide.label}」。水分を忘れずに。 #最強熊谷伝説 #水分補給`;
 
   const comparisonCard = document.getElementById("comparison-card");
-  comparisonCard.className = `comparison-card ${comparisonHeatClass}`;
+  comparisonCard.className = `comparison-card ${comparisonHeatClass}${isFallback ? " is-fallback" : ""}`;
   comparisonCard.innerHTML = `
     <div class="cool-backdrop" aria-hidden="true">
       <img src="assets/japan-silhouette.svg" alt="">
       <i class="water-ring ring-left"></i><i class="water-ring ring-right"></i>
       <span class="cool-bubble bubble-one"></span><span class="cool-bubble bubble-two"></span><span class="cool-bubble bubble-three"></span>
     </div>
-    <div class="match-live-strip" role="group" aria-label="熊谷と${targetPrefecture}の現在気温">
+    <div class="match-live-strip" role="group" aria-label="熊谷と${targetDisplayName}の現在気温">
       <span class="live-signal"><i></i> LIVE</span>
       <b><small>熊谷</small>${formatTemperature(kumagaya.temperature)}</b>
       <em>${differenceText}</em>
-      <b><small>${targetPrefecture}</small>${formatTemperature(target.temperature)}</b>
+      <b><small>${targetDisplayName}</small>${formatTemperature(target.temperature)}</b>
     </div>
     <div class="contestants">
       <article class="contestant kumagaya-side ${kumagayaHeatClass}">${characterMarkup(CHARACTER_REGISTRY.kumagaya, "hot")}
@@ -85,8 +89,8 @@ function renderComparison(kumagaya, target, ranking) {
         <p class="temperature">${formatTemperature(kumagaya.temperature)}</p>
       </article>
       <div class="versus"><span>熊谷と</span>比較</div>
-      <article class="contestant target-side ${targetHeatClass}">${characterMarkup(targetCharacter, "cool")}
-        <h3>${targetPrefecture}<small>観測地点 非公開</small></h3>
+      <article class="contestant target-side ${targetHeatClass}">${characterMarkup(targetCharacter, "cool", isFallback ? "現在地未確定" : "")}
+        <h3>${targetDisplayName}<small>${targetDetail}</small></h3>
         <p class="heat-rank">全国気温 <b>${targetRank}位</b></p>
         <p class="score-label">熊谷偏差値</p>
         <p class="score">${targetScore ?? "–"}</p>
