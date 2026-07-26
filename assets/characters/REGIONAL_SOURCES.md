@@ -1,15 +1,15 @@
 # 地方キャラクター採用元
 
-地方キャラクターは、ユーザーが選別した `candidate-characters` 内の画像、または明示的に合格となった「稲守ねむ」だけを使用する。
+地方キャラクターは、ユーザーが合格相当として選別した画像、または明示的に合格となった「稲守ねむ」だけを使用する。
 
-- 北海道: `candidate-characters/image-gen-6(1).png`
+- 北海道: `characters/06_銀髪セーラーワンピースの少女.png`（2026-07-26追加）
 - 東北: `generated-characters/05_秋田県_稲守ねむ.png`（明示合格）
-- 関東: `candidate-characters/image-gen-3(7).png`
-- 中部: `candidate-characters/image-gen-5(3).png`
-- 近畿: `candidate-characters/image-gen-6(3).png`
-- 中国: `candidate-characters/夏の爽快な笑顔.png`
+- 関東: `characters/06_薄紫ポニーテール.png`（2026-07-26追加）
+- 中部: `characters/image-gen-3(15).png`（2026-07-26追加）
+- 近畿: `characters/image-gen-2(18).png`（2026-07-26追加）
+- 中国: `characters/image-gen-5(8).png`（2026-07-26追加）
 - 四国: `candidate-characters/暑さに勝つエネルギッシュなヒーロー.png`
 - 九州・沖縄: `candidate-characters/夏の暑さに汗を拭う少女.png`
 
 不採用元の `01_北海道_白樺こゆき.png`、`02_青森県_林檎坂つむぎ.png`、`03_岩手県_石杜いわね.png` は使用しない。
-公開用画像はすべて顔寄りの660×660pxクロップへ統一する。
+公開用画像はすべて顔と冷却アイテムが同じ大きさに見える660×660pxクロップへ統一する。
