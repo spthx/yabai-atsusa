@@ -27,7 +27,7 @@
   <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/favicon-32.png">
   <link rel="apple-touch-icon" sizes="180x180" href="assets/icons/apple-touch-icon.png">
   <title>最強熊谷伝説 | 全国アメダス気温</title>
-  <link rel="stylesheet" href="css/style.css?v=20260726-ultra1">
+  <link rel="stylesheet" href="css/style.css?v=20260726-geo1">
 </head>
 <body>
   <div class="page-progress" aria-hidden="true"><i></i></div>
@@ -65,11 +65,18 @@
         <p id="hydration-status" role="status" aria-live="polite">水分補給を記録できます</p>
       </div>
       <button id="refresh-button" class="refresh-button" type="button">最新の気温を確認</button>
+      <div class="location-control">
+        <button id="location-button" class="location-button" type="button" aria-describedby="location-note" disabled>
+          <span aria-hidden="true">◎</span>
+          <b>現在地で比較</b>
+          <small>押した時だけ確認</small>
+        </button>
+        <p id="location-note" class="location-note" role="status" aria-live="polite">位置情報は自動では要求しません。現在地で比べたい時だけボタンを押してください。観測地点名は画面や共有内容に表示しません。</p>
+      </div>
       <div class="share-actions" aria-label="気温と休憩目安を共有">
         <button id="share-button" class="share-button share-primary" type="button"><span aria-hidden="true">↗</span> 結果を共有</button>
       </div>
       <p id="share-status" class="share-status" role="status" aria-live="polite"></p>
-      <p id="location-note" class="location-note">位置情報を許可すると、近い観測データと比較します。観測地点名は画面や共有内容に表示しません。</p>
     </section>
 
     <section class="capital-section" aria-labelledby="capital-heading">
@@ -112,12 +119,12 @@
       <p class="safety-note">のどが渇く前に、こまめに水分をとりましょう。水分摂取について医師から指示がある場合は、その指示を優先してください。</p>
     </footer>
   </main>
-  <script src="js/config.js?v=20260726-ultra1"></script>
-  <script src="js/utils.js?v=20260726-ultra1"></script>
-  <script src="js/characters.js?v=20260726-ultra1"></script>
-  <script src="js/locations.js?v=20260726-ultra1"></script>
-  <script src="js/amedas.js?v=20260726-ultra1"></script>
-  <script src="js/ui.js?v=20260726-ultra1"></script>
-  <script src="js/app.js?v=20260726-ultra1"></script>
+  <script src="js/config.js?v=20260726-geo1"></script>
+  <script src="js/utils.js?v=20260726-geo1"></script>
+  <script src="js/characters.js?v=20260726-geo1"></script>
+  <script src="js/locations.js?v=20260726-geo1"></script>
+  <script src="js/amedas.js?v=20260726-geo1"></script>
+  <script src="js/ui.js?v=20260726-geo1"></script>
+  <script src="js/app.js?v=20260726-geo1"></script>
 </body>
 </html>

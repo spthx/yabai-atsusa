@@ -1,6 +1,14 @@
 let currentSnapshot = null;
 let selectedStation = null;
 let latestShareText = "全国アメダスの最新気温から、今日のひと涼み目安を確認。のどが渇く前に水分を。 #最強熊谷伝説 #水分補給";
+let locationRequestInFlight = false;
+
+const LOCATION_STORAGE_KEY = "saikyo-kumagaya-nearest-station-v1";
+const LOCATION_OPTIONS = {
+  enableHighAccuracy: false,
+  timeout: 12000,
+  maximumAge: 30 * 60 * 1000
+};
 
 function setObservationTime(latestTime) {
   const text = `観測時刻：${formatObservationTime(latestTime)}`;
@@ -78,48 +86,184 @@ async function shareTemperatureResult() {
 
 async function reloadHeatData() {
   const button = document.getElementById("refresh-button");
+  const locationButton = document.getElementById("location-button");
   const comparisonCard = document.getElementById("comparison-card");
   button.disabled = true;
+  locationButton.disabled = true;
   button.textContent = "確認中…";
   document.body.classList.add("is-refreshing");
   comparisonCard?.setAttribute("aria-busy", "true");
 
   try {
     currentSnapshot = await fetchAmedasSnapshot();
-    renderSnapshot(currentSnapshot, selectedStation);
+    const restoredTarget = selectedStation || getCachedLocationTarget(currentSnapshot);
+    renderSnapshot(currentSnapshot, restoredTarget);
   } catch (error) {
     console.error(error);
     showError("観測値を取得できませんでした。");
   } finally {
     button.disabled = false;
+    locationButton.disabled = locationRequestInFlight || !currentSnapshot;
     button.textContent = "最新の気温を確認";
     document.body.classList.remove("is-refreshing");
     comparisonCard?.setAttribute("aria-busy", "false");
   }
 }
 
-function useCurrentLocation() {
-  if (!navigator.geolocation) return;
+function readLocationPreference() {
+  try {
+    const saved = JSON.parse(localStorage.getItem(LOCATION_STORAGE_KEY) || "null");
+    if (!saved || !/^\d{5}$/.test(String(saved.stationId || ""))) return null;
+    return saved;
+  } catch (_) {
+    return null;
+  }
+}
 
-  navigator.geolocation.getCurrentPosition(position => {
-    if (!currentSnapshot) return;
+function getCachedLocationTarget(snapshot) {
+  const saved = readLocationPreference();
+  if (!saved || !snapshot) return null;
+  return buildTemperatureRanking(snapshot.readings, snapshot.stations)
+    .find(item => item.id === String(saved.stationId)) || null;
+}
 
+function saveLocationPreference(target) {
+  try {
+    localStorage.setItem(LOCATION_STORAGE_KEY, JSON.stringify({
+      stationId: String(target.id),
+      savedAt: new Date().toISOString()
+    }));
+  } catch (_) {
+    // Private browsing may disable storage. The current comparison still works.
+  }
+}
+
+function setLocationControl(message, state = "idle") {
+  const control = document.querySelector(".location-control");
+  const note = document.getElementById("location-note");
+  if (control) control.dataset.locationState = state;
+  if (note) note.textContent = message;
+}
+
+function setLocationButton({ loading = false, active = false } = {}) {
+  const button = document.getElementById("location-button");
+  if (!button) return;
+  button.disabled = loading || !currentSnapshot;
+  button.classList.toggle("is-loading", loading);
+  button.classList.toggle("is-active", active);
+  button.querySelector("b").textContent = loading
+    ? "現在地を確認中…"
+    : active ? "現在地を更新" : "現在地で比較";
+  button.querySelector("small").textContent = loading
+    ? "許可画面は必要な時だけ"
+    : active ? "前回地点を使用中" : "押した時だけ確認";
+}
+
+function applyLocationTarget(nearest, { save = false, cached = false } = {}) {
+  if (!nearest || !currentSnapshot) return false;
+  if (save) saveLocationPreference(nearest);
+
+  const prefectureLabel = normalizePrefectureName(nearest.prefecture);
+  setLocationControl(
+    cached
+      ? `前回の${prefectureLabel}付近を使っています。移動した時だけ「現在地を更新」を押してください。観測地点名は表示・共有しません。`
+      : `${prefectureLabel}の近い観測データから休憩目安を出しています。次回から前回地点を使うため、許可画面は毎回出ません。観測地点名は表示・共有しません。`,
+    "active"
+  );
+  setLocationButton({ active: true });
+  if (selectedStation?.id !== nearest.id) renderSnapshot(currentSnapshot, nearest);
+  return true;
+}
+
+function getCurrentPosition() {
+  return new Promise((resolve, reject) => {
+    navigator.geolocation.getCurrentPosition(resolve, reject, LOCATION_OPTIONS);
+  });
+}
+
+async function getGeolocationPermissionState() {
+  if (!navigator.permissions?.query) return "unknown";
+  try {
+    const permission = await navigator.permissions.query({ name: "geolocation" });
+    return permission.state;
+  } catch (_) {
+    return "unknown";
+  }
+}
+
+function locationErrorMessage(error) {
+  if (error?.code === 1) {
+    return "位置情報は許可されていません。使う場合はブラウザのサイト設定で許可してから、もう一度ボタンを押してください。";
+  }
+  if (error?.code === 3) {
+    return "現在地の確認が時間切れになりました。電波のよい場所で、必要な時だけもう一度お試しください。";
+  }
+  return "現在地を確認できませんでした。気温ランキング上位の県データで比較を続けます。";
+}
+
+async function requestCurrentLocation() {
+  if (!currentSnapshot || locationRequestInFlight) return;
+  if (!navigator.geolocation) {
+    setLocationControl("このブラウザは位置情報に対応していません。気温ランキング上位の県データで比較します。", "unavailable");
+    return;
+  }
+
+  locationRequestInFlight = true;
+  setLocationButton({ loading: true });
+  setLocationControl("現在地を確認しています。位置情報は近い観測地点を選ぶためだけに使い、座標は保存しません。", "loading");
+
+  try {
+    const position = await getCurrentPosition();
     const nearest = findNearestTemperatureStation(
       position,
       buildTemperatureRanking(currentSnapshot.readings, currentSnapshot.stations)
     );
+    if (!nearest) throw new Error("nearest station unavailable");
+    applyLocationTarget(nearest, { save: true });
+  } catch (error) {
+    const cachedTarget = getCachedLocationTarget(currentSnapshot);
+    setLocationControl(
+      `${locationErrorMessage(error)}${cachedTarget ? " 前回地点の比較はそのまま続けます。" : ""}`,
+      "error"
+    );
+    setLocationButton({ active: Boolean(cachedTarget) });
+  } finally {
+    locationRequestInFlight = false;
+    document.getElementById("location-button").disabled = !currentSnapshot;
+  }
+}
 
-    if (!nearest) return;
+async function initializeLocationPreference() {
+  if (!currentSnapshot) {
+    setLocationControl("気温データを取得できなかったため、現在地との比較を開始できませんでした。", "error");
+    return;
+  }
 
-    const prefectureLabel = normalizePrefectureName(nearest.prefecture);
-    document.getElementById("location-note").textContent =
-      `${prefectureLabel}の近い観測データから休憩目安を出しています。観測地点名は画面や共有内容に表示しません。`;
+  const cachedTarget = getCachedLocationTarget(currentSnapshot);
+  if (cachedTarget) {
+    applyLocationTarget(cachedTarget, { cached: true });
+    return;
+  }
 
-    renderSnapshot(currentSnapshot, nearest);
-  }, () => {
-    document.getElementById("location-note").textContent =
-      "位置情報を取得できなかったため、気温ランキング上位の県データから休憩目安を表示しています。";
-  }, { enableHighAccuracy: false, timeout: 8000, maximumAge: 300000 });
+  if (!navigator.geolocation) {
+    setLocationControl("このブラウザは位置情報に対応していません。気温ランキング上位の県データで比較します。", "unavailable");
+    setLocationButton();
+    return;
+  }
+
+  const permissionState = await getGeolocationPermissionState();
+  setLocationControl(
+    permissionState === "denied"
+      ? "位置情報は許可されていません。使う場合はブラウザのサイト設定を変更してからボタンを押してください。"
+      : "位置情報は自動では要求しません。現在地で比べたい時だけボタンを押してください。観測地点名は表示・共有しません。",
+    permissionState === "denied" ? "unavailable" : "idle"
+  );
+  setLocationButton();
+}
+
+function setupLocationControl() {
+  document.getElementById("location-button")
+    .addEventListener("click", requestCurrentLocation);
 }
 
 function setupScrollReveals() {
@@ -230,6 +374,7 @@ function setupUltraPresentation() {
 setupScrollReveals();
 setupHydrationAction();
 setupUltraPresentation();
+setupLocationControl();
 document.getElementById("refresh-button").addEventListener("click", reloadHeatData);
 document.getElementById("share-button").addEventListener("click", shareTemperatureResult);
-reloadHeatData().then(useCurrentLocation);
+reloadHeatData().then(initializeLocationPreference);

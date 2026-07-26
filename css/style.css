@@ -4412,6 +4412,147 @@ footer > * {
   }
 }
 
+/* LOCATION CONTROL — geolocation is requested only after a deliberate tap */
+.location-control {
+  display: grid;
+  grid-template-columns: minmax(152px, .72fr) minmax(0, 1.28fr);
+  gap: 8px;
+  align-items: stretch;
+  margin: 9px 0 5px;
+}
+
+.location-button {
+  position: relative;
+  display: grid;
+  grid-template-columns: 34px minmax(0, 1fr);
+  grid-template-rows: auto auto;
+  gap: 0 8px;
+  align-content: center;
+  min-height: 68px;
+  overflow: hidden;
+  padding: 9px 11px;
+  border: 1px solid #58cbd687;
+  border-radius: 13px;
+  color: #0b718a;
+  background:
+    linear-gradient(120deg, #ffffffea, #e6fbf9e8),
+    linear-gradient(90deg, #47d8c8, #4aaeea);
+  box-shadow: 0 7px 20px #16849a1b, inset 0 1px #fff;
+  font: inherit;
+  text-align: left;
+  transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease;
+}
+
+.location-button > span {
+  display: grid;
+  grid-row: 1 / 3;
+  width: 34px;
+  height: 34px;
+  align-self: center;
+  border-radius: 50%;
+  color: #fff;
+  background: linear-gradient(145deg, #10b7c1, #1785bd);
+  box-shadow: 0 5px 13px #087d9a45, inset 0 1px #ffffffa8;
+  font-size: 1.1rem;
+  place-items: center;
+}
+
+.location-button b {
+  align-self: end;
+  font-size: .86rem;
+  line-height: 1.2;
+}
+
+.location-button small {
+  align-self: start;
+  color: #568195;
+  font-size: .62rem;
+  font-weight: 750;
+  line-height: 1.25;
+}
+
+.location-button:disabled {
+  cursor: wait;
+  opacity: .72;
+}
+
+.location-button.is-active {
+  border-color: #44c99ebd;
+  color: #087863;
+  background: linear-gradient(120deg, #effff9f2, #d8f9ebe8);
+  box-shadow: 0 7px 20px #15946e24, inset 0 1px #fff;
+}
+
+.location-button.is-active > span {
+  background: linear-gradient(145deg, #23c78e, #118f89);
+}
+
+.location-button.is-loading::after {
+  position: absolute;
+  inset: 0;
+  content: "";
+  background: linear-gradient(100deg, transparent 20%, #ffffffa6 48%, transparent 72%);
+  animation: location-control-scan 1.15s linear infinite;
+}
+
+.location-control .location-note {
+  display: flex;
+  min-height: 68px;
+  align-items: center;
+  margin: 0;
+  padding: 9px 11px 9px 34px;
+  text-align: left;
+}
+
+.location-control .location-note::before {
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.location-control[data-location-state="active"] .location-note {
+  border-color: #51cda26e;
+  color: #39776d;
+  background: #f4fffbd6;
+}
+
+.location-control[data-location-state="active"] .location-note::before {
+  content: "📍";
+}
+
+.location-control[data-location-state="loading"] .location-note::before {
+  content: "◎";
+}
+
+.location-control[data-location-state="error"] .location-note {
+  border-color: #e5a66570;
+  color: #89633e;
+  background: #fffaf1d9;
+}
+
+.location-control[data-location-state="error"] .location-note::before,
+.location-control[data-location-state="unavailable"] .location-note::before {
+  content: "△";
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .location-button:not(:disabled):hover {
+    border-color: #38bccae0;
+    box-shadow: 0 10px 25px #16849a2d, inset 0 1px #fff;
+    transform: translateY(-1px);
+  }
+}
+
+@media (max-width: 380px) {
+  .location-control {
+    grid-template-columns: 1fr;
+  }
+
+  .location-button,
+  .location-control .location-note {
+    min-height: 56px;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .orb-heat,
   .orb-water,
@@ -4438,8 +4579,13 @@ footer > * {
 
   .hydration-girl,
   .all-stations-details summary,
-  .all-stations-details summary span::after {
+  .all-stations-details summary span::after,
+  .location-button {
     transition: none !important;
+  }
+
+  .location-button.is-loading::after {
+    animation: none !important;
   }
 }
 
@@ -4546,4 +4692,9 @@ footer > * {
 @keyframes ultra-station-in {
   from { opacity: 0; transform: translateY(7px); }
   to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes location-control-scan {
+  from { transform: translateX(-120%); }
+  to { transform: translateX(120%); }
 }
