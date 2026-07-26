@@ -121,10 +121,10 @@ function renderCapitalHeatSpotlight(capitals) {
   const hottest = capitals.find(item => item.temperature !== null);
   if (spotlight && hottest) {
     const regionKey = getRegionKeyForPrefecture(hottest.prefecture);
-    const character = REGIONAL_CHARACTERS[regionKey];
+    const character = getCharacterForPrefecture(hottest.prefecture);
     spotlight.style.setProperty("--spotlight-accent", character.accent);
     spotlight.querySelector("img").src = character.image;
-    spotlight.querySelector("img").alt = `${REGION_DISPLAY_LABELS[regionKey]}キャラクター`;
+    spotlight.querySelector("img").alt = `${hottest.prefecture}の水分補給キャラクター`;
     spotlight.querySelector("strong").textContent = `${hottest.prefecture} ${formatTemperature(hottest.temperature)}`;
     spotlight.querySelector("span").textContent = `${hottest.prefecture}が県庁所在地ランキング首位。現在の気温を案内中`;
   }
@@ -137,14 +137,18 @@ function renderTop10RegionRibbon(ranking) {
   const counts = new Map();
   ranking.forEach(item => {
     const key = getRegionKeyForPrefecture(item.prefecture);
-    counts.set(key, (counts.get(key) || 0) + 1);
+    const current = counts.get(key);
+    counts.set(key, {
+      count: (current?.count || 0) + 1,
+      prefecture: current?.prefecture || normalizePrefectureName(item.prefecture)
+    });
   });
-  const regions = [...counts.entries()].sort((a, b) => b[1] - a[1]);
-  ribbon.innerHTML = `<div class="top10-ribbon-title"><small>TOP10 REGIONAL SIGNAL</small><strong>いま上位にいる地方</strong></div>` + regions.map(([key, count]) => {
-    const character = REGIONAL_CHARACTERS[key];
+  const regions = [...counts.entries()].sort((a, b) => b[1].count - a[1].count);
+  ribbon.innerHTML = `<div class="top10-ribbon-title"><small>TOP10 REGIONAL SIGNAL</small><strong>いま上位にいる地方</strong></div>` + regions.map(([key, info]) => {
+    const character = getCharacterForPrefecture(info.prefecture);
     return `<div class="top10-region-chip" style="--region-accent:${character.accent}">
       <img src="${character.image}" alt="" loading="lazy" decoding="async">
-      <span><b>${REGION_DISPLAY_LABELS[key]}</b><small>TOP10に ${count}地点</small></span>
+      <span><b>${REGION_DISPLAY_LABELS[key]}</b><small>TOP10に ${info.count}地点</small></span>
     </div>`;
   }).join("");
 }
@@ -161,10 +165,10 @@ function renderHeatRanking(ranking, kumagayaTemp) {
     const row = document.createElement("article");
     row.className = `ranking-card rank-${rank} ${index >= 10 ? "extra-kumagaya-line" : ""} ${getTempClass(item.temperature)}`;
     const regionKey = getRegionKeyForPrefecture(item.prefecture);
-    const regionCharacter = REGIONAL_CHARACTERS[regionKey];
+    const character = getCharacterForPrefecture(item.prefecture);
     row.dataset.region = regionKey;
     row.style.setProperty("--delay", `${Math.min(index, 14) * 45}ms`);
-    row.style.setProperty("--girl-watermark", `url("../${regionCharacter.image}")`);
+    row.style.setProperty("--girl-watermark", `url("../${character.image}")`);
     row.innerHTML = `
       <span class="rank-icon" aria-hidden="true">${rankIcon}</span>
       <span class="rank">${rank}位</span>
@@ -189,9 +193,9 @@ function renderCapitalTemperatureList(capitals) {
     const card = document.createElement("article");
     const missing = item.temperature === null;
     const regionKey = getRegionKeyForPrefecture(item.prefecture);
-    const regionCharacter = REGIONAL_CHARACTERS[regionKey];
+    const character = getCharacterForPrefecture(item.prefecture);
     card.dataset.region = regionKey;
-    card.style.setProperty("--girl-watermark", `url("../${regionCharacter.image}")`);
+    card.style.setProperty("--girl-watermark", `url("../${character.image}")`);
     card.className = `capital-card ${missing ? "temp-missing" : getTempClass(item.temperature)}`;
     card.innerHTML = `
       <span class="capital-rank">${index + 1}</span>
@@ -230,10 +234,10 @@ function renderAllTemperatureStations(ranking) {
     const prefectureLabel = item.prefecture || "都道府県情報なし";
     const locationLabel = item.location || "市区町村情報なし";
     const regionKey = getRegionKeyForPrefecture(prefectureLabel);
-    const regionCharacter = REGIONAL_CHARACTERS[regionKey];
+    const character = getCharacterForPrefecture(prefectureLabel);
 
     card.dataset.region = regionKey;
-    card.style.setProperty("--girl-watermark", `url("../${regionCharacter.image}")`);
+    card.style.setProperty("--girl-watermark", `url("../${character.image}")`);
     card.className = `all-station-card ${isKumagaya ? "kumagaya-marker" : ""} ${getTempClass(item.temperature)}`;
     card.innerHTML = `
       <span class="station-rank">${index + 1}</span>

@@ -3501,9 +3501,9 @@ body.site-heat.temp-extreme .season-badge {
   mask-image: radial-gradient(circle, #000 25%, #000c 52%, transparent 74%);
 }
 
-.capital-section { --section-girl: url("../assets/characters/region-hokkaido.webp?v=20260726-char1"); }
-.ranking-section { --section-girl: url("../assets/characters/region-chugoku.webp?v=20260726-char1"); }
-.all-stations-section { --section-girl: url("../assets/characters/region-kinki.webp?v=20260726-char1"); }
+.capital-section { --section-girl: url("../assets/characters/region-hokkaido.webp?v=20260726-pref1"); }
+.ranking-section { --section-girl: url("../assets/characters/region-chugoku.webp?v=20260726-pref1"); }
+.all-stations-section { --section-girl: url("../assets/characters/region-kinki.webp?v=20260726-pref1"); }
 
 :is(.capital-section, .ranking-section, .all-stations-section) > * {
   position: relative;
@@ -3511,14 +3511,14 @@ body.site-heat.temp-extreme .season-badge {
 }
 
 :is(.capital-card, .ranking-card) {
-  --girl-watermark: url("../assets/characters/region-hokkaido.webp?v=20260726-char1");
+  --girl-watermark: url("../assets/characters/region-hokkaido.webp?v=20260726-pref1");
 }
-:is(.capital-card, .ranking-card):nth-child(7n + 2) { --girl-watermark: url("../assets/characters/region-kanto.webp?v=20260726-char1"); }
-:is(.capital-card, .ranking-card):nth-child(7n + 3) { --girl-watermark: url("../assets/characters/region-chubu.webp?v=20260726-char1"); }
-:is(.capital-card, .ranking-card):nth-child(7n + 4) { --girl-watermark: url("../assets/characters/region-kinki.webp?v=20260726-char1"); }
-:is(.capital-card, .ranking-card):nth-child(7n + 5) { --girl-watermark: url("../assets/characters/region-chugoku.webp?v=20260726-char1"); }
-:is(.capital-card, .ranking-card):nth-child(7n + 6) { --girl-watermark: url("../assets/characters/region-shikoku.webp?v=20260726-char1"); }
-:is(.capital-card, .ranking-card):nth-child(7n) { --girl-watermark: url("../assets/characters/region-kyushu.webp?v=20260726-char1"); }
+:is(.capital-card, .ranking-card):nth-child(7n + 2) { --girl-watermark: url("../assets/characters/region-kanto.webp?v=20260726-pref1"); }
+:is(.capital-card, .ranking-card):nth-child(7n + 3) { --girl-watermark: url("../assets/characters/region-chubu.webp?v=20260726-pref1"); }
+:is(.capital-card, .ranking-card):nth-child(7n + 4) { --girl-watermark: url("../assets/characters/region-kinki.webp?v=20260726-pref1"); }
+:is(.capital-card, .ranking-card):nth-child(7n + 5) { --girl-watermark: url("../assets/characters/region-chugoku.webp?v=20260726-pref1"); }
+:is(.capital-card, .ranking-card):nth-child(7n + 6) { --girl-watermark: url("../assets/characters/region-shikoku.webp?v=20260726-pref1"); }
+:is(.capital-card, .ranking-card):nth-child(7n) { --girl-watermark: url("../assets/characters/region-kyushu.webp?v=20260726-pref1"); }
 
 :is(.capital-card, .ranking-card)::before {
   position: absolute;
