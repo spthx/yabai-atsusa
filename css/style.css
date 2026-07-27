@@ -4698,3 +4698,83 @@ footer > * {
   from { transform: translateX(-120%); }
   to { transform: translateX(120%); }
 }
+
+/* HYDRATION CHARACTER — a large, borderless guide instead of a tiny avatar */
+.hydration-action {
+  overflow: visible;
+  min-height: 112px;
+  padding-left: 132px;
+}
+
+.hydration-action::before,
+.hydration-action::after {
+  clip-path: inset(0 round 17px);
+}
+
+.hydration-action > .hydration-girl {
+  position: absolute;
+  z-index: 3;
+  bottom: -9px;
+  left: -18px;
+  width: 154px;
+  height: 148px;
+  max-width: none;
+  border: 0;
+  border-radius: 0;
+  object-fit: cover;
+  object-position: 50% 28%;
+  background: transparent;
+  box-shadow: none;
+  filter: drop-shadow(0 10px 11px #033b5366) saturate(1.06);
+  pointer-events: none;
+  -webkit-mask-image: radial-gradient(ellipse 76% 102% at 35% 48%, #000 0 54%, transparent 88%);
+  mask-image: radial-gradient(ellipse 76% 102% at 35% 48%, #000 0 54%, transparent 88%);
+}
+
+.hydration-lead {
+  display: block;
+}
+
+@media (max-width: 520px) {
+  .hydration-action {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 5px;
+    min-height: 148px;
+    padding: 13px 12px 10px 120px;
+  }
+
+  .hydration-action > .hydration-girl {
+    bottom: -11px;
+    left: -24px;
+    width: 156px;
+    height: 168px;
+    object-position: 50% 26%;
+  }
+
+  .hydration-copy span {
+    max-width: none;
+  }
+
+  #hydration-button {
+    width: max-content;
+    min-width: 112px;
+    justify-self: start;
+  }
+
+  #hydration-status {
+    min-height: 1.2em;
+    text-align: left;
+  }
+}
+
+@media (max-width: 380px) {
+  .hydration-action {
+    padding-left: 108px;
+  }
+
+  .hydration-action > .hydration-girl {
+    left: -27px;
+    width: 146px;
+    height: 164px;
+  }
+}
