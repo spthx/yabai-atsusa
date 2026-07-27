@@ -4912,3 +4912,60 @@ footer::before {
     opacity: .24;
   }
 }
+
+/* LIVE FIGHTERS — remove the inner portrait frame and spend the space on the heroines */
+.contestant[class*="temp-"] {
+  overflow: hidden;
+  padding-top: 0;
+}
+
+.contestant .character {
+  width: calc(100% + 10px);
+  margin-inline: -5px;
+}
+
+.contestant .fighter-photo,
+.contestant .character.hot .fighter-photo,
+.contestant .character.cool .fighter-photo,
+.contestant[class*="temp-"] .fighter-photo {
+  width: 100%;
+  max-width: none;
+  aspect-ratio: 1 / 1.08;
+  margin: 0 0 5px;
+  border: 0;
+  border-radius: 0;
+  clip-path: none;
+  background: transparent;
+  box-shadow: none;
+}
+
+.contestant .character.hot .fighter-photo img {
+  object-position: var(--character-focus, 50% 48%);
+  transform: scale(1.11);
+}
+
+.contestant .character.cool .fighter-photo img {
+  object-position: var(--character-focus, 50% 46%);
+  transform: scale(1.18);
+}
+
+.contestant .character p {
+  margin-top: 0;
+}
+
+@media (max-width: 520px) {
+  .contestant .fighter-photo,
+  .contestant .character.hot .fighter-photo,
+  .contestant .character.cool .fighter-photo {
+    width: 100%;
+    aspect-ratio: 1 / 1.12;
+  }
+
+  .contestant .character.hot .fighter-photo img {
+    transform: scale(1.13);
+  }
+
+  .contestant .character.cool .fighter-photo img {
+    transform: scale(1.2);
+  }
+}
