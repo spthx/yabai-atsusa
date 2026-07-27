@@ -4930,7 +4930,7 @@ footer::before {
 .contestant[class*="temp-"] .fighter-photo {
   width: 100%;
   max-width: none;
-  aspect-ratio: 1 / 1.08;
+  aspect-ratio: 1 / 1.28;
   margin: 0 0 5px;
   border: 0;
   border-radius: 0;
@@ -4958,7 +4958,7 @@ footer::before {
   .contestant .character.hot .fighter-photo,
   .contestant .character.cool .fighter-photo {
     width: 100%;
-    aspect-ratio: 1 / 1.12;
+    aspect-ratio: 1 / 1.32;
   }
 
   .contestant .character.hot .fighter-photo img {
