@@ -4406,6 +4406,40 @@ footer > * {
   }
 }
 
+/* CHARACTER ARCHIVE LINK — doorway from the live matchup to the fictional dating-game page */
+.character-intro-link {
+  display: flex;
+  width: max-content;
+  max-width: calc(100% - 24px);
+  align-items: center;
+  justify-content: center;
+  gap: .55em;
+  margin-inline: auto;
+  padding: 7px 13px;
+  border: 1px solid #4ccfe055;
+  border-radius: 999px;
+  color: #176b7c;
+  background: linear-gradient(110deg, #ffffffc9, #dffffbd9);
+  box-shadow: 0 7px 18px #137f9230;
+  text-decoration: none;
+  transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease;
+}
+
+.character-intro-link span {
+  color: #d64f37;
+  font-weight: 900;
+}
+
+.character-intro-link:hover {
+  border-color: #ff765e99;
+  box-shadow: 0 10px 24px #ef74413d;
+  transform: translateY(-2px);
+}
+
+.character-intro-link:active {
+  transform: translateY(0);
+}
+
 @media (max-width: 330px) {
   .capital-temperature-list {
     grid-template-columns: 1fr;
