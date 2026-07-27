@@ -58,4 +58,20 @@
   } else {
     revealTargets.forEach(function (target) { target.classList.add("is-visible"); });
   }
+
+  const mangaPages = document.querySelectorAll(".manga-page");
+  const progressCurrent = document.querySelector("#reader-progress-current");
+  if ("IntersectionObserver" in window && mangaPages.length) {
+    const pageObserver = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        mangaPages.forEach(function (page) { page.classList.remove("is-reading"); });
+        entry.target.classList.add("is-reading");
+        if (progressCurrent) progressCurrent.textContent = entry.target.dataset.page || "01";
+      });
+    }, { rootMargin: "-28% 0px -48% 0px", threshold: 0.05 });
+    mangaPages.forEach(function (page) { pageObserver.observe(page); });
+  } else if (mangaPages.length) {
+    mangaPages[0].classList.add("is-reading");
+  }
 }());

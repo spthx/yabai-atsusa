@@ -5274,3 +5274,257 @@ footer::before {
     right: -12px;
   }
 }
+
+/* COMIC BREAKING NEWS — compact top-of-page announcement */
+.comic-breaking-news {
+  position: relative;
+  height: 112px;
+  min-height: 0;
+  margin: 0 0 12px;
+  display: grid;
+  grid-template-columns: 190px minmax(0, 1fr) auto;
+  align-items: stretch;
+  overflow: hidden;
+  color: #15151b;
+  background:
+    radial-gradient(circle at 78% 35%, #fff 0 1px, transparent 1.2px) 0 0 / 8px 8px,
+    #fffdf4;
+  border: 4px solid #15151b;
+  box-shadow: 8px 8px 0 #ff3e45;
+  text-decoration: none;
+  isolation: isolate;
+  transform: rotate(-.35deg);
+  transition: transform .22s ease, box-shadow .22s ease;
+}
+
+.comic-breaking-news::before {
+  position: absolute;
+  z-index: 3;
+  top: 0;
+  left: 0;
+  width: 74px;
+  padding: 3px 0 4px;
+  content: "号 外";
+  color: #fff;
+  background: #ff3e45;
+  font-size: .55rem;
+  font-weight: 900;
+  letter-spacing: .18em;
+  text-align: center;
+}
+
+.comic-breaking-news::after {
+  position: absolute;
+  z-index: -1;
+  right: 62px;
+  bottom: -33px;
+  content: "SAITAMA";
+  color: #ff3e4519;
+  font: 900 5rem/1 "Arial Black", sans-serif;
+  letter-spacing: -.08em;
+  transform: skew(-10deg);
+}
+
+.comic-breaking-news:hover,
+.comic-breaking-news:focus-visible {
+  transform: translate(-2px, -2px) rotate(0);
+  box-shadow: 12px 12px 0 #ff3e45;
+}
+
+.comic-news-art {
+  position: relative;
+  overflow: hidden;
+  background: #15151b;
+  border-right: 4px solid #15151b;
+}
+
+.comic-news-art::after {
+  position: absolute;
+  inset: 0;
+  content: "";
+  background: linear-gradient(100deg, transparent 45%, #15151bdb 100%);
+  pointer-events: none;
+}
+
+.comic-news-art img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 72%;
+  filter: contrast(1.08);
+  transform: scale(1.16);
+  transition: transform .6s cubic-bezier(.2,.8,.2,1);
+}
+
+.comic-breaking-news:hover .comic-news-art img {
+  transform: scale(1.22);
+}
+
+.comic-news-copy {
+  position: relative;
+  z-index: 2;
+  align-self: center;
+  min-width: 0;
+  padding: 11px 14px;
+}
+
+.comic-news-copy small {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  color: #bb1a31;
+  font-size: .53rem;
+  font-weight: 900;
+  letter-spacing: .16em;
+}
+
+.comic-news-copy small i {
+  padding: 2px 5px;
+  color: #15151b;
+  background: #ffd938;
+  border: 1px solid #15151b;
+  font-style: normal;
+  letter-spacing: .08em;
+  transform: skew(-6deg);
+}
+
+.comic-news-copy strong {
+  display: block;
+  margin-top: 3px;
+  font-family: "Yu Mincho", "Noto Serif JP", serif;
+  font-size: clamp(1.38rem, 4.5vw, 2.15rem);
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: -.06em;
+}
+
+.comic-news-copy strong em {
+  position: relative;
+  color: #ff3e45;
+  font-style: normal;
+}
+
+.comic-news-copy strong em::after {
+  position: absolute;
+  z-index: -1;
+  right: -4px;
+  bottom: 0;
+  left: -4px;
+  height: 7px;
+  content: "";
+  background: #ffd938;
+  transform: skew(-10deg);
+}
+
+.comic-news-copy > b {
+  display: block;
+  margin-top: 7px;
+  overflow: hidden;
+  color: #555762;
+  font-size: .56rem;
+  font-weight: 900;
+  line-height: 1.25;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.comic-news-cta {
+  min-width: 96px;
+  display: grid;
+  place-items: center;
+  align-content: center;
+  gap: 5px;
+  color: #fff;
+  background: #15151b;
+  border-left: 4px solid #15151b;
+}
+
+.comic-news-cta b {
+  font-size: .68rem;
+  font-weight: 900;
+  letter-spacing: .05em;
+  writing-mode: vertical-rl;
+}
+
+.comic-news-cta i {
+  color: #ffd938;
+  font-size: 1.25rem;
+  font-style: normal;
+  font-weight: 900;
+  animation: comic-news-arrow 1.4s ease-in-out infinite;
+}
+
+@keyframes comic-news-arrow {
+  50% { transform: translateX(4px); }
+}
+
+@media (max-width: 520px) {
+  .comic-breaking-news {
+    height: 100px;
+    min-height: 0;
+    grid-template-columns: 88px minmax(0, 1fr) 50px;
+    margin: 0 2px 11px;
+    border-width: 3px;
+    box-shadow: 6px 6px 0 #ff3e45;
+  }
+
+  .comic-breaking-news::before {
+    width: 52px;
+    font-size: .42rem;
+  }
+
+  .comic-breaking-news::after {
+    right: 35px;
+    bottom: -15px;
+    font-size: 3rem;
+  }
+
+  .comic-news-art {
+    border-right-width: 3px;
+  }
+
+  .comic-news-art img {
+    object-position: 50% 75%;
+    transform: scale(1.35);
+  }
+
+  .comic-news-copy {
+    padding: 10px 8px;
+  }
+
+  .comic-news-copy small {
+    gap: 4px;
+    font-size: .42rem;
+    letter-spacing: .07em;
+  }
+
+  .comic-news-copy strong {
+    font-size: clamp(1.18rem, 6vw, 1.55rem);
+    line-height: .98;
+  }
+
+  .comic-news-copy > b {
+    max-width: 190px;
+    margin-top: 6px;
+    font-size: .46rem;
+  }
+
+  .comic-news-cta {
+    min-width: 0;
+    border-left-width: 3px;
+  }
+
+  .comic-news-cta b {
+    font-size: .52rem;
+  }
+
+  .comic-news-cta i {
+    font-size: 1rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .comic-news-cta i { animation: none; }
+}
