@@ -3514,7 +3514,7 @@ body.site-heat.temp-extreme .season-badge {
   --girl-watermark: url("../assets/characters/region-hokkaido.webp?v=20260726-pref1");
 }
 :is(.capital-card, .ranking-card):nth-child(7n + 2) { --girl-watermark: url("../assets/characters/region-kanto.webp?v=20260726-pref1"); }
-:is(.capital-card, .ranking-card):nth-child(7n + 3) { --girl-watermark: url("../assets/characters/region-chubu.webp?v=20260726-pref1"); }
+:is(.capital-card, .ranking-card):nth-child(7n + 3) { --girl-watermark: url("../assets/characters/pref-niigata.webp?v=20260727-chubu2"); }
 :is(.capital-card, .ranking-card):nth-child(7n + 4) { --girl-watermark: url("../assets/characters/region-kinki.webp?v=20260726-pref1"); }
 :is(.capital-card, .ranking-card):nth-child(7n + 5) { --girl-watermark: url("../assets/characters/region-chugoku.webp?v=20260726-pref1"); }
 :is(.capital-card, .ranking-card):nth-child(7n + 6) { --girl-watermark: url("../assets/characters/region-shikoku.webp?v=20260726-pref1"); }

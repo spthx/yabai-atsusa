@@ -49,7 +49,7 @@ const REGIONAL_CHARACTERS = {
   chubu: {
     region: "中部",
     name: "レモンウォーター係",
-    image: "assets/characters/region-chubu.webp?v=20260726-pref1",
+    image: "assets/characters/pref-niigata.webp?v=20260727-chubu2",
     catchphrase: "冷たい一杯、持ってきたよ！",
     role: "水分と外出対策",
     type: "CITRUS TYPE",

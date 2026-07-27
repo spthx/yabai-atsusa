@@ -30,7 +30,6 @@ const SUPPORT_CHARACTER_POOL = [
   "assets/characters/pref-yamagata.webp",
   "assets/characters/pref-yamanashi.webp",
   "assets/characters/region-hokkaido.webp",
-  "assets/characters/region-chubu.webp",
   "assets/characters/region-chugoku.webp",
   "assets/characters/region-kanto.webp",
   "assets/characters/region-kinki.webp",
