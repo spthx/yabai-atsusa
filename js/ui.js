@@ -98,6 +98,7 @@ function renderComparison(kumagaya, target, ranking, { isFallback = false } = {}
       </article>
     </div>
     <div class="verdict ${guide.className}">
+      <img class="verdict-character" src="${targetCharacter.image}" alt="" loading="lazy" decoding="async">
       <small>${differenceText}</small>
       <strong>${guide.label}</strong>
       <div class="cooldown-meter" style="--guide-level:${guide.level}%">

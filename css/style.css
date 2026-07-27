@@ -4969,3 +4969,91 @@ footer::before {
     transform: scale(1.2);
   }
 }
+
+/* REST & HYDRATION GUIDES — give both actions room and a visible heroine */
+.verdict {
+  overflow: visible;
+  min-height: 154px;
+  padding: 18px 154px 18px 20px;
+  text-align: left;
+}
+
+.verdict-character {
+  position: absolute;
+  z-index: 2;
+  right: -20px;
+  bottom: -12px;
+  width: 178px;
+  height: 178px;
+  max-width: none;
+  border: 0;
+  object-fit: cover;
+  object-position: var(--character-focus, 50% 32%);
+  filter: drop-shadow(0 12px 14px #17596a55) saturate(1.07);
+  pointer-events: none;
+  -webkit-mask-image: radial-gradient(ellipse 76% 102% at 64% 48%, #000 0 55%, transparent 89%);
+  mask-image: radial-gradient(ellipse 76% 102% at 64% 48%, #000 0 55%, transparent 89%);
+}
+
+.verdict > :not(.verdict-character) {
+  position: relative;
+  z-index: 3;
+}
+
+.verdict .cooldown-meter {
+  max-width: 390px;
+  margin-right: 0;
+  margin-left: 0;
+}
+
+.hydration-action {
+  min-height: 142px;
+  padding-left: 150px;
+}
+
+.hydration-action > .hydration-girl {
+  bottom: -10px;
+  left: -20px;
+  width: 176px;
+  height: 168px;
+}
+
+@media (max-width: 520px) {
+  .verdict {
+    min-height: 168px;
+    margin-inline: 8px;
+    padding: 15px 104px 15px 13px;
+  }
+
+  .verdict-character {
+    right: -20px;
+    bottom: -10px;
+    width: 138px;
+    height: 158px;
+  }
+
+  .verdict strong,
+  .guide-urgent strong,
+  .guide-break strong,
+  .guide-water strong,
+  .guide-gentle strong {
+    font-size: 1.2rem;
+  }
+
+  .verdict > span {
+    font-size: .68rem;
+    line-height: 1.45;
+  }
+
+  .hydration-action {
+    min-height: 166px;
+    padding-left: 126px;
+  }
+
+  .hydration-action > .hydration-girl {
+    bottom: -12px;
+    left: -25px;
+    width: 172px;
+    height: 184px;
+  }
+}
