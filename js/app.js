@@ -42,7 +42,7 @@ let supportCharacterImages = [];
 function assignSupportCharacters(excludedImages = []) {
   const normalize = path => path?.split("?")[0];
   const excluded = new Set(excludedImages.map(normalize));
-  const currentIsUsable = supportCharacterImages.length === 3
+  const currentIsUsable = supportCharacterImages.length === 5
     && supportCharacterImages.every(image => !excluded.has(normalize(image)));
   if (currentIsUsable) return;
 
@@ -51,12 +51,14 @@ function assignSupportCharacters(excludedImages = []) {
     .map(image => ({ image, order: Math.random() }))
     .sort((a, b) => a.order - b.order)
     .map(item => item.image);
-  supportCharacterImages = pool.slice(0, 3);
+  supportCharacterImages = pool.slice(0, 5);
 
   const slots = [
     document.querySelector(".hydration-girl"),
     document.querySelector(".share-character-left"),
-    document.querySelector(".share-character-right")
+    document.querySelector(".share-character-right"),
+    document.querySelector(".archive-banner-left"),
+    document.querySelector(".archive-banner-right")
   ];
   slots.forEach((slot, index) => {
     if (slot && supportCharacterImages[index]) slot.src = supportCharacterImages[index];
