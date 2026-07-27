@@ -13,6 +13,57 @@ const LOCATION_OPTIONS = {
   maximumAge: 30 * 60 * 1000
 };
 
+const SUPPORT_CHARACTER_POOL = [
+  "assets/characters/pref-chiba.webp",
+  "assets/characters/pref-gunma.webp",
+  "assets/characters/pref-ibaraki.webp",
+  "assets/characters/pref-kyoto.webp",
+  "assets/characters/pref-nagano.webp",
+  "assets/characters/pref-nara.webp",
+  "assets/characters/pref-niigata.webp",
+  "assets/characters/pref-okinawa.webp",
+  "assets/characters/pref-shiga.webp",
+  "assets/characters/pref-shizuoka.webp",
+  "assets/characters/pref-tochigi.webp",
+  "assets/characters/pref-tokyo.webp",
+  "assets/characters/pref-toyama.webp",
+  "assets/characters/pref-yamagata.webp",
+  "assets/characters/pref-yamanashi.webp",
+  "assets/characters/region-hokkaido.webp",
+  "assets/characters/region-chubu.webp",
+  "assets/characters/region-chugoku.webp",
+  "assets/characters/region-kanto.webp",
+  "assets/characters/region-kinki.webp",
+  "assets/characters/region-kyushu.webp",
+  "assets/characters/region-shikoku.webp",
+  "assets/characters/region-tohoku.webp"
+];
+let supportCharacterImages = [];
+
+function assignSupportCharacters(excludedImages = []) {
+  const normalize = path => path?.split("?")[0];
+  const excluded = new Set(excludedImages.map(normalize));
+  const currentIsUsable = supportCharacterImages.length === 3
+    && supportCharacterImages.every(image => !excluded.has(normalize(image)));
+  if (currentIsUsable) return;
+
+  const pool = SUPPORT_CHARACTER_POOL
+    .filter(image => !excluded.has(normalize(image)))
+    .map(image => ({ image, order: Math.random() }))
+    .sort((a, b) => a.order - b.order)
+    .map(item => item.image);
+  supportCharacterImages = pool.slice(0, 3);
+
+  const slots = [
+    document.querySelector(".hydration-girl"),
+    document.querySelector(".share-character-left"),
+    document.querySelector(".share-character-right")
+  ];
+  slots.forEach((slot, index) => {
+    if (slot && supportCharacterImages[index]) slot.src = supportCharacterImages[index];
+  });
+}
+
 function syncRequestButtons() {
   const refreshButton = document.getElementById("refresh-button");
   const locationButton = document.getElementById("location-button");
@@ -62,6 +113,10 @@ function renderSnapshot(snapshot, target, { source = "fallback" } = {}) {
   renderComparison(kumagaya, selectedStation, ranking, {
     isFallback: selectedStationSource === "fallback"
   });
+  assignSupportCharacters([
+    CHARACTER_REGISTRY.kumagaya.image,
+    getCharacterForPrefecture(selectedStation.prefecture).image
+  ]);
 
   const featuredNationwideRanking = ranking.slice(0, 10);
 
@@ -540,6 +595,7 @@ function setupUltraPresentation() {
 }
 
 setupScrollReveals();
+assignSupportCharacters();
 setupHydrationAction();
 setupUltraPresentation();
 setupLocationControl();

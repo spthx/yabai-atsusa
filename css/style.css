@@ -5057,3 +5057,91 @@ footer::before {
     height: 184px;
   }
 }
+
+/* SHARE CAST — turn the share action into another character showcase */
+.share-actions {
+  position: relative;
+  display: flex;
+  overflow: visible;
+  min-height: 126px;
+  align-items: center;
+  justify-content: center;
+  margin-top: 16px;
+  padding: 24px 142px 18px;
+  isolation: isolate;
+}
+
+.share-actions .share-primary {
+  z-index: 3;
+  width: 100%;
+  min-height: 66px;
+  border-radius: 18px;
+}
+
+.share-character {
+  position: absolute;
+  z-index: 2;
+  bottom: -8px;
+  width: 162px;
+  height: 154px;
+  max-width: none;
+  border: 0;
+  object-fit: cover;
+  background: transparent;
+  filter: drop-shadow(0 12px 13px #07526966) saturate(1.08);
+  pointer-events: none;
+}
+
+.share-character-left {
+  left: -10px;
+  object-position: 51% 28%;
+  -webkit-mask-image: radial-gradient(ellipse 78% 104% at 36% 48%, #000 0 55%, transparent 89%);
+  mask-image: radial-gradient(ellipse 78% 104% at 36% 48%, #000 0 55%, transparent 89%);
+}
+
+.share-character-right {
+  right: -10px;
+  object-position: 50% 23%;
+  -webkit-mask-image: radial-gradient(ellipse 78% 104% at 64% 48%, #000 0 55%, transparent 89%);
+  mask-image: radial-gradient(ellipse 78% 104% at 64% 48%, #000 0 55%, transparent 89%);
+}
+
+@media (max-width: 520px) {
+  .share-actions {
+    min-height: 132px;
+    margin-top: 12px;
+    padding: 25px 84px 18px;
+  }
+
+  .share-actions .share-primary {
+    min-height: 72px;
+    padding-inline: 8px;
+    font-size: .82rem;
+    letter-spacing: 0;
+  }
+
+  .share-character {
+    bottom: -6px;
+    width: 116px;
+    height: 142px;
+  }
+
+  .share-character-left {
+    left: -15px;
+  }
+
+  .share-character-right {
+    right: -15px;
+  }
+}
+
+@media (max-width: 360px) {
+  .share-actions {
+    padding-inline: 72px;
+  }
+
+  .share-character {
+    width: 104px;
+    height: 134px;
+  }
+}
