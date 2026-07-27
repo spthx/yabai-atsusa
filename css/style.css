@@ -4778,3 +4778,137 @@ footer > * {
     height: 164px;
   }
 }
+
+/* CHARACTER SHOWCASE — keep the data legible without shrinking heroines into thumbnails */
+.regional-heat-spotlight {
+  display: block;
+  overflow: visible;
+  min-height: 132px;
+  padding-left: 164px;
+}
+
+.regional-heat-spotlight::before {
+  border-radius: inherit;
+  clip-path: inset(0 round 20px);
+}
+
+.regional-heat-spotlight > img {
+  position: absolute;
+  z-index: 3;
+  bottom: -12px;
+  left: -22px;
+  width: 192px;
+  height: 168px;
+  max-width: none;
+  border: 0;
+  border-radius: 0;
+  object-fit: cover;
+  object-position: center 24%;
+  background: transparent;
+  box-shadow: none;
+  filter: drop-shadow(0 12px 13px #164b6063) saturate(1.08);
+  pointer-events: none;
+  -webkit-mask-image: radial-gradient(ellipse 76% 102% at 36% 48%, #000 0 55%, transparent 89%);
+  mask-image: radial-gradient(ellipse 76% 102% at 36% 48%, #000 0 55%, transparent 89%);
+}
+
+.regional-heat-spotlight > div {
+  min-height: 132px;
+  justify-content: center;
+  padding: 15px 18px 15px 0;
+}
+
+:is(.capital-card, .ranking-card)::before {
+  opacity: .4;
+  filter: saturate(1.04) contrast(1.02);
+}
+
+.capital-card::before {
+  top: -38%;
+  right: 3%;
+  width: 66%;
+}
+
+.capital-card:first-child::before {
+  top: -70%;
+  right: 8%;
+  width: 260px;
+  opacity: .48;
+}
+
+.ranking-card::before,
+.ranking-card:is(.rank-1, .rank-2, .rank-3)::before {
+  top: -42%;
+  right: 7%;
+  width: 52%;
+  opacity: .42;
+}
+
+:is(.capital-card, .ranking-card).temp-cold::before {
+  opacity: .3;
+}
+
+.all-station-card::after {
+  background-position: calc(100% - 34px) center;
+  background-size: 96px auto;
+  opacity: .25;
+  filter: saturate(.95) contrast(.95);
+}
+
+:is(.capital-section, .ranking-section, .all-stations-section)::before {
+  width: 250px;
+  opacity: .22;
+  filter: saturate(.9) contrast(.98);
+}
+
+footer::before {
+  width: 235px;
+  opacity: .2;
+  filter: saturate(.85);
+}
+
+@media (max-width: 520px) {
+  .regional-heat-spotlight {
+    min-height: 148px;
+    padding-left: 116px;
+  }
+
+  .regional-heat-spotlight > img {
+    bottom: -10px;
+    left: -25px;
+    width: 154px;
+    height: 164px;
+  }
+
+  .regional-heat-spotlight > div {
+    min-height: 148px;
+    padding: 13px 12px 13px 0;
+  }
+
+  .regional-heat-spotlight strong {
+    font-size: 1.12rem;
+  }
+
+  .regional-heat-spotlight span {
+    font-size: .64rem;
+    line-height: 1.42;
+  }
+
+  .capital-card::before {
+    width: 74%;
+    opacity: .42;
+  }
+
+  .ranking-card::before,
+  .ranking-card:is(.rank-1, .rank-2, .rank-3)::before {
+    right: 2%;
+    width: 58%;
+    opacity: .43;
+  }
+
+  .all-station-card::after {
+    background-position: calc(100% - 26px) center;
+    background-size: 88px auto;
+    opacity: .24;
+  }
+}
