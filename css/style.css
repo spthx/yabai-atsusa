@@ -856,6 +856,25 @@ body {
   gap: 5px;
 }
 
+.all-stations-load-more {
+  grid-column: 1 / -1;
+  min-height: 46px;
+  border: 1px solid #39a8bc66;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #ffffffee, #dffaffee);
+  color: #17647a;
+  font: inherit;
+  font-size: .78rem;
+  font-weight: 900;
+  cursor: pointer;
+  box-shadow: 0 8px 22px #126b8017;
+}
+
+.all-stations-load-more:hover {
+  border-color: #1595aa;
+  transform: translateY(-1px);
+}
+
 .all-station-card {
   display: grid;
   grid-template-columns: 25px minmax(0, 1fr) auto;

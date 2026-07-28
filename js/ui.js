@@ -184,6 +184,9 @@ function renderCapitalTemperatureList(capitals) {
 
 let pendingAllStationsRanking = [];
 let allStationsRendered = false;
+let allStationsNextIndex = 10;
+let allStationsLoadObserver = null;
+const ALL_STATIONS_BATCH_SIZE = 60;
 
 function renderAllTemperatureStations(ranking) {
   const list = document.getElementById("all-temperature-stations");
@@ -196,6 +199,9 @@ function renderAllTemperatureStations(ranking) {
 
   pendingAllStationsRanking = ranking;
   allStationsRendered = false;
+  allStationsNextIndex = 10;
+  allStationsLoadObserver?.disconnect();
+  allStationsLoadObserver = null;
   list.innerHTML = "";
   note.textContent = `11位以下の${remainingRanking.length}地点を、同一観測時刻・高い順で集計しています。`;
   if (summary) {
@@ -208,16 +214,28 @@ function renderAllTemperatureStations(ranking) {
 }
 
 function renderPendingAllTemperatureStations() {
+  if (!pendingAllStationsRanking.length) return;
+
+  const list = document.getElementById("all-temperature-stations");
+  if (!list.children.length) {
+    allStationsNextIndex = 10;
+    allStationsRendered = false;
+  }
+  appendAllTemperatureStationBatch();
+}
+
+function appendAllTemperatureStationBatch() {
   if (allStationsRendered || !pendingAllStationsRanking.length) return;
 
   const list = document.getElementById("all-temperature-stations");
   const ranking = pendingAllStationsRanking;
-  const remainingRanking = ranking.slice(10);
-  list.innerHTML = "";
+  const batchEnd = Math.min(ranking.length, allStationsNextIndex + ALL_STATIONS_BATCH_SIZE);
+  list.querySelector(".all-stations-load-more")?.remove();
   const fragment = document.createDocumentFragment();
 
-  remainingRanking.forEach((item, remainingIndex) => {
-    const index = remainingIndex + 10;
+  for (let index = allStationsNextIndex; index < batchEnd; index += 1) {
+    const item = ranking[index];
+    const remainingIndex = index - 10;
     const card = document.createElement("article");
     const isKumagaya = item.id === CONFIG.kumagayaStationId;
     const prefectureLabel = item.prefecture || "都道府県情報なし";
@@ -239,15 +257,41 @@ function renderPendingAllTemperatureStations() {
       <strong>${formatTemperature(item.temperature)}</strong>`;
 
     fragment.appendChild(card);
-  });
+  }
 
   list.appendChild(fragment);
-  allStationsRendered = true;
+  allStationsNextIndex = batchEnd;
+  allStationsRendered = allStationsNextIndex >= ranking.length;
+
+  if (!allStationsRendered) {
+    const loadMore = document.createElement("button");
+    loadMore.type = "button";
+    loadMore.className = "all-stations-load-more";
+    loadMore.textContent = `続きを表示（残り${ranking.length - allStationsNextIndex}地点）`;
+    loadMore.addEventListener("click", appendAllTemperatureStationBatch, { once: true });
+    list.appendChild(loadMore);
+
+    if ("IntersectionObserver" in window) {
+      allStationsLoadObserver?.disconnect();
+      allStationsLoadObserver = new IntersectionObserver(entries => {
+        if (!entries.some(entry => entry.isIntersecting)) return;
+        allStationsLoadObserver?.disconnect();
+        appendAllTemperatureStationBatch();
+      }, { rootMargin: "240px 0px" });
+      allStationsLoadObserver.observe(loadMore);
+    }
+  } else {
+    allStationsLoadObserver?.disconnect();
+    allStationsLoadObserver = null;
+  }
 }
 
 function clearRenderedAllTemperatureStations() {
+  allStationsLoadObserver?.disconnect();
+  allStationsLoadObserver = null;
   document.getElementById("all-temperature-stations").innerHTML = "";
   allStationsRendered = false;
+  allStationsNextIndex = 10;
 }
 
 function showError(message) {

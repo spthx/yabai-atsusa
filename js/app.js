@@ -14,18 +14,22 @@ const LOCATION_OPTIONS = {
 };
 
 const SUPPORT_CHARACTER_POOL = [
+  "assets/characters/pref-aichi.webp",
   "assets/characters/pref-aomori.webp",
   "assets/characters/pref-chiba.webp",
   "assets/characters/pref-fukui.webp",
+  "assets/characters/pref-fukushima.webp",
   "assets/characters/pref-gunma.webp",
   "assets/characters/pref-ibaraki.webp",
   "assets/characters/pref-iwate.webp",
   "assets/characters/pref-kyoto.webp",
+  "assets/characters/pref-kagawa.webp",
   "assets/characters/pref-miyagi.webp",
   "assets/characters/pref-nagano.webp",
   "assets/characters/pref-nara.webp",
   "assets/characters/pref-niigata.webp",
   "assets/characters/pref-okinawa.webp",
+  "assets/characters/pref-osaka.webp",
   "assets/characters/pref-shiga.webp",
   "assets/characters/pref-shizuoka.webp",
   "assets/characters/pref-tochigi.webp",

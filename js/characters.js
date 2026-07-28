@@ -173,6 +173,17 @@ const PREFECTURE_CHARACTERS = {
     accent: "#f0b63d",
     focus: "50% 50%"
   },
+  "福島県": {
+    region: "福島県",
+    name: "先回りウォーター",
+    image: "assets/characters/pref-fukushima.webp?v=20260728-unique2",
+    catchphrase: "はい、お水。動く前に一口飲もう。",
+    role: "外出前の水分補給",
+    type: "WATER TYPE",
+    skills: ["先回り給水", "外出チェック"],
+    accent: "#6eaed5",
+    focus: "50% 50%"
+  },
   "茨城県": {
     region: "茨城県",
     name: "給水ランナー",
@@ -309,6 +320,17 @@ const PREFECTURE_CHARACTERS = {
     accent: "#45aee3",
     focus: "50% 50%"
   },
+  "愛知県": {
+    region: "愛知県",
+    name: "コートサイド給水",
+    image: "assets/characters/pref-aichi.webp?v=20260728-unique2",
+    catchphrase: "休憩！まず飲んでから次の一本。",
+    role: "運動中の水分補給",
+    type: "BASKET TYPE",
+    skills: ["タイムアウト給水", "運動チェック"],
+    accent: "#d74c53",
+    focus: "50% 50%"
+  },
   "滋賀県": {
     region: "滋賀県",
     name: "湖風ウォーター",
@@ -331,6 +353,17 @@ const PREFECTURE_CHARACTERS = {
     accent: "#7180d6",
     focus: "50% 50%"
   },
+  "大阪府": {
+    region: "大阪府",
+    name: "パステルドリンク",
+    image: "assets/characters/pref-osaka.webp?v=20260728-unique2",
+    catchphrase: "冷たいドリンク、いっしょに飲も！",
+    role: "街歩きの水分補給",
+    type: "POP DRINK TYPE",
+    skills: ["ドリンクシェア", "街中休憩"],
+    accent: "#ef79bd",
+    focus: "50% 50%"
+  },
   "奈良県": {
     region: "奈良県",
     name: "紫陽花クール係",
@@ -351,6 +384,17 @@ const PREFECTURE_CHARACTERS = {
     ...REGIONAL_CHARACTERS.chugoku,
     region: "広島県",
     name: "携帯クール係"
+  },
+  "香川県": {
+    region: "香川県",
+    name: "ひまわり日差し係",
+    image: "assets/characters/pref-kagawa.webp?v=20260728-unique2",
+    catchphrase: "日差しを避けて、お水も忘れずに。",
+    role: "日差し対策と給水案内",
+    type: "SUNFLOWER TYPE",
+    skills: ["日差しシェード", "給水コール"],
+    accent: "#e7ad38",
+    focus: "50% 50%"
   },
   "高知県": {
     ...REGIONAL_CHARACTERS.shikoku,
