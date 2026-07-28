@@ -120,6 +120,39 @@ const PREFECTURE_CHARACTERS = {
     region: "北海道",
     name: "銀雪クール係"
   },
+  "青森県": {
+    region: "青森県",
+    name: "青空アイスブレイク",
+    image: "assets/characters/pref-aomori.webp?v=20260728-unique1",
+    catchphrase: "冷たいひと口のあとも、お水を忘れずに。",
+    role: "冷却休憩と水分確認",
+    type: "ICE POP TYPE",
+    skills: ["アイス休憩", "水分チェック"],
+    accent: "#ef6f70",
+    focus: "50% 50%"
+  },
+  "岩手県": {
+    region: "岩手県",
+    name: "高原クールパック",
+    image: "assets/characters/pref-iwate.webp?v=20260728-unique1",
+    catchphrase: "冷やしたら、次はちゃんと飲もう。",
+    role: "保冷パウチと屋外休憩",
+    type: "OUTDOOR TYPE",
+    skills: ["クールパウチ", "木陰サーチ"],
+    accent: "#3aa9de",
+    focus: "50% 50%"
+  },
+  "宮城県": {
+    region: "宮城県",
+    name: "木陰ファン係",
+    image: "assets/characters/pref-miyagi.webp?v=20260728-unique1",
+    catchphrase: "風に当たりながら、一口飲もっか。",
+    role: "送風と木陰休憩",
+    type: "FAN TYPE",
+    skills: ["木陰ファン", "休憩コール"],
+    accent: "#469bd2",
+    focus: "50% 50%"
+  },
   "秋田県": {
     ...REGIONAL_CHARACTERS.tohoku,
     region: "秋田県",
@@ -231,6 +264,17 @@ const PREFECTURE_CHARACTERS = {
     ...REGIONAL_CHARACTERS.chubu,
     region: "石川県",
     name: "レモンウォーター係"
+  },
+  "福井県": {
+    region: "福井県",
+    name: "青空パラソル",
+    image: "assets/characters/pref-fukui.webp?v=20260728-unique1",
+    catchphrase: "日差しを避けて、涼しい場所で飲もう。",
+    role: "日傘と日差し対策",
+    type: "PARASOL TYPE",
+    skills: ["透明パラソル", "日陰ルート"],
+    accent: "#5b9bd5",
+    focus: "50% 50%"
   },
   "山梨県": {
     region: "山梨県",
