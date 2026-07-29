@@ -6,9 +6,9 @@
     { src: "assets/characters/pref-gunma.webp", alt: "湯煙あつね" },
     { src: "assets/characters/pref-toyama.webp", alt: "雪解みずは" },
     { src: "assets/characters/pref-niigata.webp", alt: "雲田みのり" },
-    { src: "assets/characters/profile-region-hokkaido.webp", alt: "稲守ねむ" },
+    { src: "assets/characters/region-tohoku.webp", alt: "稲守ねむ" },
     { src: "assets/characters/region-hokkaido.webp", alt: "銀雪クール係" },
-    { src: "assets/characters/profile-region-kanto.webp", alt: "涼風ポニーテール" },
+    { src: "assets/characters/region-kanto.webp", alt: "涼風ポニーテール" },
     { src: "assets/characters/region-kyushu.webp", alt: "南国クールダウン係" }
   ];
 
