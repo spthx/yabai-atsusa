@@ -3,7 +3,7 @@
 
   const cast = [
     { src: "assets/characters/kumagaya-anime.png", alt: "くまがや水分係" },
-    { src: "assets/characters/pref-gunma.webp", alt: "湯煙あつね" },
+    { src: "assets/characters/pref-gunma-v2.webp", alt: "湯煙あつね" },
     { src: "assets/characters/pref-toyama.webp", alt: "雪解みずは" },
     { src: "assets/characters/pref-niigata.webp", alt: "雲田みのり" },
     { src: "assets/characters/region-tohoku.webp", alt: "稲守ねむ" },

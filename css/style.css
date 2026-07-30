@@ -4212,7 +4212,7 @@ footer > * {
 }
 
 .capital-section { --section-girl-alt: url("../assets/characters/pref-tokyo.webp?v=20260726-pref1"); }
-.ranking-section { --section-girl-alt: url("../assets/characters/pref-gunma.webp?v=20260726-pref1"); }
+.ranking-section { --section-girl-alt: url("../assets/characters/pref-gunma-v2.webp?v=20260731-cafe"); }
 .all-stations-section { --section-girl-alt: url("../assets/characters/pref-shiga.webp?v=20260726-pref1"); }
 
 :is(.capital-section, .ranking-section, .all-stations-section)::after {

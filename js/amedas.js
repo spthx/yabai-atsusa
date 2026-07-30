@@ -12,10 +12,17 @@ async function fetchAmedasSnapshot() {
 }
 
 function buildTemperatureRanking(readings, stations) {
+  const locationOverrides = {
+    "44356": { prefecture: "東京都" },
+    "50066": { prefecture: "静岡県" }
+  };
   return Object.entries(readings).map(([id, reading]) => {
     const temperature = getTemperature(reading);
     const station = stations[id];
-    const location = AMEDAS_LOCATION_METADATA[id];
+    const location = {
+      ...(AMEDAS_LOCATION_METADATA[id] || {}),
+      ...(locationOverrides[id] || {})
+    };
     return station && temperature !== null ? {
       id,
       name: station.kjName,

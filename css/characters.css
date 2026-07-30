@@ -1118,7 +1118,8 @@ main { width: min(1320px, calc(100% - 64px)); margin: 0 auto; }
 }
 
 .adopted-kaho {
-  background-image: url("../assets/characters/pref-gunma.webp");
+  background-image: url("../assets/characters/pref-gunma-v2.webp");
+  background-position: 68% 38%;
 }
 
 .adopted-shizuku {
@@ -1137,8 +1138,8 @@ main { width: min(1320px, calc(100% - 64px)); margin: 0 auto; }
 
 .tab-portrait.portrait-kaho,
 .character-image.portrait-kaho {
-  background-image: url("../assets/characters/pref-gunma.webp");
-  background-position: center;
+  background-image: url("../assets/characters/pref-gunma-v2.webp");
+  background-position: 68% 38%;
 }
 
 .tab-portrait.portrait-shizuku,

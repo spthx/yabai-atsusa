@@ -209,13 +209,13 @@ const PREFECTURE_CHARACTERS = {
   "群馬県": {
     region: "群馬県",
     name: "湯煙あつね",
-    image: "assets/characters/pref-gunma.webp?v=20260726-pref1",
-    catchphrase: "工具は置いて、まず水だ！",
-    role: "作業前後の水分補給",
-    type: "WORK TYPE",
-    skills: ["パイプレンチ", "作業前給水"],
-    accent: "#e3523d",
-    focus: "50% 50%"
+    image: "assets/characters/pref-gunma-v2.webp?v=20260731-cafe",
+    catchphrase: "湯上がりこそ、まず一杯！",
+    role: "湯上がりの水分補給",
+    type: "SPA BREAK TYPE",
+    skills: ["日陰休憩", "湯上がり給水"],
+    accent: "#5c78b8",
+    focus: "68% 38%"
   },
   "埼玉県": {
     ...CHARACTER_REGISTRY.kumagaya,
@@ -272,9 +272,15 @@ const PREFECTURE_CHARACTERS = {
     focus: "50% 50%"
   },
   "石川県": {
-    ...REGIONAL_CHARACTERS.chubu,
     region: "石川県",
-    name: "レモンウォーター係"
+    name: "加賀しずく係",
+    image: "assets/characters/default-anime.png?v=20260731-ishikawa1",
+    catchphrase: "海風の前に、冷たい一杯を。",
+    role: "海辺の給水案内",
+    type: "NOTO BLUE TYPE",
+    skills: ["海風ボトル", "木陰休憩"],
+    accent: "#2f9ed8",
+    focus: "50% 42%"
   },
   "福井県": {
     region: "福井県",
@@ -309,6 +315,17 @@ const PREFECTURE_CHARACTERS = {
     accent: "#61b58d",
     focus: "50% 50%"
   },
+  "岐阜県": {
+    region: "岐阜県",
+    name: "清流クールファン",
+    image: "assets/characters/pref-gifu.webp?v=20260730-fill1",
+    catchphrase: "風に当たりながら、冷たい水を一口。",
+    role: "送風とこまめな給水",
+    type: "RIVER BREEZE TYPE",
+    skills: ["ハンディファン", "清流ボトル"],
+    accent: "#4e9fd0",
+    focus: "50% 42%"
+  },
   "静岡県": {
     region: "静岡県",
     name: "プールサイド給水",
@@ -322,14 +339,25 @@ const PREFECTURE_CHARACTERS = {
   },
   "愛知県": {
     region: "愛知県",
-    name: "コートサイド給水",
-    image: "assets/characters/pref-aichi.webp?v=20260728-unique2",
-    catchphrase: "休憩！まず飲んでから次の一本。",
-    role: "運動中の水分補給",
-    type: "BASKET TYPE",
-    skills: ["タイムアウト給水", "運動チェック"],
-    accent: "#d74c53",
-    focus: "50% 50%"
+    name: "喫茶ひと休み係",
+    image: "assets/characters/pref-aichi-v2.webp?v=20260731-cafe",
+    catchphrase: "涼しい店内で、ゆっくり一杯。",
+    role: "喫茶店での給水休憩",
+    type: "KISSA BREAK TYPE",
+    skills: ["店内クールダウン", "休憩ドリンク"],
+    accent: "#69aebb",
+    focus: "57% 36%"
+  },
+  "三重県": {
+    region: "三重県",
+    name: "白日傘ウォーター",
+    image: "assets/characters/pref-mie.webp?v=20260730-fill1",
+    catchphrase: "日傘の下で、先に水分をとろう。",
+    role: "日差し対策と給水",
+    type: "PARASOL TYPE",
+    skills: ["白日傘", "木陰ボトル"],
+    accent: "#8d8bd7",
+    focus: "50% 42%"
   },
   "滋賀県": {
     region: "滋賀県",
@@ -364,6 +392,17 @@ const PREFECTURE_CHARACTERS = {
     accent: "#ef79bd",
     focus: "50% 50%"
   },
+  "兵庫県": {
+    region: "兵庫県",
+    name: "青風タオル係",
+    image: "assets/characters/pref-hyogo.webp?v=20260730-fill1",
+    catchphrase: "汗を拭いたら、もう一口飲んで。",
+    role: "タオル休憩と水分補給",
+    type: "TOWEL TYPE",
+    skills: ["クールタオル", "ボトル確認"],
+    accent: "#4e9fd0",
+    focus: "50% 42%"
+  },
   "奈良県": {
     region: "奈良県",
     name: "紫陽花クール係",
@@ -380,10 +419,65 @@ const PREFECTURE_CHARACTERS = {
     region: "和歌山県",
     name: "木陰ドリンク係"
   },
+  "鳥取県": {
+    region: "鳥取県",
+    name: "砂丘シェード係",
+    image: "assets/characters/pref-tottori.webp?v=20260730-fill1",
+    catchphrase: "帽子をかぶって、乾く前に飲もう。",
+    role: "日差し対策と給水",
+    type: "SUN HAT TYPE",
+    skills: ["白帽子", "給水コール"],
+    accent: "#6aaed7",
+    focus: "50% 40%"
+  },
+  "島根県": {
+    region: "島根県",
+    name: "縁涼みドリンク",
+    image: "assets/characters/pref-shimane.webp?v=20260730-fill1",
+    catchphrase: "木陰でゆっくり、ひと口どうぞ。",
+    role: "木陰休憩と水分補給",
+    type: "SHADE TYPE",
+    skills: ["木陰休憩", "ボトルタイム"],
+    accent: "#d98285",
+    focus: "50% 42%"
+  },
+  "岡山県": {
+    region: "岡山県",
+    name: "晴れ空ボトル係",
+    image: "assets/characters/pref-okayama.webp?v=20260730-fill1",
+    catchphrase: "晴れの日こそ、早めに飲んでおこう。",
+    role: "晴天時の水分補給",
+    type: "SUNNY TYPE",
+    skills: ["麦わらシェード", "先回り給水"],
+    accent: "#e3b55f",
+    focus: "50% 42%"
+  },
   "広島県": {
     ...REGIONAL_CHARACTERS.chugoku,
     region: "広島県",
     name: "携帯クール係"
+  },
+  "山口県": {
+    region: "山口県",
+    name: "木陰うちわ係",
+    image: "assets/characters/pref-yamaguchi.webp?v=20260730-fill1",
+    catchphrase: "風を作って、涼しい場所で飲もう。",
+    role: "送風と木陰休憩",
+    type: "FAN TYPE",
+    skills: ["折りたたみ扇", "木陰ナビ"],
+    accent: "#65b7a0",
+    focus: "50% 42%"
+  },
+  "徳島県": {
+    region: "徳島県",
+    name: "桃風クールタオル",
+    image: "assets/characters/pref-tokushima.webp?v=20260730-fill1",
+    catchphrase: "汗を拭いて、水分もしっかりね。",
+    role: "クールタオルと給水",
+    type: "COOL TOWEL TYPE",
+    skills: ["タオルクール", "給水チェック"],
+    accent: "#ea8f9d",
+    focus: "50% 42%"
   },
   "香川県": {
     region: "香川県",
@@ -396,10 +490,87 @@ const PREFECTURE_CHARACTERS = {
     accent: "#e7ad38",
     focus: "50% 50%"
   },
+  "愛媛県": {
+    region: "愛媛県",
+    name: "柑橘ブリーズ係",
+    image: "assets/characters/pref-ehime.webp?v=20260730-fill1",
+    catchphrase: "風に当たりながら、冷たい一口を。",
+    role: "送風と冷水休憩",
+    type: "CITRUS BREEZE TYPE",
+    skills: ["ハンディファン", "冷水ボトル"],
+    accent: "#b69cd6",
+    focus: "50% 42%"
+  },
   "高知県": {
     ...REGIONAL_CHARACTERS.shikoku,
     region: "高知県",
     name: "打ち水サポーター"
+  },
+  "福岡県": {
+    region: "福岡県",
+    name: "海風クールウォーター",
+    image: "assets/characters/pref-fukuoka.webp?v=20260731-kyushu",
+    catchphrase: "海風の下で、冷たい一口を。",
+    role: "海辺の給水休憩",
+    type: "SEASIDE TYPE",
+    skills: ["海風休憩", "冷水ボトル"],
+    accent: "#46b9d8",
+    focus: "50% 46%"
+  },
+  "佐賀県": {
+    region: "佐賀県",
+    name: "干潟ブリーズティー",
+    image: "assets/characters/pref-saga.webp?v=20260731-kyushu",
+    catchphrase: "水辺を眺めて、ゆっくり休もう。",
+    role: "水辺の麦茶休憩",
+    type: "TIDAL FLAT TYPE",
+    skills: ["木道休憩", "麦茶タイム"],
+    accent: "#62c6bc",
+    focus: "50% 33%"
+  },
+  "長崎県": {
+    region: "長崎県",
+    name: "港町クールグラス",
+    image: "assets/characters/pref-nagasaki.webp?v=20260731-kyushu",
+    catchphrase: "港を眺めて、ひと涼み。",
+    role: "港辺の給水休憩",
+    type: "HARBOR CAFE TYPE",
+    skills: ["海風テラス", "冷水グラス"],
+    accent: "#577dc2",
+    focus: "39% 36%"
+  },
+  "熊本県": {
+    region: "熊本県",
+    name: "渓流ひと休み係",
+    image: "assets/characters/pref-kumamoto.webp?v=20260731-kyushu",
+    catchphrase: "清流のそばで、体を休めよう。",
+    role: "渓流の休憩案内",
+    type: "GORGE TYPE",
+    skills: ["清流クール", "座って休憩"],
+    accent: "#3d8c80",
+    focus: "44% 40%"
+  },
+  "大分県": {
+    region: "大分県",
+    name: "湧水プール休憩係",
+    image: "assets/characters/pref-oita.webp?v=20260731-kyushu",
+    catchphrase: "日傘の下で、先に水分を。",
+    role: "日傘と給水休憩",
+    type: "SPRING POOL TYPE",
+    skills: ["日傘シェード", "プールサイド給水"],
+    accent: "#6ecbc7",
+    focus: "45% 39%"
+  },
+  "宮崎県": {
+    region: "宮崎県",
+    name: "渓谷ミスト案内",
+    image: "assets/characters/pref-miyazaki.webp?v=20260731-kyushu",
+    catchphrase: "滝の涼しさで、ゆっくりひと息。",
+    role: "渓谷の涼み休憩",
+    type: "WATERFALL TYPE",
+    skills: ["滝ミスト", "木陰休憩"],
+    accent: "#4ca5a9",
+    focus: "63% 34%"
   },
   "鹿児島県": {
     ...REGIONAL_CHARACTERS.kyushu,

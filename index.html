@@ -27,7 +27,7 @@
   <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/favicon-32.png">
   <link rel="apple-touch-icon" sizes="180x180" href="assets/icons/apple-touch-icon.png">
   <title>最強熊谷伝説 | 全国アメダス気温</title>
-  <link rel="stylesheet" href="css/style.css?v=20260729-comic3">
+  <link rel="stylesheet" href="css/style.css?v=20260731-character1">
 </head>
 <body>
   <div class="page-progress" aria-hidden="true"><i></i></div>
@@ -50,7 +50,7 @@
       </span>
       <span class="comic-news-cast" aria-hidden="true">
         <img src="assets/characters/kumagaya-anime.png" alt="">
-        <img src="assets/characters/pref-gunma.webp" alt="">
+        <img src="assets/characters/pref-gunma-v2.webp" alt="">
         <img src="assets/characters/region-tohoku.webp" alt="">
       </span>
       <span class="comic-news-cta"><b>読む</b><i>→</i></span>
@@ -94,7 +94,7 @@
         <p id="location-note" class="location-note" role="status" aria-live="polite">初回だけ現在地を確認。次回は前回の比較地点を使い、座標は保存しません。比較地点名は対戦カード・共有には出しません。</p>
       </div>
       <div class="share-actions" aria-label="気温と休憩目安を共有">
-        <img class="share-character share-character-left" src="assets/characters/pref-gunma.webp" alt="" loading="lazy" decoding="async">
+        <img class="share-character share-character-left" src="assets/characters/pref-gunma-v2.webp" alt="" loading="lazy" decoding="async">
         <button id="share-button" class="share-button share-primary" type="button"><span aria-hidden="true">↗</span> 結果を共有</button>
         <img class="share-character share-character-right" src="assets/characters/pref-kyoto.webp" alt="" loading="lazy" decoding="async">
       </div>
@@ -143,10 +143,18 @@
   </main>
   <script src="js/config.js?v=20260727-geo2"></script>
   <script src="js/utils.js?v=20260727-geo2"></script>
-  <script src="js/characters.js?v=20260728-unique2"></script>
+  <script src="js/characters.js?v=20260731-character1"></script>
   <script src="js/locations.js?v=20260727-geo2"></script>
-  <script src="js/amedas.js?v=20260727-geo2"></script>
+  <script src="js/amedas.js?v=20260729-datafix1"></script>
   <script src="js/ui.js?v=20260728-rankperf1"></script>
-  <script src="js/app.js?v=20260728-unique2"></script>
+  <script src="js/app.js?v=20260731-character1"></script>
+  <script>
+    (() => {
+      if (new URLSearchParams(window.location.search).get("qa") !== "amedas") return;
+      const qaScript = document.createElement("script");
+      qaScript.src = "js/qa.js?v=20260729-amedas2";
+      document.body.appendChild(qaScript);
+    })();
+  </script>
 </body>
 </html>
